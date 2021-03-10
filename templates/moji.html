@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block body %}
+    <svg>
+        <defs>
+            {% include "gradients/basic-gradient.html" %}
+        </defs>
+    </svg>
+    <svg width="477" height="509" viewBox="-50 -50 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g class="moji">
+            {% include "bodies/basic-body.html" %}
+            {% include "mouths/basic-mouth.html" %}
+            {% include "eyes/basic-eye.html" %}
+        </g>
+    </svg>
+{% endblock %}

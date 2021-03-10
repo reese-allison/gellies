@@ -15,4 +15,4 @@ async def root():
 
 @app.get("/mochis/", response_class=HTMLResponse)
 async def read_item(request: Request):
-    return templates.TemplateResponse("mochi.html", {"request": request})
+    return templates.TemplateResponse("moji.html", {"request": request})

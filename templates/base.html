@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+        {% endblock %}
+        <style>
+            svg {
+                shape-rendering: optimizeSpeed;
+            }
+        </style>
+    </head>
+    <body>
+        {% block body %}
+        {% endblock %}
+    </body>
+    <footer>
+        {% block footer %}
+        {% endblock %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js" defer></script>
+        <script src="/static/js/animations.js" defer></script>
+    </footer>
+</html>
