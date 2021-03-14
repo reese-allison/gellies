@@ -70,6 +70,9 @@ ehthumbs_vista.db
 
 #Node
 node_modules/
+jspm_packages/
+/build
+/*.log
 dist/
 
 # Ignore stored sql

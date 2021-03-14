@@ -8,11 +8,45 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 
+db_result = {
+    100: {
+        'eyes': 'basic',
+        'mouth': 'basic',
+        'body': 'basic',
+        'gradient': 'slime'
+    },
+    200: {
+        'eyes': 'circle',
+        'mouth': 'basic',
+        'body': 'basic',
+        'gradient': 'sunrise'
+    },
+    300: {
+        'eyes': 'anime-swirl',
+        'mouth': 'basic',
+        'body': 'basic',
+        'gradient': 'sunrise'
+    }
+}
+
+
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
 
 
-@app.get("/mochis/", response_class=HTMLResponse)
-async def read_item(request: Request):
-    return templates.TemplateResponse("moji.html", {"request": request})
+@app.get("/base/", response_class=HTMLResponse)
+async def base(request: Request):
+    return templates.TemplateResponse("base.html", {"request": request})
+
+
+@app.get("/gradients/", response_class=HTMLResponse)
+async def gradients(request: Request):
+    return templates.TemplateResponse("demo.html", {"request": request})
+
+
+@app.get("/mochi/{mochi_id}", response_class=HTMLResponse)
+async def mochis(mochi_id: int, request: Request):
+    svgs = db_result[mochi_id]
+    svgs['id'] = mochi_id
+    return templates.TemplateResponse("mochi.html", {"request": request, "svgs": svgs})
