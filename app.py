@@ -13,19 +13,29 @@ db_result = {
         'eyes': 'basic',
         'mouth': 'basic',
         'body': 'basic',
-        'gradient': 'slime'
+        'body-gradient': 'slime',
+        'eye-gradient': 'basic'
+    },
+    101: {
+        'eyes': 'cat',
+        'mouth': 'basic',
+        'body': 'basic',
+        'body-gradient': 'slime',
+        'eye-gradient': 'basic'
     },
     200: {
         'eyes': 'circle',
         'mouth': 'basic',
         'body': 'basic',
-        'gradient': 'sunrise'
+        'body-gradient': 'sunrise',
+        'eye-gradient': 'basic'
     },
     300: {
         'eyes': 'anime-swirl',
         'mouth': 'basic',
         'body': 'basic',
-        'gradient': 'sunrise'
+        'body-gradient': 'sunrise',
+        'eye-gradient': 'basic'
     }
 }
 
@@ -45,8 +55,8 @@ async def gradients(request: Request):
     return templates.TemplateResponse("demo.html", {"request": request})
 
 
-@app.get("/mochi/{mochi_id}", response_class=HTMLResponse)
-async def mochis(mochi_id: int, request: Request):
-    svgs = db_result[mochi_id]
-    svgs['id'] = mochi_id
-    return templates.TemplateResponse("mochi.html", {"request": request, "svgs": svgs})
+@app.get("/moji/{moji_id}", response_class=HTMLResponse)
+async def mojis(moji_id: int, request: Request):
+    svgs = db_result[moji_id]
+    svgs['id'] = moji_id
+    return templates.TemplateResponse("moji.html", {"request": request, "svgs": svgs})
