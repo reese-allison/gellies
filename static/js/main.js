@@ -11,4 +11,5 @@ render(html`
     <${Moji} id="101" />
     <${Moji} id="200" />
     <${Moji} id="300" />
+    <${Moji} id="302" />
 `, main);

@@ -36,6 +36,13 @@ db_result = {
         'body': 'basic',
         'body-gradient': 'sunrise',
         'eye-gradient': 'basic'
+    },
+    302: {
+        'eyes': 'circle',
+        'mouth': 'basic',
+        'body': 'basic',
+        'body-gradient': 'twinkie',
+        'eye-gradient': 'basic'
     }
 }
 
