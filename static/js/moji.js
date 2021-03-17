@@ -1,8 +1,6 @@
+import { html, Component } from 'https://unpkg.com/htm/preact/index.mjs?module'
+import { TimelineMax } from 'https://unpkg.com/gsap?module';
 import { randomRange } from './common.js';
-
-const Component = preact.Component;
-const h = preact.h;
-const html = htm.bind(h);
 
 const ebb_tl = new TimelineMax({repeat:-1, repeatDelay:.5, yoyo:true});
 

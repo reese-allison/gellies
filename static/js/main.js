@@ -1,10 +1,8 @@
-gsap.ticker.fps(30);
-
+import { gsap } from 'https://unpkg.com/gsap?module';
+import { html, render } from 'https://unpkg.com/htm/preact/index.mjs?module'
 import { Moji } from './moji.js';
 
-const h = preact.h;
-const render = preact.render;
-const html = htm.bind(h);
+gsap.ticker.fps(30);
 
 var main = document.getElementById('main');
 
