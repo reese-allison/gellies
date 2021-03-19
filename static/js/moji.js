@@ -1,10 +1,27 @@
 import { html, Component } from 'https://unpkg.com/htm/preact/index.mjs?module'
 import { gsap, TimelineMax } from 'https://unpkg.com/gsap?module';
-import { Draggable } from 'https://unpkg.com/gsap/Draggable?module';
-import { randomRange } from './common.js';
+// import { Draggable } from 'https://unpkg.com/gsap/Draggable?module';
+// gsap.registerPlugin(Draggable);
+
+import { randomRange, randomNegative } from './common.js';
 
 const ebb_tl = new TimelineMax({repeat:-1, repeatDelay:.5, yoyo:true});
-gsap.registerPlugin(Draggable);
+
+
+function eye_movement(inner_eyes){
+    let eye_movement_delay = randomRange(0, 2);
+    let x = randomRange(0, 4) * randomNegative();
+    let y = randomRange(0, 4) * randomNegative();
+    Array.from(inner_eyes).forEach((e)=>{
+        gsap.to(e, {
+            x:x,
+            y:y,
+            delay: eye_movement_delay,
+            duration: .5
+        });
+    });
+}
+
 
 class Moji extends Component {
     constructor(props){
@@ -21,19 +38,27 @@ class Moji extends Component {
         }.bind(this));
     }
 
+    componentWillUnmount(){
+        ebb_tl.remove(this.ebb);
+        this.eyes.kill();
+    }
+
     componentDidUpdate(){
-        ebb_tl.from(`#moji-${ this.props.id }`, {
-            scale: 1.025,
-            duration: 3,
+        this.ebb = gsap.from(`#moji-${ this.props.id }`, {
+            scale: 1.03,
+            duration: 2,
             ease: "linear",
             transformOrigin: "top"
-        }, randomRange(0, 3));
-        Draggable.create(`#moji-${ this.props.id }-svg`, {trigger: `#moji-${ this.props.id }`});
+        });
+        ebb_tl.add(this.ebb, randomRange(0, 2));
+
+        let inner_eyes = document.querySelectorAll(`#moji-${ this.props.id } .inner-eye`);
+        this.eyes = gsap.set(eye_movement, {onRepeat: eye_movement, onRepeatParams: [inner_eyes], repeat: -1, repeatDelay: 2.5});
     }
 
     render(){
         if(this.state.moji){
-            return html`<div innerHTML=${this.state.moji}></div>`
+            return html`<div style="display: inline;" innerHTML=${this.state.moji}></div>`
         }
     }
 }
