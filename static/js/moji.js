@@ -1,9 +1,10 @@
 import { html, Component } from 'https://unpkg.com/htm/preact/index.mjs?module'
-import { TimelineMax } from 'https://unpkg.com/gsap?module';
+import { gsap, TimelineMax } from 'https://unpkg.com/gsap?module';
+import { Draggable } from 'https://unpkg.com/gsap/Draggable?module';
 import { randomRange } from './common.js';
-import { Draggable } from './drag.js';
 
 const ebb_tl = new TimelineMax({repeat:-1, repeatDelay:.5, yoyo:true});
+gsap.registerPlugin(Draggable);
 
 class Moji extends Component {
     constructor(props){
@@ -27,10 +28,7 @@ class Moji extends Component {
             ease: "linear",
             transformOrigin: "top"
         }, randomRange(0, 3));
-        document.getElementById(`moji-${ this.props.id }`).addEventListener("click", ()=>{
-            document.getElementById(`moji-${ this.props.id }-mouth-open`).classList.remove('hidden');
-        });
-        Draggable(`moji-${ this.props.id }-svg`)
+        Draggable.create(`#moji-${ this.props.id }-svg`, {trigger: `#moji-${ this.props.id }`});
     }
 
     render(){
