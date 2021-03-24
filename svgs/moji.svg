@@ -88,14 +88,20 @@
      inkscape:window-height="1001"
      id="namedview36"
      showgrid="false"
-     inkscape:zoom="3.2282934"
-     inkscape:cx="301.54456"
-     inkscape:cy="349.37469"
+     inkscape:zoom="1.806477"
+     inkscape:cx="376.65499"
+     inkscape:cy="334.75046"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="svg34"
      inkscape:document-rotation="0" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1.48054px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="M -23.090394,258.50848 505.89662,255.61562 506.59265,399.294 C 450.88126,350.40604 296.33282,350.6966 237.14126,397.27281 175.45466,350.05374 28.851696,351.04889 -25.178504,400.25828 Z"
+     id="path212-7"
+     sodipodi:nodetypes="cccccc"
+     inkscape:label="droop" />
   <g
      id="slime"
      class="slime"
@@ -422,4 +428,10 @@
          ry="11.642079" />
     </g>
   </g>
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1.48054px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="m 496.82201,413.85843 -528.991146,2.00101 -0.453792,-143.67935 c 55.628887,48.98182 210.177608,48.95182 269.447608,2.47547 61.6069,47.323 208.21133,46.57502 262.32442,-2.5432 z"
+     id="path212"
+     sodipodi:nodetypes="cccccc"
+     inkscape:label="cheeks" />
 </svg>

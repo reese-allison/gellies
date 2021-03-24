@@ -1,4 +1,7 @@
 <svg id="svg-{{ svgs['id'] }}" width="477" height="509" viewBox="-50 -50 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <clipPath id="moji-{{ svgs['id'] }}-cheeks">
+        <path d="m-26.57 167.5 532.5-.0948.696 296.3c-55.71-100.8-210.3-100.2-269.5-4.168-61.69-97.37-208.3-95.32-262.3 6.157z"/>
+    </clipPath>
     {% with moji_id=svgs['id'] %}
         <defs>
             {% set path = "/svgs/eye-gradients/" + svgs["eye-gradient"] + '-gradient.html' %}{% include path ignore missing %}
