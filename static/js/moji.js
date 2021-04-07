@@ -24,7 +24,7 @@ class Moji extends Component {
 
         this.state = {
             setup: false,
-            states: ['gaping', 'chewing', 'bouncing', 'jumping'],
+            states: ['chewing', 'bouncing', 'jumping'],
             active: []
         };
 
@@ -83,12 +83,12 @@ class Moji extends Component {
             //     }
             // });
     
-            // Test jump on click
-            this.moji.addEventListener("click", e => {
-                if(!this.state.active.includes('jumping')){
-                    this.jump();
-                }
-            });
+            // // Test jump on click
+            // this.moji.addEventListener("click", e => {
+            //     if(!this.state.active.includes('jumping')){
+            //         this.jump();
+            //     }
+            // });
         }
 
 
@@ -133,10 +133,6 @@ class Moji extends Component {
             chew_tl.to(this.mouth, {scale: 0.85, transformOrigin: "center"}, 0)
             chew_tl.to(this.cheeks, {y: -30}, 0);
         });
-    }
-
-    gape(){
-
     }
 
     bounce(){

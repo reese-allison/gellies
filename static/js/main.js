@@ -2,6 +2,7 @@ import { gsap } from 'https://unpkg.com/gsap?module';
 import { html, render } from 'https://unpkg.com/htm/preact/index.mjs?module'
 
 import { Moji } from './moji.js';
+import { Edible } from './edible.js';
 
 gsap.ticker.fps(30);
 
@@ -13,4 +14,5 @@ render(html`
     <${Moji} id="200" />
     <${Moji} id="300" />
     <${Moji} id="302" />
+    <${Edible} id="1" />
 `, main);
