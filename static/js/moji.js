@@ -69,29 +69,15 @@ class Moji extends Component {
             let inner_eyes = document.querySelectorAll(`#moji-${ this.props.id } .inner-eye`);
             this.eye_movement = gsap.set(eye_movement, {onRepeat: eye_movement, onRepeatParams: [inner_eyes], repeat: -1, repeatDelay: 2});
             this.setState({setup: true});
-            // // Test chewing on click
-            // this.moji.addEventListener("click", e => {
-            //     if(!this.state.active.includes('chewing')){
-            //         this.chew();
-            //     }
-            // });
-    
-            // // Test bounce on click
-            // this.moji.addEventListener("click", e => {
-            //     if(!this.state.active.includes('bouncing')){
-            //         this.bounce();
-            //     }
-            // });
-    
-            // // Test jump on click
-            // this.moji.addEventListener("click", e => {
-            //     if(!this.state.active.includes('jumping')){
-            //         this.jump();
-            //     }
-            // });
+
+            ['click','ontouchstart'].forEach( evt => {
+                this.moji.addEventListener(evt, e => {
+                    if(!this.state.active.includes('bouncing')){
+                        this.bounce();
+                    }
+                });
+            });
         }
-
-
     }
 
     active(state, callback){

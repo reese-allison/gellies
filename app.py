@@ -43,6 +43,20 @@ db_result = {
         'body': 'basic',
         'body-gradient': 'twinkie',
         'eye-gradient': 'basic'
+    },
+    402: {
+        'eyes': 'basic',
+        'mouth': 'basic',
+        'body': 'basic',
+        'body-gradient': 'bao-bun',
+        'eye-gradient': 'basic'
+    },
+    502: {
+        'eyes': 'cat',
+        'mouth': 'basic',
+        'body': 'basic',
+        'body-gradient': 'blueberry-cobler',
+        'eye-gradient': 'basic'
     }
 }
 
