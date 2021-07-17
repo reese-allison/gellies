@@ -1,12 +1,13 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+
+from core.drops.drop_tables import get_moji
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
-
 
 db_result = {
     100: {
@@ -78,6 +79,13 @@ async def gradients(request: Request):
 
 @app.get("/moji/{moji_id}", response_class=HTMLResponse)
 async def mojis(moji_id: int, request: Request):
-    svgs = db_result[moji_id]
-    svgs['id'] = moji_id
-    return templates.TemplateResponse("moji.html", {"request": request, "svgs": svgs})
+    if moji_id:
+        svgs = db_result[moji_id]
+        svgs['id'] = moji_id
+    else:
+        svgs = get_moji('basic')
+    response = {
+        'html': templates.get_template("moji.html").render({"svgs": svgs}),
+        'id': svgs['id']
+    }
+    return JSONResponse(response)

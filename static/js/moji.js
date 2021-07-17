@@ -23,6 +23,7 @@ class Moji extends Component {
         super(props);
 
         this.state = {
+            id: this.props.id ? this.props.id : 0,
             setup: false,
             states: ['chewing', 'bouncing', 'jumping'],
             active: []
@@ -39,13 +40,17 @@ class Moji extends Component {
     }
 
     componentDidMount(){
-        fetch(`/moji/${this.props.id}`, {method: 'GET'})
+        fetch(`/moji/${this.state.id ? this.state.id : 0}`, {method: 'GET'})
         .then(function(response){
-            return response.text();
+            return response.json();
         })
-        .then(function(html){
-            this.setState({moji: html});
-        }.bind(this));
+        .then(function(json){
+            this.setState({
+                id: json.id,
+                moji: json.html
+            });
+        }
+        .bind(this));
     }
 
     componentWillUnmount(){
@@ -54,11 +59,11 @@ class Moji extends Component {
 
     componentDidUpdate(){
         if (!this.state.setup){
-            this.moji = document.getElementById(`moji-${ this.props.id }`);
-            this.eyes = document.getElementById(`moji-${ this.props.id }-eyes`);
-            this.mouth = document.getElementById(`moji-${ this.props.id }-mouth`);
-            this.cheeks = document.getElementById(`moji-${ this.props.id }-cheeks`);
-            this.shadow = document.getElementById(`moji-${ this.props.id }-shadow`);
+            this.moji = document.getElementById(`moji-${ this.state.id }`);
+            this.eyes = document.getElementById(`moji-${ this.state.id }-eyes`);
+            this.mouth = document.getElementById(`moji-${ this.state.id }-mouth`);
+            this.cheeks = document.getElementById(`moji-${ this.state.id }-cheeks`);
+            this.shadow = document.getElementById(`moji-${ this.state.id }-shadow`);
             this.ebb.add(gsap.from(this.moji, {
                 scale: 1.03,
                 duration: 2,
@@ -66,7 +71,7 @@ class Moji extends Component {
                 transformOrigin: "top"
             }), randomRange(0, 2));
     
-            let inner_eyes = document.querySelectorAll(`#moji-${ this.props.id } .inner-eye`);
+            let inner_eyes = document.querySelectorAll(`#moji-${ this.state.id } .inner-eye`);
             this.eye_movement = gsap.set(eye_movement, {onRepeat: eye_movement, onRepeatParams: [inner_eyes], repeat: -1, repeatDelay: 2});
             this.setState({setup: true});
 
@@ -114,7 +119,7 @@ class Moji extends Component {
                     this.inactive('chewing');
                 }})
             }});
-            this.eyes.style.clipPath = `url(#moji-${ this.props.id }-cheeks)`;
+            this.eyes.style.clipPath = `url(#moji-${ this.state.id }-cheeks)`;
             chew_tl.to(this.mouth, {y: -5}, 0)
             chew_tl.to(this.mouth, {scale: 0.85, transformOrigin: "center"}, 0)
             chew_tl.to(this.cheeks, {y: -30}, 0);
