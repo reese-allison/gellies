@@ -32,9 +32,9 @@ class Moji extends Component {
         this.active = this.active.bind(this);
         this.inactive = this.inactive.bind(this);
 
-        this.chew = this.chew.bind(this);
         this.bounce = this.bounce.bind(this);
         this.jump = this.jump.bind(this);
+        this.busy = this.busy.bind(this);
 
         this.ebb = new TimelineMax({repeat:-1, repeatDelay:.5, yoyo:true});
     }
@@ -77,8 +77,15 @@ class Moji extends Component {
 
             ['click','ontouchstart'].forEach( evt => {
                 this.moji.addEventListener(evt, e => {
-                    if(!this.state.active.includes('bouncing')){
-                        this.bounce();
+                    if(Math.random() > .15){
+                        if(!this.busy()){
+                            this.bounce();
+                        }
+                    }
+                    else{
+                        if(!this.busy()){
+                            this.jump();
+                        }
                     }
                 });
             });
@@ -107,23 +114,6 @@ class Moji extends Component {
                 }
             });
         }
-    }
-
-    chew(){
-        this.active('chewing', ()=>{
-            let chew_tl = new TimelineMax({repeat: 4, yoyo:true, onComplete: () => {
-                gsap.to(this.mouth, {y: 0, duration: 1})
-                gsap.fromTo(this.mouth, {scale: 0.85, transformOrigin: "center"}, {scale: 1, duration:1, transformOrigin: "center"}, 0)
-                gsap.to(this.cheeks, {y: 0, duration: 1, onComplete: () => {
-                    this.eyes.style.clipPath = null
-                    this.inactive('chewing');
-                }})
-            }});
-            this.eyes.style.clipPath = `url(#moji-${ this.state.id }-cheeks)`;
-            chew_tl.to(this.mouth, {y: -5}, 0)
-            chew_tl.to(this.mouth, {scale: 0.85, transformOrigin: "center"}, 0)
-            chew_tl.to(this.cheeks, {y: -30}, 0);
-        });
     }
 
     bounce(){
@@ -195,6 +185,10 @@ class Moji extends Component {
                 }
             }, 0);
         });
+    }
+
+    busy(){
+        return this.state.active.length != 0;
     }
 
     render(){
