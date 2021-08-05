@@ -83,7 +83,7 @@ async def mojis(moji_id: int, request: Request):
         svgs = db_result[moji_id]
         svgs['id'] = moji_id
     else:
-        svgs = get_moji('basic')
+        svgs = get_moji('random')
     response = {
         'html': templates.get_template("moji.html").render({"svgs": svgs}),
         'id': svgs['id']
