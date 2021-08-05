@@ -2,12 +2,19 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from pydantic import BaseModel
+import re
 
 from core.drops.drop_tables import get_moji
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
+
+
+class BodyGradient(BaseModel):
+    html: str
+    name: str
 
 db_result = {
     100: {
@@ -75,6 +82,15 @@ async def base(request: Request):
 @app.get("/gradients/", response_class=HTMLResponse)
 async def gradients(request: Request):
     return templates.TemplateResponse("demo.html", {"request": request})
+
+
+@app.post("/save/", response_class=HTMLResponse)
+async def save(body_gradient: BodyGradient):
+    _html = re.sub('-[0-9]*-', '-{{ moji_id }}-', body_gradient.html)
+    _html = re.sub('\s\s\s\s\n', '', _html)
+    with open(f'./templates/svgs/body-gradients/{body_gradient.name}-gradient.html', 'w+') as f:
+        f.write(_html)
+    return JSONResponse({'Success': True})
 
 
 @app.get("/moji/{moji_id}", response_class=HTMLResponse)

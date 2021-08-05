@@ -33,7 +33,7 @@ table_1 = {
 
 table_random = {
     'eyes': [
-        ['basic', 100]
+        ['circle', 1]
     ],
     'eye-gradient': [
         ['basic', 100]
@@ -42,7 +42,7 @@ table_random = {
         ['basic', 100]
     ],
     'body-gradient': [
-        ['random', 100]
+        ['random', 200]
     ],
     'mouth': [
         ['basic', 100]
