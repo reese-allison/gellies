@@ -39,13 +39,22 @@ table_random = {
         ['basic', 100]
     ],
     'body': [
-        ['basic', 100]
+        ['teddy', 100],
+        ['cat', 100],
+        ['basic', 100],
+        ['alien', 100],
+        ['fin', 100]
     ],
     'body-gradient': [
         ['random', 200]
     ],
     'mouth': [
-        ['basic', 100]
+        ['basic', 100],
+        ['bored', 100],
+        ['snaggle', 100],
+        ['none', 100],
+        ['surprised', 100],
+        ['frown', 100]
     ],
 }
 
