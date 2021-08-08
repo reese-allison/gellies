@@ -38,4 +38,4 @@ class Gradient_Moji extends Moji{
 
 var main = document.getElementById('main');
 
-render(Array(100).fill(0).map(_ => html`<${Gradient_Moji}/>`), main);
+render(Array(50).fill(0).map(_ => html`<${Gradient_Moji}/>`), main);

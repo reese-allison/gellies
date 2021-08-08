@@ -33,28 +33,38 @@ table_1 = {
 
 table_random = {
     'eyes': [
-        ['circle', 1]
+        ['circle', 100],
+        ['cat', 100],
+        ['basic', 100]
     ],
     'eye-gradient': [
         ['basic', 100]
     ],
     'body': [
+        ['devil', 100],
+        ['deer', 100],
         ['teddy', 100],
         ['cat', 100],
         ['basic', 100],
         ['alien', 100],
-        ['fin', 100]
+        ['axolotl', 100]
     ],
     'body-gradient': [
-        ['random', 200]
+        ['random', 100]
     ],
     'mouth': [
-        ['basic', 100],
+        ['cute', 100],
         ['bored', 100],
         ['snaggle', 100],
         ['none', 100],
         ['surprised', 100],
-        ['frown', 100]
+        ['frown', 100],
+        ['buck-teeth', 100],
+        ['fanged', 100],
+        ['smiley', 100],
+        ['pouty', 100],
+        ['cat', 100],
+        ['teddy', 100]
     ],
 }
 
