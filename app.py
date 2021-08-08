@@ -83,7 +83,6 @@ async def base(request: Request):
 async def gradients(request: Request):
     return templates.TemplateResponse("demo.html", {"request": request})
 
-
 @app.post("/save/", response_class=HTMLResponse)
 async def save(body_gradient: BodyGradient):
     _html = re.sub('-[0-9]*-', '-{{ moji_id }}-', body_gradient.html)
