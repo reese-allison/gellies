@@ -2,7 +2,8 @@
     <body>
         <div>
             Gradient Top:<input type="color" id="gradient-top-color"></input><br>
-            Gradient Top:<input type="color" id="gradient-bottom-color"></input><br>
+            Gradient Bottom:<input type="color" id="gradient-bottom-color"></input><br>
+            Save Gradient:<button id="saveme"></button>
             <!-- Eye Color:<input type="color" id="eye-color"></input><br> -->
         </div>
         <style>
@@ -384,6 +385,20 @@
             gradient_bottom_color.addEventListener("change", (e)=>{
                 gradient_bottom.setAttribute("style", `stop-color: ${e.target.value}`)
             })
+
+            //document.getElementById(“clickMe”);
+            //btn.addEventListener(“click”, alertMe);
+
+            function toSend(){
+               let gradient_name = prompt('Gradient Name');
+               fetch('/save/', {
+                       method: 'post',
+                        body: JSON.stringify({
+                           'name': gradient_name.toLowerCase(),
+                           'html' : document.getElementById(`moji-${ this.state.id }-body-color`).outerHTML
+                        })
+                    })
+            }
 
         </script>
     </footer>
