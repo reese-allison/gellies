@@ -77,24 +77,16 @@ class Moji extends Component {
 
             ['click','ontouchstart'].forEach( evt => {
                 this.moji.addEventListener(evt, e => {
-                    // if(Math.random() > .25){
-                    //     if(!this.busy()){
-                    //         this.bounce();
-                    //     }
-                    // }
-                    // else{
-                    //     if(!this.busy()){
-                    //         this.jump();
-                    //     }
-                    // }
-                    let gradient_name = prompt('Gradient Name');
-                    fetch('/save/', {
-                        method: 'post',
-                        body: JSON.stringify({
-                            'name': gradient_name.toLowerCase(),
-                            'html' : document.getElementById(`moji-${ this.state.id }-body-color`).outerHTML
-                        })
-                    })
+                    if(Math.random() > .25){
+                        if(!this.busy()){
+                            this.bounce();
+                        }
+                    }
+                    else{
+                        if(!this.busy()){
+                            this.jump();
+                        }
+                    }
                 });
             });
         }

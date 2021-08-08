@@ -1,3 +1,33 @@
 .hidden {
     display: none;
 }
+
+.mouth{
+    fill: #000;
+}
+
+.cel{
+    stroke: black;
+    stroke-width: .5px;   
+}
+
+.bold-cel{
+    stroke: black;
+    stroke-width: 2px;
+}
+
+.brighter{
+    filter: brightness(1.5);
+}
+
+.bright{
+    filter: brightness(1.25);
+}
+
+.dull{
+    filter: brightness(.75);
+}
+
+.duller{
+    filter: brightness(.5);
+}

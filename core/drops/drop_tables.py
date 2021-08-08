@@ -1,37 +1,7 @@
+from copy import deepcopy
 from random import randint
 
-eyes = ['anime-swirl', 'basic', 'cat', 'circle']
-eye_gradients = ['basic']
-bodies = ['basic']
-body_gradients = ['bao-bun', 'blueberry-cobler', 'slime', 'sunrise', 'twinkie']
-mouths = ['basic']
-
-table_1 = {
-    'eyes': [
-        ['anime-swirl', 1],
-        ['circle', 1],
-        ['cat', 29],
-        ['basic', 70]
-    ],
-    'eye-gradient': [
-        ['basic', 100]
-    ],
-    'body': [
-        ['basic', 100]
-    ],
-    'body-gradient': [
-        ['bao-bun', 10],
-        ['twinkie', 10],
-        ['blueberry-cobler', 1],
-        ['sunrise', 100],
-        ['slime', 200]
-    ],
-    'mouth': [
-        ['basic', 100]
-    ],
-}
-
-table_random = {
+all_drops = {
     'eyes': [
         ['circle', 100],
         ['cat', 100],
@@ -50,13 +20,29 @@ table_random = {
         ['axolotl', 100]
     ],
     'body-gradient': [
-        ['random', 100]
+        ["avocado", 100],
+        ["blueberry", 100],
+        ["bone", 100],
+        ["bubblegum", 100],
+        ["cranberry", 100],
+        ["fish", 100],
+        ["jade", 100],
+        ["lavender", 100],
+        ["olive", 100],
+        ["key-lime", 100],
+        ["candy", 100],
+        ["sardine", 100],
+        ["mint", 100],
+        ["lime", 100],
+        ["oyster", 100],
+        ["strawberry", 100],
+        ["tomato", 100]
     ],
     'mouth': [
         ['cute', 100],
         ['bored', 100],
         ['snaggle', 100],
-        ['none', 100],
+        ['null', 100],
         ['surprised', 100],
         ['frown', 100],
         ['buck-teeth', 100],
@@ -68,9 +54,12 @@ table_random = {
     ],
 }
 
+random_body_gradients = deepcopy(all_drops)
+random_body_gradients['body-gradient'] = ['random', 1]
+
 tables = {
-    'basic': table_1,
-    'random': table_random
+    'all': all_drops,
+    'random-body-gradient': random_body_gradients
 }
 
 
