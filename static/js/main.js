@@ -6,4 +6,4 @@ gsap.ticker.fps(30);
 
 var main = document.getElementById('main');
 
-render(Array(500).fill(0).map(_ => html`<${Moji}/>`), main);
+render(Array(50).fill(0).map(_ => html`<${Moji}/>`), main);

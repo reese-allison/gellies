@@ -28,7 +28,7 @@ db_result = {
         'eyes': 'cat',
         'mouth': 'basic',
         'body': 'basic',
-        'body-gradient': 'slime',
+        'body-gradient': 'slimes',
         'eye-gradient': 'basic'
     },
     200: {
