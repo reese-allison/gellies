@@ -57,11 +57,11 @@ all_drops = {
 }
 
 random_gradients = deepcopy(all_drops)
-random_gradients['gradient'] = ['random', 1]
+random_gradients['gradient'] = [['random', 1]]
 
 tables = {
     'all': all_drops,
-    'random-gradient': random_gradients
+    'gradient': random_gradients
 }
 
 

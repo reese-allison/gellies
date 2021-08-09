@@ -37,9 +37,9 @@ async def base(request: Request):
     return templates.TemplateResponse("base.html", {"request": request})
 
 
-@app.get("/gradients/", response_class=HTMLResponse)
+@app.get("/gradient-generator/", response_class=HTMLResponse)
 async def gradients(request: Request):
-    return templates.TemplateResponse("demo.html", {"request": request})
+    return templates.TemplateResponse("gradient-generator.html", {"request": request})
 
 
 @app.post("/save/", response_class=HTMLResponse)
@@ -57,7 +57,7 @@ async def mojis(moji_id: int, request: Request):
         svgs = db_result[moji_id]
         svgs['id'] = moji_id
     else:
-        svgs = get_moji('all')
+        svgs = get_moji('gradient')
     response = {
         'html': templates.get_template("moji.html").render({"svgs": svgs}),
         'id': svgs['id']
