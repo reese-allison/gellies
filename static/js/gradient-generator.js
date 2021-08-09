@@ -37,4 +37,4 @@ gsap.ticker.fps(30);
 
 var main = document.getElementById('main');
 
-render(Array(50).fill(0).map(_ => html`<${Gradient_Moji}/>`), main);
+render(Array(200).fill(0).map(_ => html`<${Gradient_Moji}/>`), main);

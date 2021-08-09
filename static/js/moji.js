@@ -169,13 +169,13 @@ class Moji extends Component {
             });
 
             jump_tl.to(this.moji, .2, {
-                y: -200,
+                y: -100,
                 onComplete: () => {
                     jump_tl.reverse();
                 }
             }, 0)
             .to(this.shadow, .2, {
-                y: 200,
+                y: 100,
                 transformOrigin: "50% 50%",
                 scaleX: 1.075,
                 scaleY: 1.075,
