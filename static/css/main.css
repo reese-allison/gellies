@@ -16,18 +16,37 @@
     stroke-width: 2px;
 }
 
-.brighter{
-    filter: brightness(1.5);
+.thick-cel{
+    stroke: black;
+    stroke-width: 5px;
 }
 
-.bright{
-    filter: brightness(1.25);
+.darken-25{
+    fill:#000;
+    opacity: .25;
 }
 
-.dull{
-    filter: brightness(.75);
+.darken-50{
+    fill:#000;
+    opacity: .50;
 }
 
-.duller{
-    filter: brightness(.5);
+.darken-75{
+    fill:#000;
+    opacity: .75;
+}
+
+.lighten-25{
+    fill:#fff;
+    opacity: .25;
+}
+
+.lighten-50{
+    fill:#fff;
+    opacity: .50;
+}
+
+.lighten-75{
+    fill:#fff;
+    opacity: .75;
 }

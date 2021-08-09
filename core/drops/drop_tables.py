@@ -5,10 +5,9 @@ all_drops = {
     'eyes': [
         ['circle', 100],
         ['cat', 100],
-        ['basic', 100]
-    ],
-    'eye-gradient': [
-        ['basic', 100]
+        ['basic', 100],
+        ['pumpkin', 100],
+        ['panda', 100]
     ],
     'body': [
         ['devil', 100],
@@ -19,7 +18,7 @@ all_drops = {
         ['alien', 100],
         ['axolotl', 100]
     ],
-    'body-gradient': [
+    'gradient': [
         ["avocado", 100],
         ["blueberry", 100],
         ["bone", 100],
@@ -50,16 +49,18 @@ all_drops = {
         ['smiley', 100],
         ['pouty', 100],
         ['cat', 100],
-        ['teddy', 100]
+        ['teddy', 100],
+        ['skeleton', 100],
+        ['pumpkin', 100]
     ],
 }
 
-random_body_gradients = deepcopy(all_drops)
-random_body_gradients['body-gradient'] = ['random', 1]
+random_gradients = deepcopy(all_drops)
+random_gradients['gradient'] = ['random', 1]
 
 tables = {
     'all': all_drops,
-    'random-body-gradient': random_body_gradients
+    'random-gradient': random_gradients
 }
 
 
@@ -77,8 +78,7 @@ def get_moji(table_name):
         'eyes': weighted_random(table['eyes']),
         'mouth': weighted_random(table['mouth']),
         'body': weighted_random(table['body']),
-        'body-gradient': weighted_random(table['body-gradient']),
-        'eye-gradient': weighted_random(table['eye-gradient'])
+        'gradient': weighted_random(table['gradient'])
     }
     svgs['id'] = randint(1, 100000000)
     return svgs

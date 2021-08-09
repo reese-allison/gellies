@@ -1,8 +1,7 @@
 <svg id="svg-{{ svgs['id'] }}" width="477" height="509" viewBox="-50 -50 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
     {% with moji_id=svgs['id'] %}
         <defs>
-            {% set path = "/svgs/eye-gradients/" + svgs["eye-gradient"] + '-gradient.html' %}{% include path ignore missing %}
-            {% set path = "/svgs/body-gradients/" + svgs["body-gradient"] + '-gradient.html' %}{% include path ignore missing %}
+            {% set path = "/svgs/gradients/" + svgs["gradient"] + '-gradient.html' %}{% include path ignore missing %}
         </defs>
         <g id="moji-{{ svgs['id'] }}" class="moji">
             {% set path = "/svgs/bodies/" + svgs["body"] + '-body.html' %}{% include path ignore missing %}

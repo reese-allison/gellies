@@ -12,7 +12,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 
-class BodyGradient(BaseModel):
+class Gradient(BaseModel):
     html: str
     name: str
 
@@ -21,60 +21,18 @@ db_result = {
         'eyes': 'basic',
         'mouth': 'basic',
         'body': 'basic',
-        'body-gradient': 'slime',
-        'eye-gradient': 'basic'
+        'gradient': 'slime'
     },
     101: {
         'eyes': 'cat',
         'mouth': 'basic',
         'body': 'basic',
-        'body-gradient': 'slimes',
-        'eye-gradient': 'basic'
-    },
-    200: {
-        'eyes': 'circle',
-        'mouth': 'basic',
-        'body': 'basic',
-        'body-gradient': 'sunrise',
-        'eye-gradient': 'basic'
-    },
-    300: {
-        'eyes': 'anime-swirl',
-        'mouth': 'basic',
-        'body': 'basic',
-        'body-gradient': 'sunrise',
-        'eye-gradient': 'basic'
-    },
-    302: {
-        'eyes': 'circle',
-        'mouth': 'basic',
-        'body': 'basic',
-        'body-gradient': 'twinkie',
-        'eye-gradient': 'basic'
-    },
-    402: {
-        'eyes': 'basic',
-        'mouth': 'basic',
-        'body': 'basic',
-        'body-gradient': 'bao-bun',
-        'eye-gradient': 'basic'
-    },
-    502: {
-        'eyes': 'cat',
-        'mouth': 'basic',
-        'body': 'basic',
-        'body-gradient': 'blueberry-cobler',
-        'eye-gradient': 'basic'
+        'gradient': 'slimes'
     }
 }
 
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-@app.get("/base/", response_class=HTMLResponse)
+@app.get("/", response_class=HTMLResponse)
 async def base(request: Request):
     return templates.TemplateResponse("base.html", {"request": request})
 
@@ -85,10 +43,10 @@ async def gradients(request: Request):
 
 
 @app.post("/save/", response_class=HTMLResponse)
-async def save(body_gradient: BodyGradient):
-    _html = re.sub('-[0-9]*-', '-{{ moji_id }}-', body_gradient.html)
+async def save(gradient: Gradient):
+    _html = re.sub('-[0-9]*-', '-{{ moji_id }}-', gradient.html)
     _html = re.sub('\s\s\s\s\n', '', _html)
-    with open(f'./templates/svgs/body-gradients/{body_gradient.name}-gradient.html', 'w+') as f:
+    with open(f'./templates/svgs/gradients/{gradient.name}-gradient.html', 'w+') as f:
         f.write(_html)
     return JSONResponse({'Success': True})
 
