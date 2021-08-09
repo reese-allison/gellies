@@ -8,45 +8,42 @@
 
 .cel{
     stroke: black;
-    stroke-width: .5px;   
+    stroke-width: .5px;
+    stroke-opacity: 1;
 }
 
 .bold-cel{
     stroke: black;
-    stroke-width: 2px;
-}
-
-.thick-cel{
-    stroke: black;
-    stroke-width: 5px;
+    stroke-width: 4px;
+    stroke-opacity: 1;
 }
 
 .darken-25{
     fill:#000;
-    opacity: .25;
+    fill-opacity: .25;
 }
 
 .darken-50{
     fill:#000;
-    opacity: .50;
+    fill-opacity: .50;
 }
 
 .darken-75{
     fill:#000;
-    opacity: .75;
+    fill-opacity: .75;
 }
 
 .lighten-25{
     fill:#fff;
-    opacity: .25;
+    fill-opacity: .25;
 }
 
 .lighten-50{
     fill:#fff;
-    opacity: .50;
+    fill-opacity: .50;
 }
 
 .lighten-75{
     fill:#fff;
-    opacity: .75;
+    fill-opacity: .75;
 }

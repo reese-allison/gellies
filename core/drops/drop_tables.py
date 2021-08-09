@@ -8,7 +8,8 @@ all_drops = {
         ['cute', 100],
         ['pumpkin', 100],
         ['teddy', 100],
-        ['smiley', 100]
+        ['smiley', 100],
+        ['knockout', 100]
     ],
     'body': [
         ['devil', 100],
@@ -36,7 +37,12 @@ all_drops = {
         ["lime", 100],
         ["oyster", 100],
         ["strawberry", 100],
-        ["tomato", 100]
+        ["tomato", 100],
+        ["eggplant", 100],
+        ["dough", 100],
+        ["ice", 100],
+        ["lemon", 100],
+        ["pear", 100]
     ],
     'mouth': [
         ['cute', 100],
@@ -52,7 +58,8 @@ all_drops = {
         ['cat', 100],
         ['teddy', 100],
         ['skeleton', 100],
-        ['pumpkin', 100]
+        ['pumpkin', 100],
+        ['knockout', 100]
     ],
 }
 
