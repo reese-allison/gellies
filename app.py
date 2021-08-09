@@ -24,10 +24,10 @@ db_result = {
         'gradient': 'slime'
     },
     101: {
-        'eyes': 'cat',
-        'mouth': 'basic',
-        'body': 'basic',
-        'gradient': 'slimes'
+        'eyes': 'teddy',
+        'mouth': 'teddy',
+        'body': 'teddy',
+        'gradient': 'oyster'
     }
 }
 

@@ -5,16 +5,17 @@ all_drops = {
     'eyes': [
         ['circle', 100],
         ['cat', 100],
-        ['basic', 100],
+        ['cute', 100],
         ['pumpkin', 100],
-        ['panda', 100]
+        ['teddy', 100],
+        ['smiley', 100]
     ],
     'body': [
         ['devil', 100],
         ['deer', 100],
         ['teddy', 100],
         ['cat', 100],
-        ['basic', 100],
+        ['cute', 100],
         ['alien', 100],
         ['axolotl', 100]
     ],
