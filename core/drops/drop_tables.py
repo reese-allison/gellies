@@ -9,7 +9,9 @@ all_drops = {
         ['pumpkin', 100],
         ['teddy', 100],
         ['smiley', 100],
-        ['knockout', 100]
+        ['knockout', 100],
+        ['pouty', 100],
+        ['disappointed', 100]
     ],
     'body': [
         ['devil', 100],
@@ -35,21 +37,22 @@ all_drops = {
         ["sardine", 100],
         ["mint", 100],
         ["lime", 100],
-        ["oyster", 100],
+        ["marshmallow", 100],
         ["strawberry", 100],
         ["tomato", 100],
         ["eggplant", 100],
         ["dough", 100],
         ["ice", 100],
         ["lemon", 100],
-        ["pear", 100]
+        ["pear", 100],
+        ["lemon", 100]
     ],
     'mouth': [
         ['cute', 100],
         ['bored', 100],
         ['snaggle', 100],
         ['null', 100],
-        ['surprised', 100],
+        ['disappointed', 100],
         ['frown', 100],
         ['buck-teeth', 100],
         ['fanged', 100],
