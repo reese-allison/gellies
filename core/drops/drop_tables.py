@@ -45,7 +45,8 @@ all_drops = {
         ["ice", 100],
         ["lemon", 100],
         ["pear", 100],
-        ["lemon", 100]
+        ["lemon", 100],
+        ["fire", 100]
     ],
     'mouth': [
         ['cute', 100],
