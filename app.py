@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
+import minify_html
 import re
 
 from core.drops.drop_tables import get_moji
@@ -59,7 +60,7 @@ async def mojis(moji_id: int, request: Request):
     else:
         svgs = get_moji('all')
     response = {
-        'html': templates.get_template("moji.html").render({"svgs": svgs}),
+        'html': minify_html.minify(templates.get_template("moji.html").render({"svgs": svgs})),
         'id': svgs['id']
     }
     return JSONResponse(response)

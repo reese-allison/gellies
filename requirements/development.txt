@@ -9,6 +9,7 @@ jinja2>=2.11.3
 lazy-object-proxy==1.5.2
 MarkupSafe>=1.1.1
 mccabe>=0.6.1
+minify-html>=0.6.8
 pip>=21.0.1
 pydantic>=1.8.1
 pylint>=2.7.2
