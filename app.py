@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Response
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -34,8 +34,13 @@ db_result = {
 
 
 @app.get("/", response_class=HTMLResponse)
-async def base(request: Request):
-    return templates.TemplateResponse("base.html", {"request": request})
+async def main(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+
+@app.get("/editor", response_class=HTMLResponse)
+async def editor(request: Request):
+    return templates.TemplateResponse("editor.html", {"request": request})
 
 
 @app.get("/gradient-generator/", response_class=HTMLResponse)
@@ -64,3 +69,16 @@ async def mojis(moji_id: int, request: Request):
         'id': svgs['id']
     }
     return JSONResponse(response)
+
+@app.get("/moji-test/", response_class=HTMLResponse)
+async def moji_test(request: Request):
+    svgs = get_moji('all')
+    # data =  minify_html.minify(templates.get_template("moji.html").render({"svgs": svgs}))
+    data = templates.get_template("moji.html").render({"svgs": svgs})
+    return Response(content=data, media_type="image/svg+xml")
+
+
+@app.get("/test/", response_class=HTMLResponse)
+async def mojiafadfsfs(request: Request):
+        return templates.TemplateResponse("test.html", {"request": request})
+

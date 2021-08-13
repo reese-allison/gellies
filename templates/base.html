@@ -8,6 +8,8 @@
             }
         </style>
         <link rel="stylesheet" href="/static/css/main.css">
+        {% block head %}
+        {% endblock %}
     </head>
     <body>
         <svg height=0 width=0>
@@ -18,8 +20,11 @@
             </defs>
         </svg>
         <div id="main"></div>
+        {% block body %}
+        {% endblock %}
     </body>
     <footer>
-        <script type="module" src="/static/js/main.js" defer></script>
+        {% block footer %}
+        {% endblock %}
     </footer>
 </html>

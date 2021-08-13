@@ -1,4 +1,4 @@
-<svg id="svg-{{ svgs['id'] }}" width="477" height="509" viewBox="-50 -50 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg id="svg-{{ svgs['id'] }}" width="477" height="509" viewBox="-50 -50 600 600" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     {% with moji_id=svgs['id'] %}
         <defs>
             {% set path = "/svgs/gradients/" + svgs["gradient"] + '-gradient.html' %}{% include path ignore missing %}
@@ -9,4 +9,15 @@
             {% set path = "/svgs/mouths/" + svgs["mouth"] + '-mouth.html' %}{% include path ignore missing %}
         </g>
     {% endwith %}
+    <script xlink:href="https://unpkg.com/gsap"></script>
+    <script xlink:href="/static/js/common.js"></script>
+    <script>
+        let _ebb = new TimelineMax({repeat:-1, repeatDelay:.5, yoyo:true});
+        _ebb.add(gsap.from(document.getElementById("moji-{{ svgs['id'] }}"), {
+            scale: 1.03,
+            duration: 2,
+            ease: "linear",
+            transformOrigin: "top"
+        }), randomRange(0, 2));
+    </script>
 </svg>
