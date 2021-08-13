@@ -12,12 +12,27 @@
     <script xlink:href="https://unpkg.com/gsap"></script>
     <script xlink:href="/static/js/common.js"></script>
     <script>
+        let _moji = document.getElementById("moji-{{ svgs['id'] }}");
         let _ebb = new TimelineMax({repeat:-1, repeatDelay:.5, yoyo:true});
-        _ebb.add(gsap.from(document.getElementById("moji-{{ svgs['id'] }}"), {
+        _ebb.add(gsap.from(_moji, {
             scale: 1.03,
             duration: 2,
             ease: "linear",
             transformOrigin: "top"
         }), randomRange(0, 2));
+        ['click','ontouchstart'].forEach( evt => {
+            _moji.addEventListener(evt, e => {
+                let bounce_tl = new TimelineMax();
+                bounce_tl.to(_moji, .3, {
+                    transformOrigin: "50% 100%",
+                    scaleX: 1.1,
+                    scaleY: 0.8,
+                    ease: "power1.inOut",
+                    onComplete: () => {
+                        bounce_tl.reverse();
+                    }
+                })
+            });
+        });
     </script>
 </svg>
