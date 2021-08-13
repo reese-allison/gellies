@@ -1,4 +1,10 @@
-<svg id="svg-{{ svgs['id'] }}" width="477" height="509" viewBox="-50 -50 600 600" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg id="svg-{{ svgs['id'] }}" width="477" height="509" viewBox="-50 -50 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        svg {
+            shape-rendering: optimizeSpeed;
+            text-rendering: optimizeSpeed;
+        }
+    </style>
     {% with moji_id=svgs['id'] %}
         <defs>
             {% set path = "/svgs/gradients/" + svgs["gradient"] + '-gradient.html' %}{% include path ignore missing %}
@@ -9,9 +15,10 @@
             {% set path = "/svgs/mouths/" + svgs["mouth"] + '-mouth.html' %}{% include path ignore missing %}
         </g>
     {% endwith %}
-    <script xlink:href="https://unpkg.com/gsap"></script>
-    <script xlink:href="/static/js/common.js"></script>
+    <script href="https://unpkg.com/gsap"></script>
+    <script href="/static/js/common.js"></script>
     <script>
+        gsap.ticker.fps(30);
         let _moji = document.getElementById("moji-{{ svgs['id'] }}");
         let _ebb = new TimelineMax({repeat:-1, repeatDelay:.5, yoyo:true});
         _ebb.add(gsap.from(_moji, {
@@ -20,19 +27,17 @@
             ease: "linear",
             transformOrigin: "top"
         }), randomRange(0, 2));
-        ['click','ontouchstart'].forEach( evt => {
-            _moji.addEventListener(evt, e => {
-                let bounce_tl = new TimelineMax();
-                bounce_tl.to(_moji, .3, {
-                    transformOrigin: "50% 100%",
-                    scaleX: 1.1,
-                    scaleY: 0.8,
-                    ease: "power1.inOut",
-                    onComplete: () => {
-                        bounce_tl.reverse();
-                    }
-                })
-            });
+        _moji.addEventListener('click', e => {
+            let bounce_tl = new TimelineMax();
+            bounce_tl.to(_moji, .3, {
+                transformOrigin: "50% 100%",
+                scaleX: 1.1,
+                scaleY: 0.8,
+                ease: "power1.inOut",
+                onComplete: () => {
+                    bounce_tl.reverse();
+                }
+            })
         });
     </script>
 </svg>
