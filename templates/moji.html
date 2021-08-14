@@ -16,28 +16,8 @@
         </g>
     {% endwith %}
     <script href="https://unpkg.com/gsap"></script>
-    <script href="/static/js/common.js"></script>
+    <script href="/static/js/moji.js"></script>
     <script>
-        gsap.ticker.fps(30);
-        let _moji = document.getElementById("moji-{{ svgs['id'] }}");
-        let _ebb = new TimelineMax({repeat:-1, repeatDelay:.5, yoyo:true});
-        _ebb.add(gsap.from(_moji, {
-            scale: 1.03,
-            duration: 2,
-            ease: "linear",
-            transformOrigin: "top"
-        }), randomRange(0, 2));
-        _moji.addEventListener('click', e => {
-            let bounce_tl = new TimelineMax();
-            bounce_tl.to(_moji, .3, {
-                transformOrigin: "50% 100%",
-                scaleX: 1.1,
-                scaleY: 0.8,
-                ease: "power1.inOut",
-                onComplete: () => {
-                    bounce_tl.reverse();
-                }
-            })
-        });
+        new Moji({{ svgs['id'] }});
     </script>
 </svg>
