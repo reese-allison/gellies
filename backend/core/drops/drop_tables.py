@@ -11,7 +11,8 @@ all_drops = {
         ['smiley', 100],
         ['knockout', 100],
         ['pouty', 100],
-        ['disappointed', 100]
+        ['disappointed', 100],
+        ['tired', 100]
     ],
     'body': [
         ['devil', 100],

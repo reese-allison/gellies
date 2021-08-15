@@ -1,0 +1,46 @@
+from fastapi import FastAPI, Request, Response
+from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from pydantic import BaseModel
+import minify_html
+import re
+
+from backend.core.drops.drop_tables import get_moji
+
+app = FastAPI()
+app.mount("/static", StaticFiles(directory="backend/static"), name="static")
+templates = Jinja2Templates(directory="backend/templates")
+
+
+class Gradient(BaseModel):
+    html: str
+    name: str
+
+db_result = {
+    100: {
+        'eyes': 'basic',
+        'mouth': 'basic',
+        'body': 'basic',
+        'gradient': 'slime'
+    },
+    101: {
+        'eyes': 'teddy',
+        'mouth': 'teddy',
+        'body': 'teddy',
+        'gradient': 'oyster'
+    }
+}
+
+
+@app.get("/moji-test/", response_class=HTMLResponse)
+async def moji_test(request: Request):
+    svgs = get_moji('all')
+    # data =  minify_html.minify(templates.get_template("moji.html").render({"svgs": svgs}))
+    data = templates.get_template("moji.html").render({"svgs": svgs})
+    return Response(content=data, media_type="image/svg+xml")
+
+
+@app.get("/", response_class=HTMLResponse)
+async def index(request: Request):
+        return templates.TemplateResponse("index.html", {"request": request})

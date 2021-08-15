@@ -18,6 +18,7 @@ static/.webassets-cache
 static/.webassets-manifest
 static/bundle/*.js
 static/bundle/*.css
+.cache
 
 # Temp files generated on ini
 temp
