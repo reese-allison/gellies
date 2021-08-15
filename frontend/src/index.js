@@ -6,4 +6,4 @@ class Moji extends Component{
     }
 }
 
-render(<Moji />, document.getElementById('main'))
+render(<Moji />, document.getElementById('root'))
