@@ -19,7 +19,7 @@ class Gradient(BaseModel):
 
 class Appendage(BaseModel):
     type: str
-    number: int
+    item: str
 
 
 
@@ -50,7 +50,7 @@ async def moji_test(request: Request):
 async def moji_test(request: Request):
     svg_list = get_part_list()
     data = templates.get_template("selection.html").render({"svgs": svg_list})
-    return Response(content=data, media_type="image/svg+xml")
+    return Response(content=data)
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -58,4 +58,5 @@ async def index(request: Request):
         return templates.TemplateResponse("index.html", {"request": request})
 
 #@app.post("/part-fetch", response_class=HTMLResponse)
-#async def part_fetch(req)
+#async def part_fetch(appendage: Appendage):
+#        Appendage
