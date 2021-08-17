@@ -5,7 +5,7 @@ module.exports = {
   mode: "development",
   entry: path.join(__dirname, "src", "index.js"),
   output: {
-    path:path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "dist"),
   },
   module: {
     rules: [
@@ -36,8 +36,10 @@ module.exports = {
   ],
   resolve: {
     "alias": {
-      "react": "preact-compat",
-      "react-dom": "preact-compat"
+      "react": "preact/compat",
+      "react-dom/test-utils": "preact/test-utils",
+      "react-dom": "preact/compat",
+      "react/jsx-runtime": "preact/jsx-runtime"
     }
   }
 }
