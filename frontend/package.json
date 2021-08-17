@@ -15,7 +15,6 @@
     "html-webpack-plugin": "^5.3.2",
     "mini-css-extract-plugin": "^2.2.0",
     "preact-compat": "^3.19.0",
-    "preact-material-components": "^1.6.1",
     "preact-router": "^3.2.1",
     "style-loader": "^3.2.1",
     "webpack": "^5.50.0",
@@ -29,10 +28,7 @@
   "babel": {
     "plugins": [
       [
-        "@babel/transform-react-jsx",
-        {
-          "pragma": "h"
-        }
+        "@babel/plugin-transform-react-jsx"
       ]
     ]
   }

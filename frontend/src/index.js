@@ -1,8 +1,9 @@
 import { Router,  Link } from 'preact-router';
-import { h, Component, render } from 'preact';
-//import { Button } from '@material-ui/core';
-import { Button } from 'preact-material-components/Button'
+import { h, Fragment, Component, render } from 'preact';
+import Button from '@material-ui/core/Button'
 
+/** @jsx h */
+/** @jsxFrag Fragment */
 
 const App = () => (
     <div class="app">
