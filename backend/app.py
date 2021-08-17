@@ -19,7 +19,7 @@ class Gradient(BaseModel):
 
 class Appendage(BaseModel):
     type: str
-    number: 
+    number: int
 
 
 

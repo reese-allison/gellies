@@ -61,7 +61,7 @@ class Menu extends Component{
 
 
     render(){
-        return <object type="html" data="http://localhost:8000/moji-menu" />
+        return <object type="image/svg+xml" data="http://localhost:8000/moji-menu" />
     }
 }
 
