@@ -59,8 +59,8 @@ class Moji extends Component{
 
 class Menu extends Component{
     //text = []
-    FetchHtml(tag){
-        fetch('http://localhost:8000/moji-menu')
+    FetchHtml(url, tag){
+        fetch(url)
         .then((response) => { 
             return response.text() 
         })
@@ -78,7 +78,7 @@ class Menu extends Component{
     };
     render(){
         return (
-            <div id='menu'>{this.FetchHtml('menu')}</div>
+            <div id='menu'>{this.FetchHtml('http://localhost:8000/moji-menu','menu')}</div>
         )
     }
 
