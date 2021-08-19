@@ -64,7 +64,7 @@ async def moji_test(request: Request):
     svg_list = get_part_list()
     data = templates.get_template("selection.html").render({"svgs": svg_list})
     return templates.TemplateResponse("selection.html",{'request' : request, "svgs": svg_list})
-    return Response(content=data, media_type="application/xml")
+    #return Response(content=data, media_type="application/xml")
 
 
 #@app.get("/", response_class=HTMLResponse)

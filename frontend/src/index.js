@@ -51,20 +51,6 @@ const Error = ({ type, url }) => (
 	</section>
 );
 
-function FetchHtml(){
-    let text
-    fetch('http://localhost:8000/moji-menu')
-    .then(response => { 
-        let data = response.text()
-        return data
-    })
-    .catch(function(error){
-        console.log(error)
-    })
-
-}
-
-
 class Moji extends Component{
     render(){
         return <object type="image/svg+xml" data="http://localhost:8000/moji-test" />
@@ -72,10 +58,30 @@ class Moji extends Component{
 }
 
 class Menu extends Component{
-    //I need to pull list from server, as well as the individual html's from the server
-    render(){
-        return FetchHtml() //always undefined
+    //text = []
+    FetchHtml(tag){
+        fetch('http://localhost:8000/moji-menu')
+        .then((response) => { 
+            return response.text() 
+        })
+        .then((html) => {
+            this.renderit(tag, html)
+        })
+        .catch(function(error){
+            console.log(error)
+        });
     }
+    renderit = (tag, data) => {
+        //this.text.push(data)
+        document.getElementById(tag).innerHTML = data //Sets html as fetched data on selected tag
+        //console.log(this.text.pop())
+    };
+    render(){
+        return (
+            <div id='menu'>{this.FetchHtml('menu')}</div>
+        )
+    }
+
 }
 
 render(<App />, document.getElementById('root'))
