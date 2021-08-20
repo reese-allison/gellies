@@ -58,27 +58,32 @@ class Moji extends Component{
 }
 
 class Menu extends Component{
-    //text = []
-    FetchHtml(url, tag){
+    constructor(props){
+        super(props);
+        this.state = {}
+    }
+
+    componentDidMount(){
+        this.fetch_html('http://localhost:8000/moji-menu');
+    }
+
+    fetch_html(url){
         fetch(url)
-        .then((response) => { 
-            return response.text() 
+        .then(response => {
+            return response.text();
         })
-        .then((html) => {
-            this.renderit(tag, html)
+        .then(content => {
+            this.setState({content: content})
         })
         .catch(function(error){
             console.log(error)
         });
     }
-    renderit = (tag, data) => {
-        //this.text.push(data)
-        document.getElementById(tag).innerHTML = data //Sets html as fetched data on selected tag
-        //console.log(this.text.pop())
-    };
+
     render(){
         return (
-            <div id='menu'>{this.FetchHtml('http://localhost:8000/moji-menu','menu')}</div>
+            // THIS IS DANGEROUS! TO REDUCE XSS ATTACKS, WE NEED TO SANITIZE this.state.content (See DomPurify)
+            <div id='menu' dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
         )
     }
 
