@@ -1,6 +1,16 @@
 import { Router,  Link } from 'preact-router';
 import { h, Fragment, Component, render } from 'preact';
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
+
+
+const useStyles = makeStyles({
+    root: {
+        backgroundColor: 'green',
+        height: '5%',
+    },
+});
+
 
 /** @jsx h */
 /** @jsxFrag Fragment */
@@ -17,25 +27,28 @@ const App = () => (
     </div>
 );
 
-const Nav = () => (
-    <nav style="background-color: #d24dff; height: 5%"> 
-        <Link activeClassName="active" href="/">
-            <Button>
-                Home
-            </Button>
-        </Link>
-        <Link activeClassName="active" href="/moji">
-            <Button>
-                MOJI
-            </Button>
-        </Link>
-        <Link activeClassName="active" href="/menu">
-            <Button>
-                MENU
-            </Button>
-        </Link>
-    </nav>
-);
+const Nav = () => {
+    const classes = useStyles();
+    return(
+        <nav className={classes.root}> 
+            <Link activeClassName="active" href="/">
+                <Button>
+                    Home
+                </Button>
+            </Link>
+            <Link activeClassName="active" href="/moji">
+                <Button>
+                    MOJI
+                </Button>
+            </Link>
+            <Link activeClassName="active" href="/menu">
+                <Button>
+                    MENU
+                </Button>
+            </Link>
+        </nav>
+    )
+};
 
 const Home = () =>(
     <div>
