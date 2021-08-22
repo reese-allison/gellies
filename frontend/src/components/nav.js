@@ -13,7 +13,7 @@ const Nav = () => {
     /** @jsxFrag Fragment */
 
     return(
-        <AppBar>
+        <AppBar position="static">
             <Toolbar className={classes.navBar}>
                 <Link style={{ flex: 1 }} className={classes.navBarLink} activeClassName="active" href="/">
                     <Button className={classes.navBarButton}>

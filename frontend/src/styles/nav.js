@@ -8,7 +8,7 @@ const navBarStyles = makeStyles(theme => ({
     navBarButton: {
         color: theme.palette.primary.contrastText,
         fontFamily: `'Grandstander', cursive;`,
-        fontSize: '1.75rem',
+        fontSize: '1.6rem',
         fontWeight: 'bold',
         textShadow: Array(14).join('#000 0px 0px 2px, ') + '#000 0px 0px 2px;',
         WebkitFontSmoothing: true,
