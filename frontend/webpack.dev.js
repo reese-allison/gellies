@@ -24,10 +24,10 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(png|jp(e*)g|svg|gif)$/,
-        use: ['file-loader'],
-      },
-    ]
+        test: /\.(woff|woff2|eot|ttf|png|jpeg|jpg|svg|gif)$/,
+        use: 'asset/resource'
+      }
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({

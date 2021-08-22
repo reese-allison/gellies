@@ -1,52 +1,36 @@
-import { Router,  Link } from 'preact-router';
+import { Router } from 'preact-router';
 import { h, Fragment, Component, render } from 'preact';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button'
+import { ThemeProvider, makeStyles} from '@material-ui/core/styles';
 
-
-const useStyles = makeStyles({
-    root: {
-        backgroundColor: 'green',
-        height: '5%',
-    },
-});
+import Nav from './components/nav'
+import theme from './styles/theme.js'
 
 
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-const App = () => (
-    <div class="app">
-        <Nav/>
-        <Router>
-            <Home path="/"/>
-            <Moji path="/moji"/>
-            <Menu path="/menu"/>
-            <Error type='404' default/>
-        </Router>
-    </div>
-);
+const appStyles = makeStyles(theme => ({
+    "@global": {
+        body: {
+          backgroundColor: theme.palette.secondary.light
+        }
+    }
+}), { defaultTheme: theme });
 
-const Nav = () => {
-    const classes = useStyles();
-    return(
-        <nav className={classes.root}> 
-            <Link activeClassName="active" href="/">
-                <Button>
-                    Home
-                </Button>
-            </Link>
-            <Link activeClassName="active" href="/moji">
-                <Button>
-                    MOJI
-                </Button>
-            </Link>
-            <Link activeClassName="active" href="/menu">
-                <Button>
-                    MENU
-                </Button>
-            </Link>
-        </nav>
+const App = () => {
+    const classes = appStyles();
+    return (
+        <ThemeProvider theme={theme}>
+            <div>
+                <Nav/>
+                <Router>
+                    <Home path="/"/>
+                    <Moji path="/moji"/>
+                    <Menu path="/menu"/>
+                    <Error type='404' default/>
+                </Router>
+            </div>
+        </ThemeProvider>
     )
 };
 
@@ -66,7 +50,7 @@ const Error = ({ type, url }) => (
 
 class Moji extends Component{
     render(){
-        return <object type="image/svg+xml" data="http://localhost:8000/moji-test" />
+        return <object type="image/svg+xml" data="http://localhost/api/moji-test/" />
     }
 }
 
@@ -77,7 +61,7 @@ class Menu extends Component{
     }
 
     componentDidMount(){
-        this.fetch_html('http://localhost:8000/moji-menu');
+        this.fetch_html('http://localhost/api/moji-menu/');
     }
 
     fetch_html(url){
