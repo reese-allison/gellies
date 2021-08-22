@@ -15,19 +15,19 @@ const Nav = () => {
     return(
         <AppBar>
             <Toolbar className={classes.navBar}>
-                <Link activeClassName="active" href="/">
+                <Link style={{ flex: 1 }} className={classes.navBarLink} activeClassName="active" href="/">
                     <Button className={classes.navBarButton}>
-                        Home
+                        MOJI
                     </Button>
                 </Link>
-                <Link activeClassName="active" href="/moji">
+                <Link style={{ marginRight: 30 }} className={classes.navBarLink} activeClassName="active" href="/moji">
                     <Button className={classes.navBarButton}>
-                        Moji
+                        RANDOM
                     </Button >
                 </Link>
-                <Link activeClassName="active" href="/menu">
+                <Link className={classes.navBarLink} activeClassName="active" href="/menu">
                     <Button className={classes.navBarButton}>
-                        Menu
+                        MENU
                     </Button>
                 </Link>
             </Toolbar>
