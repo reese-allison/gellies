@@ -9,9 +9,9 @@ function randomNegative() {
 
 
 function eye_movement(inner_eyes){
-    let eye_movement_delay = randomRange(0, 1);
-    let x = randomRange(0, 4) * randomNegative();
-    let y = randomRange(0, 4) * randomNegative();
+    let eye_movement_delay = randomRange(0, 3);
+    let x = randomRange(0, 5) * randomNegative();
+    let y = randomRange(0, 5) * randomNegative();
     Array.from(inner_eyes).forEach((e)=>{
         gsap.to(e, {
             x:x,
@@ -29,10 +29,11 @@ class Moji {
         this.busy = false;
 
         this.moji = document.getElementById(`moji-${ this.id }`);
+        this.mouth = document.getElementById(`moji-${ this.id }-mouth`);
         this.shadow = document.getElementById(`moji-${ this.id }-shadow`);
 
         let inner_eyes = document.querySelectorAll(`#moji-${ this.id } .inner-eye`);
-        this.eye_movement = gsap.set(eye_movement, {onRepeat: eye_movement, onRepeatParams: [inner_eyes], repeat: -1, repeatDelay: 2});
+        this.eye_movement = gsap.set(eye_movement, {onRepeat: eye_movement, onRepeatParams: [inner_eyes], repeat: -1, repeatDelay: 4});
 
         this.ebb = new TimelineMax({repeat:-1, repeatDelay:.5, yoyo:true});
         this.ebb.add(gsap.to(this.moji, {
