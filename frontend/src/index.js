@@ -50,7 +50,13 @@ const Error = ({ type, url }) => (
 
 class Moji extends Component{
     render(){
-        return <object type="image/svg+xml" data="http://localhost/api/moji-test/" />
+        return (
+            <div>
+                <object type="image/svg+xml" data="/api/moji-test/" />
+                <object type="image/svg+xml" data="/api/moji-test/" />
+                <object type="image/svg+xml" data="/api/moji-test/" />
+            </div>
+        )
     }
 }
 
@@ -61,7 +67,7 @@ class Menu extends Component{
     }
 
     componentDidMount(){
-        this.fetch_html('http://localhost/api/moji-menu/');
+        this.fetch_html('/api/moji-menu/');
     }
 
     fetch_html(url){
