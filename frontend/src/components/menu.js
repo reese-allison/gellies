@@ -1,11 +1,16 @@
 
-import { h, Fragment, Component, render } from 'preact';
+import { h, Fragment, Component } from 'preact';
+
+
 
 class Menu extends Component{
     constructor(props){
         super(props);
         this.state = {}
     }
+    
+    /** @jsx h */
+    /** @jsxFrag Fragment */
 
     componentDidMount(){
         this.fetch_html('/api/moji-menu/');

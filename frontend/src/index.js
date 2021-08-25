@@ -5,7 +5,7 @@ import { ThemeProvider, makeStyles} from '@material-ui/core/styles';
 import Nav from './components/nav'
 import theme from './styles/theme.js'
 import Menu from './components/menu';
-import { Home, Error, Moji } from './components/pages'
+import { Home, Moji, Error } from './components/pages'
 
 
 /** @jsx h */

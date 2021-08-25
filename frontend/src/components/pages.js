@@ -1,21 +1,30 @@
 
-import { h, Fragment, Component, render } from 'preact';
+import { h, Fragment, Component} from 'preact';
 
-const Home = () =>(
+export const Home = () =>{
+    
+    /** @jsx h */
+    /** @jsxFrag Fragment */
+    
+    return(
     <div>
         <h1>HOME SCREEN</h1>
     </div>
-);
+    )
+};
 
-const Error = ({ type, url }) => (
-	<section class="error">
-		<h2>Error</h2>
-		<p>It looks like we hit a snag.</p>
-		<pre>{url}</pre>
-	</section>
-);
+export const Error = ({ type, url }) => {
 
-class Moji extends Component{
+    return(
+        <section class="error">
+            <h2>Error</h2>
+            <p>It looks like we hit a snag.</p>
+            <pre>{url}</pre>
+        </section>
+        )
+};
+
+export class Moji extends Component{
     render(){
         return (
             <div>
@@ -25,10 +34,4 @@ class Moji extends Component{
             </div>
         )
     }
-}
-
-export {
-    Home,
-    Error,
-    Moji
 }
