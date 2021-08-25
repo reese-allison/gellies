@@ -43,6 +43,7 @@ class Moji {
         }), randomRange(0, 2));
 
         this.moji.addEventListener('click', e => {
+            e.preventDefault();
             if(Math.random() > .25){
                 this.bounce();
             }
