@@ -119,25 +119,25 @@ class Build extends Component{
 
     showBodies() {
         console.log("onclicked");
-        this.fetch_html('http://localhost/api/build/bodies');  
+        this.fetch_html('/api/build/bodies');  
         this.updateSelectionGrid();
     }
 
     showEyes() {
         console.log("onclicked");
-        this.fetch_html('http://localhost/api/build/eyes');
+        this.fetch_html('/api/build/eyes');
         this.updateSelectionGrid();
     }
 
     showGradients() {
         console.log("onclicked");
-        this.fetch_html('http://localhost/api/build/gradients');
+        this.fetch_html('/api/build/gradients');
         this.updateSelectionGrid();
     }
 
     showMouths() {
         console.log("onclicked");
-        this.fetch_html('http://localhost/api/build/mouths');
+        this.fetch_html('/api/build/mouths');
         this.updateSelectionGrid();
     }
 
