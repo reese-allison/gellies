@@ -1,20 +1,21 @@
 {% for moji in mojis %}
-<svg id="svg-{{ moji }}" width="477" height="509" viewBox="-50 -50 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <style>
-        svg {
-            shape-rendering: optimizeSpeed;
-            text-rendering: optimizeSpeed;
-        }
-    </style>
-        <defs>
-            <filter id="shadow-blur" x="-100%" y="-100%" height="300%" width="300%">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="20" />
-            </filter>
-        </defs>
-        <g id="moji-{{ moji }}" class="moji">
-            <g id="body" class="moji">
-                {% set path = "/svgs/" + folder + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
+    {% set moji_id = loop.index %}
+    <svg id="svg-{{ moji_id }}" width="477" height="509" viewBox="-50 -50 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <style>
+            svg {
+                shape-rendering: optimizeSpeed;
+                text-rendering: optimizeSpeed;
+            }
+        </style>
+            <defs>
+                <filter id="shadow-blur" x="-100%" y="-100%" height="300%" width="300%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="20" />
+                </filter>
+            </defs>
+            <g id="moji-{{ moji_id }}" class="moji">
+                <g id="body" class="moji">
+                    {% set path = "/svgs/" + folder + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
+                </g>
             </g>
-        </g>
-</svg>
+    </svg>
 {% endfor %}

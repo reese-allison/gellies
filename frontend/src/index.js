@@ -143,10 +143,10 @@ class Build extends Component{
         return (
             <div>
                 <h1>Placeholder</h1>
-                <h1 onClick={() => this.showBodies()}>Bodies</h1>
-                <h1 onClick={() => this.showEyes()}>Eyes</h1>
-                <h1 onClick={() => this.showGradients()}>Gradients</h1>
-                <h1 onClick={() => this.showMouths()}>Mouths</h1>
+                <h1 style="cursor: pointer" onClick={() => this.showBodies()}>Bodies</h1>
+                <h1 style="cursor: pointer" onClick={() => this.showEyes()}>Eyes</h1>
+                <h1 style="cursor: pointer" onClick={() => this.showGradients()}>Gradients</h1>
+                <h1 style="cursor: pointer" onClick={() => this.showMouths()}>Mouths</h1>
                 <div id='selection-grid' dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
             </div>
         )
