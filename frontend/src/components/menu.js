@@ -1,8 +1,6 @@
 
 import { h, Fragment, Component } from 'preact';
-
-
-
+import pageStyle from '../styles/pages'
 class Menu extends Component{
     constructor(props){
         super(props);
@@ -30,9 +28,10 @@ class Menu extends Component{
     }
 
     render(){
+        const pageclass = pageStyle();
         return (
             // THIS IS DANGEROUS! TO REDUCE XSS ATTACKS, WE NEED TO SANITIZE this.state.content (See DomPurify)
-            <div id='menu' dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
+            <div className={pageclass.pageCenter}id='menu' dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
         )
     }
 
