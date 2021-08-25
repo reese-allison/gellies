@@ -30,6 +30,11 @@ const Nav = () => {
                         MENU
                     </Button>
                 </Link>
+                <Link activeClassName="active" href="/build">
+                    <Button className={classes.navBarButton}>
+                        Build
+                    </Button>
+                </Link>
             </Toolbar>
         </AppBar>
     )
