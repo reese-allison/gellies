@@ -27,6 +27,7 @@ const App = () => {
                     <Home path="/"/>
                     <Moji path="/moji"/>
                     <Menu path="/menu"/>
+                    <Build path="/build/"/>
                     <Error type='404' default/>
                 </Router>
             </div>
@@ -84,6 +85,72 @@ class Menu extends Component{
         )
     }
 
+}
+
+class Build extends Component{
+    constructor(props){
+        super(props);
+        this.state = {}
+    }
+
+    componentDidMount(){
+        this.showBodies();
+        console.log("Mounted Build Screen");
+    }
+
+    fetch_html(url){
+        fetch(url)
+        .then(response => {
+            return response.text();
+        })
+        .then(content => {
+            this.setState({content: content})
+        })
+        .catch(function(error){
+            console.log(error)
+        });
+    }
+
+    showBodies() {
+        console.log("onclicked");
+        this.fetch_html('http://localhost/api/build/bodies');  
+        this.updateSelectionGrid();
+    }
+
+    showEyes() {
+        console.log("onclicked");
+        this.fetch_html('http://localhost/api/build/eyes');
+        this.updateSelectionGrid();
+    }
+
+    showGradients() {
+        console.log("onclicked");
+        this.fetch_html('http://localhost/api/build/gradients');
+        this.updateSelectionGrid();
+    }
+
+    showMouths() {
+        console.log("onclicked");
+        this.fetch_html('http://localhost/api/build/mouths');
+        this.updateSelectionGrid();
+    }
+
+    updateSelectionGrid() {
+        document.querySelector("#selection-grid").dangerouslySetInnerHTML=({ __html: this.state.content });
+    }
+
+    render(){
+        return (
+            <div>
+                <h1>Placeholder</h1>
+                <h1 onClick={() => this.showBodies()}>Bodies</h1>
+                <h1 onClick={() => this.showEyes()}>Eyes</h1>
+                <h1 onClick={() => this.showGradients()}>Gradients</h1>
+                <h1 onClick={() => this.showMouths()}>Mouths</h1>
+                <div id='selection-grid' dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
+            </div>
+        )
+    }
 }
 
 render(<App />, document.getElementById('root'))

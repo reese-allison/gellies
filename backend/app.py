@@ -50,6 +50,26 @@ async def moji_menu(request: Request):
     return templates.TemplateResponse("selection.html",{'request' : request, "svgs": svg_list})
     #return Response(content=data, media_type="application/xml")
 
+@app.get("/build/eyes", response_class=HTMLResponse)
+async def get_build_eyes(request: Request):
+    svg_list = get_part_list()
+    return templates.TemplateResponse("parts.html",{'request' : request, 'mojis' : svg_list["eyes"], 'type': 'eyes', 'folder': "eyes"})
+
+@app.get("/build/bodies", response_class=HTMLResponse)
+async def get_build_bodies(request: Request):
+    svg_list = get_part_list()
+    return templates.TemplateResponse("parts.html",{'request' : request, 'mojis' : svg_list["body"], 'type': 'body', 'folder': 'bodies'})
+
+@app.get("/build/gradients", response_class=HTMLResponse)
+async def get_build_gradient(request: Request):
+    svg_list = get_part_list()
+    print(svg_list['gradient'])
+    return templates.TemplateResponse("gradients.html",{'request' : request, 'mojis' : svg_list["gradient"], 'type': 'gradient', 'folder': 'gradients'})
+
+@app.get("/build/mouths", response_class=HTMLResponse)
+async def get_build_mouths(request: Request):
+    svg_list = get_part_list()
+    return templates.TemplateResponse("parts.html",{'request' : request, 'mojis' : svg_list["mouth"], 'type': 'mouth', 'folder': 'mouths'})
 
 #@app.get("/", response_class=HTMLResponse)
 #async def index(request: Request):
