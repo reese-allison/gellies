@@ -25,7 +25,7 @@ const Nav = () => {
                         RANDOM
                     </Button >
                 </Link>
-                <Link className={classes.navBarLink} activeClassName="active" href="/menu">
+                <Link style={{ marginRight: 30 }} className={classes.navBarLink} activeClassName="active" href="/menu">
                     <Button className={classes.navBarButton}>
                         MENU
                     </Button>

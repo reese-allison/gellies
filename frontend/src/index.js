@@ -148,10 +148,10 @@ class Build extends Component{
     render(){
         return (
             <div>
-                <h1 style="cursor: pointer; float: left; margin: 30px;" onClick={() => this.showBodies()}>Bodies</h1>
-                <h1 style="cursor: pointer; float: left; margin: 30px;" onClick={() => this.showEyes()}>Eyes</h1>
-                <h1 style="cursor: pointer; float: left; margin: 30px;" onClick={() => this.showGradients()}>Gradients</h1>
-                <h1 style="cursor: pointer; float: left; margin: 30px;" onClick={() => this.showMouths()}>Mouths</h1>
+                <h1 style={{cursor: 'pointer', float: 'left', margin: '30px'}} onClick={() => this.showBodies()}>Bodies</h1>
+                <h1 style={{cursor: 'pointer', float: 'left', margin: '30px'}} onClick={() => this.showEyes()}>Eyes</h1>
+                <h1 style={{cursor: 'pointer', float: 'left', margin: '30px'}} onClick={() => this.showGradients()}>Gradients</h1>
+                <h1 style={{cursor: 'pointer', float: 'left', margin: '30px'}} onClick={() => this.showMouths()}>Mouths</h1>
                 <div style="clear: left;" id='selection-grid' dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
             </div>
         )

@@ -63,7 +63,7 @@ async def get_build_bodies(request: Request):
 @app.get("/build/gradients", response_class=HTMLResponse)
 async def get_build_gradient(request: Request):
     svg_list = get_part_list()
-    return templates.TemplateResponse("gradients.html", {'request': request, 'mojis': svg_list["gradient"], 'type': 'gradient', 'folder': 'gradients'})
+    return templates.TemplateResponse("parts.html", {'request': request, 'mojis': svg_list["gradient"], 'type': 'gradient', 'folder': 'gradients'})
 
 @app.get("/build/mouths", response_class=HTMLResponse)
 async def get_build_mouths(request: Request):

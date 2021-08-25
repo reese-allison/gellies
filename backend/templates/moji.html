@@ -3,11 +3,8 @@
     {% with moji_id=svgs['id'] %}
         <defs>
             {% set path = "/svgs/gradients/" + svgs["gradient"] + '-gradient.html' %}{% include path ignore missing %}
-            <filter id="shadow-blur" x="-100%" y="-100%" height="300%" width="300%">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="20" />
-            </filter>
         </defs>
-        <g id="moji-{{ svgs['id'] }}" class="moji">
+        <g id="moji-{{ moji_id }}" class="moji">
             {% set path = "/svgs/bodies/" + svgs["body"] + '-body.html' %}{% include path ignore missing %}
             {% set path = "/svgs/eyes/" + svgs["eyes"] + '-eyes.html' %}{% include path ignore missing %}
             {% set path = "/svgs/mouths/" + svgs["mouth"] + '-mouth.html' %}{% include path ignore missing %}
