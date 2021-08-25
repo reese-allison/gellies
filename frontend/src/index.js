@@ -25,8 +25,8 @@ const App = () => {
                 <Nav/>
                 <Router>
                     <Home path="/"/>
-                    <Moji path="/moji"/>
-                    <Menu path="/menu"/>
+                    <Moji path="/moji/"/>
+                    <Menu path="/menu/"/>
                     <Build path="/build/"/>
                     <Error type='404' default/>
                 </Router>
@@ -148,12 +148,11 @@ class Build extends Component{
     render(){
         return (
             <div>
-                <h1>Placeholder</h1>
-                <h1 style="cursor: pointer" onClick={() => this.showBodies()}>Bodies</h1>
-                <h1 style="cursor: pointer" onClick={() => this.showEyes()}>Eyes</h1>
-                <h1 style="cursor: pointer" onClick={() => this.showGradients()}>Gradients</h1>
-                <h1 style="cursor: pointer" onClick={() => this.showMouths()}>Mouths</h1>
-                <div id='selection-grid' dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
+                <h1 style="cursor: pointer; float: left; margin: 30px;" onClick={() => this.showBodies()}>Bodies</h1>
+                <h1 style="cursor: pointer; float: left; margin: 30px;" onClick={() => this.showEyes()}>Eyes</h1>
+                <h1 style="cursor: pointer; float: left; margin: 30px;" onClick={() => this.showGradients()}>Gradients</h1>
+                <h1 style="cursor: pointer; float: left; margin: 30px;" onClick={() => this.showMouths()}>Mouths</h1>
+                <div style="clear: left;" id='selection-grid' dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
             </div>
         )
     }

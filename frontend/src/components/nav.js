@@ -30,9 +30,9 @@ const Nav = () => {
                         MENU
                     </Button>
                 </Link>
-                <Link activeClassName="active" href="/build">
+                <Link className={classes.navBarLink} activeClassName="active" href="/build">
                     <Button className={classes.navBarButton}>
-                        Build
+                        BUILD
                     </Button>
                 </Link>
             </Toolbar>
