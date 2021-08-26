@@ -12,7 +12,8 @@ all_drops = {
         ['knockout', 100],
         ['pouty', 100],
         ['disappointed', 100],
-        ['tired', 100]
+        ['tired', 100],
+        ['surprised', 100],
     ],
     'body': [
         ['devil', 100],
@@ -44,7 +45,6 @@ all_drops = {
         ["eggplant", 100],
         ["dough", 100],
         ["ice", 100],
-        ["lemon", 100],
         ["pear", 100],
         ["lemon", 100],
         ["fire", 100],
@@ -66,7 +66,8 @@ all_drops = {
         ['teddy', 100],
         ['skeleton', 100],
         ['pumpkin', 100],
-        ['knockout', 100]
+        ['knockout', 100],
+        ['surprised', 100]
     ],
 }
 
