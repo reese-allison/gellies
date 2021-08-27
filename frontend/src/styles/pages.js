@@ -34,6 +34,11 @@ const pageStyles = makeStyles(theme => ({
         fontWeight: 'bold',
         textShadow: Array(14).join('#000 0px 0px 2px, ') + '#000 0px 0px 2px;',
         WebkitFontSmoothing: true,
+    },
+    pageMenu:{
+        margin: theme.spacing(1),
+        minWidth: 120,
+        maxWidth: 300,
     }
 }), { defaultTheme: theme });
 

@@ -4,6 +4,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 import re
+import json
+
+from pydantic.types import Json
 
 from backend.core.drops.drop_tables import get_moji, get_part_list
 
@@ -50,6 +53,12 @@ async def moji_menu(request: Request):
     return templates.TemplateResponse("selection.html",{'request' : request, "svgs": svg_list})
     #return Response(content=data, media_type="application/xml")
 
+@app.get("/part/{type}/{item}", response_class=HTMLResponse)
+async def part_pull(request: Request, type: str, item: int):
+    #call part through route
+    data = json.dumps({"type": type, "item" : item})
+    return Response(content=data)
+
 
 #@app.get("/", response_class=HTMLResponse)
 #async def index(request: Request):
@@ -57,4 +66,4 @@ async def moji_menu(request: Request):
 
 #@app.post("/part-fetch", response_class=HTMLResponse)
 #async def part_fetch(appendage: Appendage):
-#        Appendage
+#Appendage
