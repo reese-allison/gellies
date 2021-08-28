@@ -13,10 +13,12 @@ all_drops = {
         ['pouty', 100],
         ['disappointed', 100],
         ['surprised', 100],
-        ['winking', 100],
+        ['winking_(right)', 100],
+        ['winking_(left)', 100],
         ['dot', 100],
         ['swirl', 100],
-        ['frog', 100]
+        ['frog', 100],
+        ['sleepy', 100]
     ],
     'body': [
         ['devil', 100],
@@ -82,6 +84,8 @@ all_drops = {
         ['whisker', 100],
         ['beauty_mark', 100],
         ['freckle', 100],
+        ['scar_(left)', 100],
+        ['scar_(right)', 100]
     ]
 }
 

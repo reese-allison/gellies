@@ -19,8 +19,14 @@
                     {% include "/svgs/bodies/cute-body.html" %}
                 {% elif type == 'pattern' %}
                     {% include "/svgs/bodies/cute-body.html" %}
+                    {% include "/svgs/gradients/bone-gradient.html" %}
+                    {% set path = "/svgs/" + folder + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
+                {% elif type != 'body' %}
+                    {% include "/svgs/bodies/cute-body.html" %}
+                    {% include "/svgs/gradients/bone-gradient.html" %}
                     {% set path = "/svgs/" + folder + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
                 {% else %}
+                    {% include "/svgs/gradients/bone-gradient.html" %}
                     {% set path = "/svgs/" + folder + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
                 {% endif %}
             </g>
