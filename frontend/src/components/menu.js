@@ -1,5 +1,5 @@
 
-import { h, Fragment, Component } from 'preact';
+import { useState, h, Fragment, Component } from 'preact';
 import { Select, InputLabel, MenuItem } from '@material-ui/core'
 import pageStyle from '../styles/pages'
 
@@ -10,16 +10,18 @@ import pageStyle from '../styles/pages'
 class Menu extends Component{
     constructor(props){
         super(props);
-        this.state = {}
+        this.state = {
+            gradient: 10,
+            bodies: 10,
+            eyes: 10,
+            mouths: 10,
+        }
+        
     }
     
     /** @jsx h */
     /** @jsxFrag Fragment */
-
-    componentDidMount(){
-        this.fetch_html('/api/moji-menu/');
-    }
-
+    
     fetch_html(url){
         fetch(url)
         .then(response => {
@@ -31,6 +33,39 @@ class Menu extends Component{
         .catch(function(error){
             console.log(error)
         });
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        if (prevProps.gradient !== this.state.gradient){
+            console.log("/path/gradients/"+this.state.gradient)
+            fetch_html("/path/gradients/"+this.state.gradient)
+        }
+        if (prevProps.bodies !== this.state.bodies){
+            console.log("/path/bodies/"+this.state.bodies)
+            fetch_html("/path/bodies/"+this.state.bodies)
+        }
+        if (prevProps.eyes !== this.state.eyes){
+            fetch_html()
+        }
+        if (prevProps.mouths !== this.state.mouths){
+            fetch_html()
+        }
+
+
+
+    }
+
+    gradientChange = (event) =>{
+        this.setState({gradient: event.target.value})
+    }
+    bodyChange = (event) =>{
+        this.setState({bodies: event.target.value})
+    }
+    eyeChange = (event) =>{
+        this.setState({eyes: event.target.value})
+    }
+    mouthChange = (event) =>{
+        this.setState({mouths: event.target.value})
     }
 
     render(){
@@ -56,21 +91,25 @@ class Menu extends Component{
                     <g id="mouths" class="moji"></g>  
                 </g>
                 </svg>
-                <InputLabel id="label">Gradient</InputLabel>
-                <Select className={pageclass.pageMenu} labelId="label" id="select" value="20">
+                <InputLabel id="grad_label">Gradient</InputLabel>
+                <Select className={pageclass.pageMenu} labelId="grad_label" id="gradient" value={this.state.gradient} onChange = {this.gradientChange}>
                     <MenuItem value="10">Gradient</MenuItem>
+                    <MenuItem value="20">test2</MenuItem>
                 </Select>
-                <InputLabel id="label">Body</InputLabel>
-                <Select className={pageclass.pageMenu} labelId="label" id="select" value="20">
+                <InputLabel id="body_label">Body</InputLabel>
+                <Select className={pageclass.pageMenu} labelId="body_label" id="bodies" value={this.state.bodies} onChange = {this.bodyChange}>
                     <MenuItem value="10">Body</MenuItem>
+                    <MenuItem value="20">test2</MenuItem>
                 </Select>
-                <InputLabel id="label">Eyes</InputLabel>
-                <Select className={pageclass.pageMenu} labelId="label" id="select" value="20">
+                <InputLabel id="eye_label">Eyes</InputLabel>
+                <Select className={pageclass.pageMenu} labelId="eye_label" id="eyes" value={this.state.eyes} onChange = {this.eyeChange}>
                     <MenuItem value="10">Eyes</MenuItem>
+                    <MenuItem value="20">test2</MenuItem>
                 </Select>
-                <InputLabel id="label">Mouth</InputLabel>
-                <Select className={pageclass.pageMenu} labelId="label" id="select" value="20">
+                <InputLabel id="mouth_label">Mouth</InputLabel>
+                <Select className={pageclass.pageMenu} labelId="mouth_label" id="mouths" value={this.state.mouths} onChange = {this.mouthChange}>
                     <MenuItem value="10">Mouth</MenuItem>
+                    <MenuItem value="20">test2</MenuItem>
                 </Select>
             </div>
             )

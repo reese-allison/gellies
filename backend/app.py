@@ -46,18 +46,26 @@ async def moji_test(request: Request):
     data = templates.get_template("moji.html").render({"svgs": svgs})
     return Response(content=data, media_type="image/svg+xml")
 
-@app.get("/moji-menu/", response_class=HTMLResponse)
-async def moji_menu(request: Request):
+@app.get("/part/{direct}/{item}", response_class=HTMLResponse)
+async def part_pull(request: Request, direct: str, item: str):
+    if direct:
+        item_types = {
+            "bodies" : "body", 
+            "eyes" : "eyes",
+            "mouths" : "mouth",
+            "gradients" : "gradient"
+        }
+        type = item_types.get(direct, Exception)
     svg_list = get_part_list()
-    # data = templates.get_template("selection.html").render({"svgs": svg_list})
-    return templates.TemplateResponse("selection.html",{'request' : request, "svgs": svg_list})
-    #return Response(content=data, media_type="application/xml")
+    return templates.TemplateResponse("selection.html",{'request' : request, "svg_list" : svg_list, "paths": {"type": type, "item" : item, "direct" : direct}})
 
-@app.get("/part/{type}/{item}", response_class=HTMLResponse)
-async def part_pull(request: Request, type: str, item: int):
-    #call part through route
-    data = json.dumps({"type": type, "item" : item})
-    return Response(content=data)
+
+#@app.get("/moji-menu/", response_class=HTMLResponse)
+#async def moji_menu(request: Request):
+##    svg_list = get_part_list()
+ #   # data = templates.get_template("selection.html").render({"svgs": svg_list})
+ #   return templates.TemplateResponse("selection.html",{'request' : request, "svgs": svg_list})
+    #return Response(content=data, media_type="application/xml")
 
 
 #@app.get("/", response_class=HTMLResponse)
@@ -67,3 +75,8 @@ async def part_pull(request: Request, type: str, item: int):
 #@app.post("/part-fetch", response_class=HTMLResponse)
 #async def part_fetch(appendage: Appendage):
 #Appendage
+ #call part through route
+    #data = json.dumps({"type": type, "item" : item})
+    #return Response(content=data)
+    #data = {"type": type, "item" : item, "direct" : direct}
+    #print("/svgs/" + data["direct"] + "/" + data["item"] + "-" + data["type"] + ".html")
