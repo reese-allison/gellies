@@ -14,6 +14,8 @@ all_drops = {
         ['disappointed', 100],
         ['tired', 100],
         ['surprised', 100],
+        ['winking', 100],
+        ['dot', 100],
     ],
     'body': [
         ['devil', 100],
@@ -67,7 +69,8 @@ all_drops = {
         ['skeleton', 100],
         ['pumpkin', 100],
         ['knockout', 100],
-        ['surprised', 100]
+        ['surprised', 100],
+        ['sabor-toothed', 100]
     ],
 }
 
