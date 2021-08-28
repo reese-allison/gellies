@@ -16,6 +16,9 @@
             <g id="body" class="moji">
                 {% if type == 'gradient' %}
                     {% include "/svgs/bodies/cute-body.html" %}
+                {% elif type == 'pattern' %}
+                    {% include "/svgs/bodies/cute-body.html" %}
+                    {% set path = "/svgs/" + folder + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
                 {% else %}
                     {% set path = "/svgs/" + folder + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
                 {% endif %}

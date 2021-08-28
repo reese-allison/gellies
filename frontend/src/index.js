@@ -118,31 +118,24 @@ class Build extends Component{
     }
 
     showBodies() {
-        console.log("onclicked");
         this.fetch_html('/api/build/bodies');  
-        this.updateSelectionGrid();
     }
 
     showEyes() {
-        console.log("onclicked");
         this.fetch_html('/api/build/eyes');
-        this.updateSelectionGrid();
     }
 
     showGradients() {
-        console.log("onclicked");
         this.fetch_html('/api/build/gradients');
-        this.updateSelectionGrid();
     }
 
     showMouths() {
-        console.log("onclicked");
         this.fetch_html('/api/build/mouths');
-        this.updateSelectionGrid();
     }
 
-    updateSelectionGrid() {
-        document.querySelector("#selection-grid").dangerouslySetInnerHTML=({ __html: this.state.content });
+
+    showPatterns() {
+        this.fetch_html('/api/build/patterns');
     }
 
     render(){
@@ -152,6 +145,7 @@ class Build extends Component{
                 <h1 style={{cursor: 'pointer', float: 'left', margin: '30px'}} onClick={() => this.showEyes()}>Eyes</h1>
                 <h1 style={{cursor: 'pointer', float: 'left', margin: '30px'}} onClick={() => this.showGradients()}>Gradients</h1>
                 <h1 style={{cursor: 'pointer', float: 'left', margin: '30px'}} onClick={() => this.showMouths()}>Mouths</h1>
+                <h1 style={{cursor: 'pointer', float: 'left', margin: '30px'}} onClick={() => this.showPatterns()}>Patterns</h1>
                 <div style="clear: left;" id='selection-grid' dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
             </div>
         )

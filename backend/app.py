@@ -70,6 +70,11 @@ async def get_build_mouths(request: Request):
     svg_list = get_part_list()
     return templates.TemplateResponse("parts.html", {'request': request, 'mojis': svg_list["mouth"], 'type': 'mouth', 'folder': 'mouths'})
 
+@app.get("/build/patterns", response_class=HTMLResponse)
+async def get_build_patterns(request: Request):
+    svg_list = get_part_list()
+    return templates.TemplateResponse("parts.html", {'request': request, 'mojis': svg_list["pattern"], 'type': 'pattern', 'folder': 'patterns'})
+
 #@app.get("/", response_class=HTMLResponse)
 #async def index(request: Request):
 #        return templates.TemplateResponse("index.html", {"request": request})
