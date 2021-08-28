@@ -12,11 +12,11 @@ all_drops = {
         ['knockout', 100],
         ['pouty', 100],
         ['disappointed', 100],
-        ['tired', 100],
         ['surprised', 100],
         ['winking', 100],
         ['dot', 100],
         ['swirl', 100],
+        ['frog', 100]
     ],
     'body': [
         ['devil', 100],
@@ -25,7 +25,8 @@ all_drops = {
         ['cat', 100],
         ['cute', 100],
         ['alien', 100],
-        ['axolotl', 100]
+        ['axolotl', 100],
+        ['bunny', 100]
     ],
     'gradient': [
         ["avocado", 100],
@@ -58,7 +59,7 @@ all_drops = {
         ['cute', 100],
         ['bored', 100],
         ['snaggle', 100],
-        ['null', 100],
+        ['no', 100],
         ['disappointed', 100],
         ['frown', 100],
         ['buck-teeth', 100],
@@ -73,6 +74,15 @@ all_drops = {
         ['surprised', 100],
         ['sabor-toothed', 100]
     ],
+    'hat': [
+        ['no', 100]
+    ],
+    'pattern':[
+        ['no', 100],
+        ['whisker', 100],
+        ['beauty-mark', 100],
+        ['freckle', 100],
+    ]
 }
 
 random_gradients = deepcopy(all_drops)
@@ -97,8 +107,10 @@ def get_part_list():
         'eyes':[],
         'mouth':[],
         'body':[],
-        'gradient':[]
-        }
+        'gradient':[],
+        'hat': [],
+        'pattern': []
+    }
     for element in table:
         for x in table[element]:
             svg_list[element].append(x[0])
@@ -114,7 +126,9 @@ def get_moji(table_name):
         'eyes': weighted_random(table['eyes']),
         'mouth': weighted_random(table['mouth']),
         'body': weighted_random(table['body']),
-        'gradient': weighted_random(table['gradient'])
+        'gradient': weighted_random(table['gradient']),
+        'hat': weighted_random(table['hat']),
+        'pattern': weighted_random(table['pattern'])
     }
     svgs['id'] = randint(1, 100000000)
     return svgs

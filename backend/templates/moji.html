@@ -6,6 +6,7 @@
         </defs>
         <g id="moji-{{ moji_id }}" class="moji">
             {% set path = "/svgs/bodies/" + svgs["body"] + '-body.html' %}{% include path ignore missing %}
+            {% set path = "/svgs/patterns/" + svgs["pattern"] + '-pattern.html' %}{% include path ignore missing %}
             {% set path = "/svgs/eyes/" + svgs["eyes"] + '-eyes.html' %}{% include path ignore missing %}
             {% set path = "/svgs/mouths/" + svgs["mouth"] + '-mouth.html' %}{% include path ignore missing %}
         </g>
