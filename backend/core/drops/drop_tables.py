@@ -16,6 +16,7 @@ all_drops = {
         ['surprised', 100],
         ['winking', 100],
         ['dot', 100],
+        ['swirl', 100],
     ],
     'body': [
         ['devil', 100],
