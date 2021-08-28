@@ -1,6 +1,7 @@
 import { Router } from 'preact-router';
 import { h, Fragment, Component, render } from 'preact';
 import { ThemeProvider, makeStyles} from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Nav from './components/nav'
 import theme from './styles/theme.js'
@@ -21,16 +22,15 @@ const App = () => {
     const classes = appStyles();
     return (
         <ThemeProvider theme={theme}>
-            <div>
-                <Nav/>
-                <Router>
-                    <Home path="/"/>
-                    <Moji path="/moji/"/>
-                    <Menu path="/menu/"/>
-                    <Build path="/build/"/>
-                    <Error type='404' default/>
-                </Router>
-            </div>
+            <CssBaseline />
+            <Nav/>
+            <Router>
+                <Home path="/"/>
+                <Moji path="/moji/"/>
+                <Menu path="/menu/"/>
+                <Build path="/build/"/>
+                <Error type='404' default/>
+            </Router>
         </ThemeProvider>
     )
 };

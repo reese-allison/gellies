@@ -1,6 +1,6 @@
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme, responsiveFontSizes } from '@material-ui/core/styles';
 
-const theme = createTheme({
+var theme = createTheme({
     palette: {
       primary: {
         main: '#3E517A'
@@ -27,5 +27,6 @@ const theme = createTheme({
         fontFamily: `'Glory', sans-serif;`,
     },
 });
+theme = responsiveFontSizes(theme);
 
 export default theme

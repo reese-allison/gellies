@@ -62,7 +62,7 @@ all_drops = {
         ['no', 100],
         ['disappointed', 100],
         ['frown', 100],
-        ['buck-teeth', 100],
+        ['buck_teeth', 100],
         ['fanged', 100],
         ['smiley', 100],
         ['pouty', 100],
@@ -72,7 +72,7 @@ all_drops = {
         ['pumpkin', 100],
         ['knockout', 100],
         ['surprised', 100],
-        ['sabor-toothed', 100]
+        ['sabor-tooth', 100]
     ],
     'hat': [
         ['no', 100]
@@ -80,7 +80,7 @@ all_drops = {
     'pattern':[
         ['no', 100],
         ['whisker', 100],
-        ['beauty-mark', 100],
+        ['beauty_mark', 100],
         ['freckle', 100],
     ]
 }

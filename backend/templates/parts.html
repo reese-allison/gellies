@@ -7,6 +7,7 @@
                 text-rendering: optimizeSpeed;
             }
         </style>
+        <text font-family="Grandstander" fill="#000" font-size="28px" dominant-baseline="middle" text-anchor="middle" x="238.5" y="90%">{{ moji.replace("_", " ")|title }} {{ type|title }}</text>
         <g id="moji-{{ moji_id }}" class="moji">
             {% if type == 'gradient' %}
                 <defs>
