@@ -37,12 +37,22 @@ class Moji {
         this.eye_movement = gsap.set(eye_movement, {onRepeat: eye_movement, onRepeatParams: [inner_eyes], repeat: -1, repeatDelay: 4});
 
         this.ebb = new TimelineMax({repeat:-1, repeatDelay:.5, yoyo:true});
-        this.ebb.add(gsap.to(this.moji, {
-            scale: 1.03,
-            duration: 2,
-            ease: "linear",
-            transformOrigin: "top"
-        }), randomRange(0, 2));
+        let _range = randomRange(0, 2);
+        this.ebb.add(
+            gsap.to(this.moji, {
+                scale: 1.03,
+                duration: 2,
+                ease: "linear",
+                transformOrigin: "top"
+            }), _range
+        );
+        this.ebb.add(
+            gsap.to(this.hat, {
+                duration: 2,
+                y: -1.5,
+                ease: "linear",
+            }), _range
+        );
 
         this.moji.addEventListener('click', e => {
             e.preventDefault();
