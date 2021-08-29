@@ -49,7 +49,7 @@ class Moji {
         this.ebb.add(
             gsap.to(this.hat, {
                 duration: 2,
-                y: -1.5,
+                y: 3,
                 ease: "linear",
             }), _range
         );
