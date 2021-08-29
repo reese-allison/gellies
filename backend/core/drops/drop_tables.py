@@ -3,7 +3,7 @@ from random import randint
 
 all_drops = {
     'eyes': [
-        ['circle', 100],
+        ['shiny', 100],
         ['cat', 100],
         ['cute', 100],
         ['pumpkin', 100],
@@ -11,7 +11,7 @@ all_drops = {
         ['smiley', 100],
         ['knockout', 100],
         ['pouty', 100],
-        ['disappointed', 100],
+        ['bored', 100],
         ['surprised', 100],
         ['winking_(right)', 100],
         ['winking_(left)', 100],
@@ -62,7 +62,6 @@ all_drops = {
         ['bored', 100],
         ['snaggle', 100],
         ['no', 100],
-        ['disappointed', 100],
         ['frown', 100],
         ['buck_teeth', 100],
         ['fanged', 100],
@@ -85,7 +84,7 @@ all_drops = {
         ['beauty_mark', 100],
         ['freckle', 100],
         ['scar_(left)', 100],
-        ['scar_(right)', 100]
+        ['scar_(right)', 100],
     ]
 }
 
