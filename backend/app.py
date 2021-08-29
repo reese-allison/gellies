@@ -75,6 +75,11 @@ async def get_build_patterns(request: Request):
     svg_list = get_part_list()
     return templates.TemplateResponse("parts.html", {'request': request, 'mojis': svg_list["pattern"], 'type': 'pattern', 'folder': 'patterns'})
 
+@app.get("/build/hats", response_class=HTMLResponse)
+async def get_build_hats(request: Request):
+    svg_list = get_part_list()
+    return templates.TemplateResponse("parts.html", {'request': request, 'mojis': svg_list["hat"], 'type': 'hat', 'folder': 'hats'})
+
 #@app.get("/", response_class=HTMLResponse)
 #async def index(request: Request):
 #        return templates.TemplateResponse("index.html", {"request": request})

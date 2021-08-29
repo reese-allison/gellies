@@ -1,12 +1,7 @@
 {% for moji in mojis %}
     {% set moji_id = loop.index %}
     <svg id="svg-{{ moji_id }}" width="477" height="509" viewBox="-50 -50 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <style>
-            svg {
-                shape-rendering: optimizeSpeed;
-                text-rendering: optimizeSpeed;
-            }
-        </style>
+        <style>svg {shape-rendering:optimizeSpeed;text-rendering:optimizeSpeed;}</style>
         <text font-family="Grandstander" fill="#000" font-size="28px" dominant-baseline="middle" text-anchor="middle" x="238.5" y="90%">{{ moji.replace("_", " ")|title }} {{ type|title }}</text>
         <g id="moji-{{ moji_id }}" class="moji">
             {% if type == 'gradient' %}

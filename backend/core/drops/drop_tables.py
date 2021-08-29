@@ -76,7 +76,8 @@ all_drops = {
         ['sabor-tooth', 100]
     ],
     'hat': [
-        ['no', 100]
+        ['no', 100],
+        ['fancy', 100]
     ],
     'pattern':[
         ['no', 100],

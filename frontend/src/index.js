@@ -133,9 +133,12 @@ class Build extends Component{
         this.fetch_html('/api/build/mouths');
     }
 
-
     showPatterns() {
         this.fetch_html('/api/build/patterns');
+    }
+
+    showHats() {
+        this.fetch_html('/api/build/hats');       
     }
 
     render(){
@@ -146,6 +149,7 @@ class Build extends Component{
                 <h1 style={{cursor: 'pointer', float: 'left', margin: '30px'}} onClick={() => this.showGradients()}>Gradients</h1>
                 <h1 style={{cursor: 'pointer', float: 'left', margin: '30px'}} onClick={() => this.showMouths()}>Mouths</h1>
                 <h1 style={{cursor: 'pointer', float: 'left', margin: '30px'}} onClick={() => this.showPatterns()}>Patterns</h1>
+                <h1 style={{cursor: 'pointer', float: 'left', margin: '30px'}} onClick={() => this.showHats()}>Hats</h1>
                 <div style="clear: left;" id='selection-grid' dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
             </div>
         )
