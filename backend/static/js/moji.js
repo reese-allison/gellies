@@ -31,6 +31,7 @@ class Moji {
         this.moji = document.getElementById(`moji-${ this.id }`);
         this.mouth = document.getElementById(`moji-${ this.id }-mouth`);
         this.shadow = document.getElementById(`moji-${ this.id }-shadow`);
+        this.hat = document.getElementById(`moji-${ this.id }-hat`);
 
         let inner_eyes = document.querySelectorAll(`#moji-${ this.id } .inner-eye`);
         this.eye_movement = gsap.set(eye_movement, {onRepeat: eye_movement, onRepeatParams: [inner_eyes], repeat: -1, repeatDelay: 4});
@@ -45,7 +46,7 @@ class Moji {
 
         this.moji.addEventListener('click', e => {
             e.preventDefault();
-            if(Math.random() > .25){
+            if(Math.random() > .3){
                 this.bounce();
             }
             else{
@@ -71,7 +72,13 @@ class Moji {
             onComplete: () => {
                 bounce_tl.reverse();
             }
-        })
+        }, 0).to(this.hat, .3, {
+            y: 65,
+            ease: "power1.inOut",
+            onComplete: () => {
+                bounce_tl.reverse();
+            }
+        }, 0);
     }
 
     jump(){
@@ -99,7 +106,14 @@ class Moji {
             onComplete: () => {
                 second_bounce_tl.reverse();
             }
-        })
+        }, 0)
+        .to(this.hat, .3, {
+            y: (Math.random() > .3) ? 65 : -20,
+            ease: "power1.inOut",
+            onComplete: () => {
+                second_bounce_tl.reverse();
+            }
+        }, 0);
 
         first_bounce_tl.to(this.moji, .3, {
             transformOrigin: "50% 100%",
@@ -109,7 +123,14 @@ class Moji {
             onComplete: () => {
                 first_bounce_tl.reverse();
             }
-        });
+        }, 0)
+        .to(this.hat, .3, {
+            y: 32,
+            ease: "power1.inOut",
+            onComplete: () => {
+                first_bounce_tl.reverse();
+            }
+        }, 0);
 
         jump_tl.to(this.moji, .2, {
             y: -100,
@@ -123,6 +144,13 @@ class Moji {
             scaleX: 1.075,
             scaleY: 1.075,
             opacity: .5,
+            onComplete: () => {
+                jump_tl.reverse();
+            }
+        }, 0)
+        .to(this.hat, .2, {
+            y: -100,
+            transformOrigin: "50% 50%",
             onComplete: () => {
                 jump_tl.reverse();
             }
