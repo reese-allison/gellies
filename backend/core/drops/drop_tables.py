@@ -28,7 +28,7 @@ all_drops = {
         ['cute', 100],
         ['alien', 100],
         ['axolotl', 100],
-        ['bunny', 100]
+        ['bunny', 100],
     ],
     'gradient': [
         ["avocado", 100],
@@ -77,7 +77,10 @@ all_drops = {
     ],
     'hat': [
         ['no', 100],
-        ['fancy', 100]
+        ['fancy', 100],
+        ['bow_(red)', 100],
+        ['bow_(blue)', 100],
+        ['bow_(green)', 100],
     ],
     'pattern':[
         ['no', 100],
