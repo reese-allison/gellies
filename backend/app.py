@@ -46,6 +46,12 @@ async def moji_test(request: Request):
     data = templates.get_template("moji.html").render({"svgs": svgs})
     return Response(content=data, media_type="image/svg+xml")
 
+@app.get("/list", response_class=HTMLResponse)
+async def lists(request: Request):
+    svg_list = get_part_list()
+    return Response(content=json.dumps(svg_list))
+
+
 @app.get("/part/{direct}/{item}", response_class=HTMLResponse)
 async def part_pull(request: Request, direct: str, item: str):
     if direct:
@@ -56,8 +62,9 @@ async def part_pull(request: Request, direct: str, item: str):
             "gradients" : "gradient"
         }
         type = item_types.get(direct, Exception)
-    svg_list = get_part_list()
-    return templates.TemplateResponse("selection.html",{'request' : request, "svg_list" : svg_list, "paths": {"type": type, "item" : item, "direct" : direct}})
+        print(request, direct, item, type)
+    return templates.TemplateResponse(
+        "selection.html", {'request' : request, "moji_id": 'menu', "paths": {"type": type, "item" : item, "direct" : direct}})
 
 
 #@app.get("/moji-menu/", response_class=HTMLResponse)
