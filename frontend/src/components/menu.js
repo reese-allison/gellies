@@ -85,7 +85,10 @@ class Menu extends Component{
     }
 
     Selection = () => {
-        console.log(this.state.list)
+        Object.keys(this.state.list).map(
+            
+        )
+
         return(
         <div>
             <InputLabel id="grad_label">Gradient</InputLabel>
