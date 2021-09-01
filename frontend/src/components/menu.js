@@ -6,7 +6,7 @@ class Menu extends Component{
     constructor(props){
         super(props);
         this.state = {
-            gradient: 'random',
+            gradient: 'lemon',
             g_html: '',
             body: 'cute',
             b_html: '',
@@ -62,6 +62,19 @@ class Menu extends Component{
             //this.fetch_html('gradient', 'g_html')
             this.setState({change: 'gradient'})
         }
+        if (prevState.body !== this.state.body){
+            //this.fetch_html('gradient', 'g_html')
+            this.setState({change: 'body'})
+        }
+        if (prevState.eyes !== this.state.eyes){
+            //this.fetch_html('gradient', 'g_html')
+            this.setState({change: 'eyes'})
+        }
+        if (prevState.mouth !== this.state.mouth){
+            //this.fetch_html('gradient', 'g_html')
+            this.setState({change: 'mouth'})
+        }
+        console.log(this.state.change)
     }
 
     handleChange = (event) =>{
@@ -85,17 +98,30 @@ class Menu extends Component{
     }
 
     Selection = () => {
-        Object.keys(this.state.list).map(
-            
-        )
-
+        
+        const pageclass = pageStyle();
+        var selectArray = []
+        Object.keys(this.state.list).map((key) => {
+            console.log(key)
+            console.log(this.state.list[key])
+            console.log(typeof(this.state.list[key]))
+            selectArray.push(
+                h(InputLabel, {id: key+'_label'},
+                h(Select, {
+                    labelId: key+'_label',
+                    name: key,
+                    value: this.state[key],
+                    className: pageclass.pageMenu,
+                    onchange: this.onChange
+                }, Object.values(this.state.list[key]).map((menuitem) => {
+                    return(h(MenuItem, {value: menuitem},menuitem))
+                })), key)
+                )
+        })
+        console.log(selectArray)
         return(
         <div>
-            <InputLabel id="grad_label">Gradient</InputLabel>
-                <Select labelId="grad_label" name="gradient" value={this.state.gradient} onChange = {this.handleChange}>
-                    <MenuItem value="random">random</MenuItem>
-                    <MenuItem value="bone">bone</MenuItem>
-                </Select>
+            {selectArray}
         </div>)
     }
 
@@ -118,7 +144,7 @@ class Menu extends Component{
                 <g id="eyes" dangerouslySetInnerHTML={{__html: this.state.e_html}}></g>
                 <g id="mouths" dangerouslySetInnerHTML={{__html: this.state.m_html}}></g>  
                 </svg>
-                <this.Selection/>
+                <this.Selection event={this.onChange} />
             </div>
         )
     }
