@@ -1,7 +1,6 @@
 import { h, Fragment, Component, options } from 'preact';
 import { Select, InputLabel, MenuItem } from '@material-ui/core'
 import pageStyle from '../styles/pages'
-
 class Menu extends Component{
     constructor(props){
         super(props);
@@ -17,6 +16,7 @@ class Menu extends Component{
             change: '',
             list: {},
         }
+        this.onChange = this.onChange.bind(this)
     }
     
     /** @jsx h */
@@ -55,29 +55,26 @@ class Menu extends Component{
         this.fetch_html('body', 'b_html')
         this.fetch_html('eyes', 'e_html')
         this.fetch_html('mouth', 'm_html')
+
     }
 
     componentDidUpdate(prevProps, prevState){
         if (prevState.gradient !== this.state.gradient){
-            //this.fetch_html('gradient', 'g_html')
             this.setState({change: 'gradient'})
         }
         if (prevState.body !== this.state.body){
-            //this.fetch_html('gradient', 'g_html')
             this.setState({change: 'body'})
         }
         if (prevState.eyes !== this.state.eyes){
-            //this.fetch_html('gradient', 'g_html')
             this.setState({change: 'eyes'})
         }
         if (prevState.mouth !== this.state.mouth){
-            //this.fetch_html('gradient', 'g_html')
             this.setState({change: 'mouth'})
         }
         console.log(this.state.change)
     }
 
-    handleChange = (event) =>{
+    onChange = (event) =>{
         const {value, name} = event.target
         const tag_list = {
             'gradient' : 'g_html',
@@ -85,9 +82,11 @@ class Menu extends Component{
             'eyes' : 'e_html',
             'mouth' : 'm_html'
         }
-        this.setState({[name]: value})
-        this.fetch_html('gradient', tag_list[name])
-
+        this.setState({[name]: value}, () =>{
+            this.fetch_html('gradient', tag_list[name] //Gradient Swap fixed
+            )
+        } )
+        console.log('onChange Called!')
         /*
         console.log(event.name)
         const {type, value, html_tag} = event.target
@@ -97,14 +96,11 @@ class Menu extends Component{
         console.log(type)*/
     }
 
-    Selection = () => {
-        
+    Selection = (props) => {
         const pageclass = pageStyle();
+        /*
         var selectArray = []
         Object.keys(this.state.list).map((key) => {
-            console.log(key)
-            console.log(this.state.list[key])
-            console.log(typeof(this.state.list[key]))
             selectArray.push(
                 h(InputLabel, {id: key+'_label'},
                 h(Select, {
@@ -112,16 +108,30 @@ class Menu extends Component{
                     name: key,
                     value: this.state[key],
                     className: pageclass.pageMenu,
-                    onchange: this.onChange
+                    onchange: this.props.func
                 }, Object.values(this.state.list[key]).map((menuitem) => {
                     return(h(MenuItem, {value: menuitem},menuitem))
                 })), key)
                 )
-        })
+        }) */
+        /*
         console.log(selectArray)
-        return(
+        console.log(key)
+            console.log(this.state.list[key])
+            console.log(typeof(this.state.list[key]))
+        */
+       return(
         <div>
-            {selectArray}
+            {Object.keys(this.state.list).map((key) => (
+                <div>
+                <InputLabel id={key+'_label'}>{key}</InputLabel>
+                <Select labelId={key+'_label'} name={key} value={this.state[key]} className={pageclass.pageMenu} onchange={e => this.onChange(e)}>
+                    {Object.values(this.state.list[key]).map((menuitem) => (
+                        <MenuItem value={menuitem}>{menuitem}</MenuItem>
+                    ))}
+                </Select>
+                </div>))
+                }
         </div>)
     }
 
@@ -144,7 +154,14 @@ class Menu extends Component{
                 <g id="eyes" dangerouslySetInnerHTML={{__html: this.state.e_html}}></g>
                 <g id="mouths" dangerouslySetInnerHTML={{__html: this.state.m_html}}></g>  
                 </svg>
-                <this.Selection event={this.onChange} />
+                <div>
+                <this.Selection/>
+                <InputLabel id="grad_label">FUNCTIONAL SELECT</InputLabel>
+                <Select className={pageclass.pageMenu} labelId="grad_label" name="gradient" value={this.state.gradient} onChange = {this.onChange}>
+                    <MenuItem value="lemon">lemon</MenuItem>
+                    <MenuItem value="bone">bone</MenuItem>
+                </Select>
+        </div>
             </div>
         )
     }
