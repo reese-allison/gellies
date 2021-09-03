@@ -19,6 +19,10 @@ const appStyles = makeStyles(theme => ({
 }), { defaultTheme: theme });
 
 const App = () => {
+    let anchors = [
+        {width: '20%', bottom: '4%', left: '5%'},
+        {width: '8%', bottom: '44%', right: '12%'}
+    ]
     const classes = appStyles();
     return (
         <ThemeProvider theme={theme}>
@@ -26,7 +30,7 @@ const App = () => {
             <Nav/>
             <Router>
                 <Home path="/"/>
-                <Moji path="/moji/"/>
+                <Background anchors={anchors} width="960px" background="/static/images/beach.gif" path="/moji/"/>
                 <Menu path="/menu/"/>
                 <Build path="/build/"/>
                 <Error type='404' default/>
@@ -52,10 +56,32 @@ const Error = ({ type, url }) => (
 class Moji extends Component{
     render(){
         return (
+            <object width="100%" height="100%" type="image/svg+xml" data="/api/moji-test/" />
+        )
+    }
+}
+
+class Background extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            width: props.width,
+            background: props.background,
+            anchors: props.anchors
+        };
+    }
+
+    render(){
+        return (
             <div>
-                <object type="image/svg+xml" data="/api/moji-test/" />
-                <object type="image/svg+xml" data="/api/moji-test/" />
-                <object type="image/svg+xml" data="/api/moji-test/" />
+                <div style={{ position: 'relative', width: this.state.width }}>
+                    {this.state.anchors.map((x, i) =>
+                        <div style={Object.assign({position: 'absolute'}, x)}>
+                            <Moji />
+                        </div>
+                    )}
+                    <img style={{ width: '100%' }} src={ this.state.background } />
+                </div>
             </div>
         )
     }
@@ -96,7 +122,7 @@ class Menu extends Component{
 class Build extends Component{
     constructor(props){
         super(props);
-        this.state = {}
+        this.state = {};
     }
 
     componentDidMount(){
