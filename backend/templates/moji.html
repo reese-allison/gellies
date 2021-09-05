@@ -1,16 +1,16 @@
-<svg id="svg-{{ svgs['id'] }}" width="477" height="509" viewBox="-50 -50 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg id="svg-{{ svgs['id'] }}" width="477" height="477" viewBox="-50 -50 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
     <style>svg {shape-rendering:optimizeSpeed;text-rendering:optimizeSpeed;}</style>
     {% with moji_id=svgs['id'] %}
         <defs>
-            {% set path = "/svgs/gradients/" + svgs["gradient"] + '-gradient.html' %}{% include path ignore missing %}
+            {% set path = "/svgs/gradient/" + svgs["gradient"] + '-gradient.html' %}{% include path ignore missing %}
         </defs>
         <g id="moji-{{ moji_id }}" class="moji">
-            {% set path = "/svgs/bodies/" + svgs["body"] + '-body.html' %}{% include path ignore missing %}
-            {% set path = "/svgs/patterns/" + svgs["pattern"] + '-pattern.html' %}{% include path ignore missing %}
+            {% set path = "/svgs/body/" + svgs["body"] + '-body.html' %}{% include path ignore missing %}
+            {% set path = "/svgs/pattern/" + svgs["pattern"] + '-pattern.html' %}{% include path ignore missing %}
             {% set path = "/svgs/eyes/" + svgs["eyes"] + '-eyes.html' %}{% include path ignore missing %}
-            {% set path = "/svgs/mouths/" + svgs["mouth"] + '-mouth.html' %}{% include path ignore missing %}
+            {% set path = "/svgs/mouth/" + svgs["mouth"] + '-mouth.html' %}{% include path ignore missing %}
         </g>
-        {% set path = "/svgs/hats/" + svgs["hat"] + '-hat.html' %}{% include path ignore missing %}
+        {% set path = "/svgs/headwear/" + svgs["headwear"] + '-headwear.html' %}{% include path ignore missing %}
     {% endwith %}
     <script href="https://unpkg.com/gsap/dist/gsap.min.js"></script>
     <script href="/static/js/moji.js"></script>

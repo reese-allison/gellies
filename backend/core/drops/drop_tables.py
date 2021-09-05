@@ -75,9 +75,9 @@ all_drops = {
         ['surprised', 100],
         ['sabor-tooth', 100]
     ],
-    'hat': [
+    'headwear': [
         ['no', 100],
-        ['fancy', 100],
+        ['tophat', 100],
         ['bow_(red)', 100],
         ['bow_(blue)', 100],
         ['bow_(green)', 100],
@@ -115,7 +115,7 @@ def get_part_list():
         'mouth':[],
         'body':[],
         'gradient':[],
-        'hat': [],
+        'headwear': [],
         'pattern': []
     }
     for element in table:
@@ -129,13 +129,7 @@ def get_part(type, number):
 
 def get_moji(table_name):
     table = tables[table_name]
-    svgs = {
-        'eyes': weighted_random(table['eyes']),
-        'mouth': weighted_random(table['mouth']),
-        'body': weighted_random(table['body']),
-        'gradient': weighted_random(table['gradient']),
-        'hat': weighted_random(table['hat']),
-        'pattern': weighted_random(table['pattern'])
-    }
+    components = {'eyes', 'mouth', 'body', 'gradient', 'headwear', 'pattern'}
+    svgs = { i: weighted_random(table[i]) for i in components }
     svgs['id'] = randint(1, 100000000)
     return svgs

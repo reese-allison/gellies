@@ -4,21 +4,21 @@
         <style>svg {shape-rendering:optimizeSpeed;text-rendering:optimizeSpeed;}</style>
         <text font-family="Grandstander" fill="#000" font-size="28px" dominant-baseline="middle" text-anchor="middle" x="238.5" y="90%">{{ moji.replace("_", " ")|title }} {{ type|title }}</text>
         <g id="moji-{{ moji_id }}" class="moji">
-            {% if type == 'gradient' %}
+            {% if type == 'gradients' %}
                 <defs>
-                    {% set path = "/svgs/" + folder + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
+                    {% set path = "/svgs/" + type + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
                 </defs>
             {% endif %}
             <g id="body" class="moji">
-                {% if type == 'gradient' %}
-                    {% include "/svgs/bodies/cute-body.html" %}
-                {% elif type == 'body' %}
-                    {% include "/svgs/gradients/bone-gradient.html" %}
-                    {% set path = "/svgs/" + folder + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
+                {% if type == 'gradients' %}
+                    {% include "/svgs/body/cute-body.html" %}
+                {% elif type == 'bodies' %}
+                    {% include "/svgs/gradient/bone-gradient.html" %}
+                    {% set path = "/svgs/" + type + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
                 {% else %}
-                    {% include "/svgs/bodies/cute-body.html" %}
-                    {% include "/svgs/gradients/bone-gradient.html" %}
-                    {% set path = "/svgs/" + folder + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
+                    {% include "/svgs/body/cute-body.html" %}
+                    {% include "/svgs/gradient/bone-gradient.html" %}
+                    {% set path = "/svgs/" + type + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
                 {% endif %}
             </g>
         </g>
