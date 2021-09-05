@@ -3,8 +3,10 @@ import { h, Fragment, Component, render } from 'preact';
 import { ThemeProvider, makeStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import Nav from './components/nav'
-import theme from './styles/theme.js'
+import Nav from './components/nav';
+import Build from './components/build';
+import Scene from './components/scene';
+import theme from './styles/theme.js';
 
 
 /** @jsx h */
@@ -20,9 +22,9 @@ const appStyles = makeStyles(theme => ({
 
 const App = () => {
     let anchors = [
-        {width: '20%', bottom: '4%', left: '5%'},
-        {width: '8%', bottom: '44%', right: '12%'}
-    ]
+        {width: .2, style: {bottom: '4%', left: '5%'}},
+        {width: .08, style: {bottom: '44%', right: '12%'}}
+    ];
     const classes = appStyles();
     return (
         <ThemeProvider theme={theme}>
@@ -30,8 +32,7 @@ const App = () => {
             <Nav/>
             <Router>
                 <Home path="/"/>
-                <Background anchors={anchors} width="960px" background="/static/images/beach.gif" path="/moji/"/>
-                <Menu path="/menu/"/>
+                <Scene anchors={anchors} width="100%" background="/static/images/beach.gif" path="/moji/"/>
                 <Build path="/build/"/>
                 <Error type='404' default/>
             </Router>
@@ -53,133 +54,4 @@ const Error = ({ type, url }) => (
 	</section>
 );
 
-class Moji extends Component{
-    render(){
-        return (
-            <object width="100%" height="100%" type="image/svg+xml" data="/api/moji-test/" />
-        )
-    }
-}
-
-class Background extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            width: props.width,
-            background: props.background,
-            anchors: props.anchors
-        };
-    }
-
-    render(){
-        return (
-            <div>
-                <div style={{ position: 'relative', width: this.state.width }}>
-                    {this.state.anchors.map((x, i) =>
-                        <div style={Object.assign({position: 'absolute'}, x)}>
-                            <Moji />
-                        </div>
-                    )}
-                    <img style={{ width: '100%' }} src={ this.state.background } />
-                </div>
-            </div>
-        )
-    }
-}
-
-class Menu extends Component{
-    constructor(props){
-        super(props);
-        this.state = {}
-    }
-
-    componentDidMount(){
-        this.fetch_html('/api/moji-menu/');
-    }
-
-    fetch_html(url){
-        fetch(url)
-        .then(response => {
-            return response.text();
-        })
-        .then(content => {
-            this.setState({content: content})
-        })
-        .catch(function(error){
-            console.log(error)
-        });
-    }
-
-    render(){
-        return (
-            // THIS IS DANGEROUS! TO REDUCE XSS ATTACKS, WE NEED TO SANITIZE this.state.content (See DomPurify)
-            <div id='menu' dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
-        )
-    }
-
-}
-
-class Build extends Component{
-    constructor(props){
-        super(props);
-        this.state = {};
-    }
-
-    componentDidMount(){
-        this.showBodies();
-        console.log("Mounted Build Screen");
-    }
-
-    fetch_html(url){
-        fetch(url)
-        .then(response => {
-            return response.text();
-        })
-        .then(content => {
-            this.setState({content: content})
-        })
-        .catch(function(error){
-            console.log(error)
-        });
-    }
-
-    showBodies() {
-        this.fetch_html('/api/build/bodies');  
-    }
-
-    showEyes() {
-        this.fetch_html('/api/build/eyes');
-    }
-
-    showGradients() {
-        this.fetch_html('/api/build/gradients');
-    }
-
-    showMouths() {
-        this.fetch_html('/api/build/mouths');
-    }
-
-    showPatterns() {
-        this.fetch_html('/api/build/patterns');
-    }
-
-    showHats() {
-        this.fetch_html('/api/build/hats');       
-    }
-
-    render(){
-        return (
-            <div>
-                <h1 style={{cursor: 'pointer', float: 'left', margin: '30px'}} onClick={() => this.showBodies()}>Bodies</h1>
-                <h1 style={{cursor: 'pointer', float: 'left', margin: '30px'}} onClick={() => this.showEyes()}>Eyes</h1>
-                <h1 style={{cursor: 'pointer', float: 'left', margin: '30px'}} onClick={() => this.showGradients()}>Gradients</h1>
-                <h1 style={{cursor: 'pointer', float: 'left', margin: '30px'}} onClick={() => this.showMouths()}>Mouths</h1>
-                <h1 style={{cursor: 'pointer', float: 'left', margin: '30px'}} onClick={() => this.showPatterns()}>Patterns</h1>
-                <h1 style={{cursor: 'pointer', float: 'left', margin: '30px'}} onClick={() => this.showHats()}>Hats</h1>
-                <div style="clear: left;" id='selection-grid' dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
-            </div>
-        )
-    }
-}
-
-render(<App />, document.getElementById('root'))
+render(<App />, document.getElementById('root'));

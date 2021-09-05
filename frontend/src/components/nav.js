@@ -2,16 +2,16 @@ import { h, Fragment} from 'preact';
 import { Link } from 'preact-router';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button';
 
-import navBarStyles from '../styles/nav'
+import navBarStyles from '../styles/nav';
+
+
+/** @jsx h */
+/** @jsxFrag Fragment */
 
 const Nav = () => {
     const classes = navBarStyles();
-
-    /** @jsx h */
-    /** @jsxFrag Fragment */
-
     return(
         <AppBar position="static">
             <Toolbar className={classes.navBar}>
@@ -25,11 +25,6 @@ const Nav = () => {
                         RANDOM
                     </Button >
                 </Link>
-                <Link style={{ marginRight: 30 }} className={classes.navBarLink} activeClassName="active" href="/menu">
-                    <Button className={classes.navBarButton}>
-                        MENU
-                    </Button>
-                </Link>
                 <Link className={classes.navBarLink} activeClassName="active" href="/build">
                     <Button className={classes.navBarButton}>
                         BUILD
@@ -40,4 +35,4 @@ const Nav = () => {
     )
 };
 
-export default Nav
+export default Nav;
