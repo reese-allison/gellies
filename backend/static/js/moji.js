@@ -149,11 +149,10 @@ class Moji {
             }
         }, 0)
         .to(this.shadow, .2, {
-            y: 100,
             transformOrigin: "50% 50%",
-            scaleX: 1.075,
-            scaleY: 1.075,
-            opacity: .5,
+            scaleX: .9,
+            scaleY: .9,
+            opacity: .65,
             onComplete: () => {
                 jump_tl.reverse();
             }

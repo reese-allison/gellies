@@ -22,8 +22,8 @@ const appStyles = makeStyles(theme => ({
 
 const App = () => {
     let anchors = [
-        {width: .2, style: {bottom: '4%', left: '5%'}},
-        {width: .08, style: {bottom: '44%', right: '12%'}}
+        {width: .2, orientation: 'right', style: {bottom: '4%', left: '5%'}},
+        {width: .08, orientation: 'left', style: {bottom: '44%', right: '12%'}}
     ];
     const classes = appStyles();
     return (
