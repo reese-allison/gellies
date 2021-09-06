@@ -118,6 +118,7 @@ def get_part_list():
     for element in table:
         for x in table[element]:
             svg_list[element].append(x[0])
+    #svg_list['id'] = 'menu'
     return svg_list
 
 def get_part(type, number):

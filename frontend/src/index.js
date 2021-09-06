@@ -5,6 +5,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Nav from './components/nav'
 import theme from './styles/theme.js'
+import Menu from './components/menu';
+import { Home, Moji, Error } from './components/pages'
 
 
 /** @jsx h */
@@ -35,63 +37,6 @@ const App = () => {
     )
 };
 
-const Home = () =>(
-    <div>
-        <h1>HOME SCREEN</h1>
-    </div>
-);
-
-const Error = ({ type, url }) => (
-	<section class="error">
-		<h2>Error</h2>
-		<p>It looks like we hit a snag.</p>
-		<pre>{url}</pre>
-	</section>
-);
-
-class Moji extends Component{
-    render(){
-        return (
-            <div>
-                <object type="image/svg+xml" data="/api/moji-test/" />
-                <object type="image/svg+xml" data="/api/moji-test/" />
-                <object type="image/svg+xml" data="/api/moji-test/" />
-            </div>
-        )
-    }
-}
-
-class Menu extends Component{
-    constructor(props){
-        super(props);
-        this.state = {}
-    }
-
-    componentDidMount(){
-        this.fetch_html('/api/moji-menu/');
-    }
-
-    fetch_html(url){
-        fetch(url)
-        .then(response => {
-            return response.text();
-        })
-        .then(content => {
-            this.setState({content: content})
-        })
-        .catch(function(error){
-            console.log(error)
-        });
-    }
-
-    render(){
-        return (
-            // THIS IS DANGEROUS! TO REDUCE XSS ATTACKS, WE NEED TO SANITIZE this.state.content (See DomPurify)
-            <div id='menu' dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
-        )
-    }
-
-}
 
 class Build extends Component{
     constructor(props){

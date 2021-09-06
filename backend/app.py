@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 import re
+import json
 
 from backend.core.drops.drop_tables import get_moji, get_part_list
 
@@ -43,11 +44,34 @@ async def moji_test(request: Request):
     data = templates.get_template("moji.html").render({"svgs": svgs})
     return Response(content=data, media_type="image/svg+xml")
 
-@app.get("/moji-menu/", response_class=HTMLResponse)
-async def moji_menu(request: Request):
+@app.get("/list", response_class=HTMLResponse)
+async def lists(request: Request):
     svg_list = get_part_list()
-    # data = templates.get_template("selection.html").render({"svgs": svg_list})
-    return templates.TemplateResponse("selection.html",{'request' : request, "svgs": svg_list})
+    return Response(content=json.dumps(svg_list))
+
+
+@app.get("/part/{direct}/{item}", response_class=HTMLResponse)
+async def part_pull(request: Request, direct: str, item: str):
+    if direct:
+        item_types = {
+            "bodies" : "body", 
+            "eyes" : "eyes",
+            "mouths" : "mouth",
+            "gradients" : "gradient",
+            "hats" : "hat",
+            "patterns" : "pattern"
+        }
+        type = item_types.get(direct, Exception)
+        print(request, direct, item, type)
+    return templates.TemplateResponse(
+        "selection.html", {'request' : request, "moji_id": 'menu', "paths": {"type": type, "item" : item, "direct" : direct}})
+
+
+#@app.get("/moji-menu/", response_class=HTMLResponse)
+#async def moji_menu(request: Request):
+##    svg_list = get_part_list()
+ #   # data = templates.get_template("selection.html").render({"svgs": svg_list})
+ #   return templates.TemplateResponse("selection.html",{'request' : request, "svgs": svg_list})
     #return Response(content=data, media_type="application/xml")
 
 @app.get("/build/eyes", response_class=HTMLResponse)
@@ -86,4 +110,9 @@ async def get_build_hats(request: Request):
 
 #@app.post("/part-fetch", response_class=HTMLResponse)
 #async def part_fetch(appendage: Appendage):
-#        Appendage
+#Appendage
+ #call part through route
+    #data = json.dumps({"type": type, "item" : item})
+    #return Response(content=data)
+    #data = {"type": type, "item" : item, "direct" : direct}
+    #print("/svgs/" + data["direct"] + "/" + data["item"] + "-" + data["type"] + ".html")
