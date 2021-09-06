@@ -1,0 +1,29 @@
+<svg id="svg-{{ svgs['id'] }}" width="477" height="477" style="transform:rotateY(15deg);transform-origin:238.5px 0;" viewBox="-50 -50 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <style>svg {shape-rendering:optimizeSpeed;text-rendering:optimizeSpeed;}</style>
+    {% with moji_id=svgs['id'], orientation='right' %}
+        {% include "/svgs/shadow.html" %}
+        <g id="moji-{{ moji_id }}">
+            <defs>
+                {% set path = "/svgs/gradient/" + svgs["gradient"] + '-gradient.html' %}{% include path ignore missing %}
+                {% include "/moji/body-clip.html" %}
+                <clipPath id="pattern-clip-{{ moji_id }}" style="transform: translate(-50px, 0);">
+                    <path d="m114.5 214.3c65.4-39.5 183.5-45.7 264-2.1 60.1 36.8 96.7 107.2 77.6 172.2-9.9 44.1-48.5 76.5-92 85.2-70.2 18.2-173.3 15.9-240.2 4.8-42.5-8.2-82.2-38.8-93.6-89.8-21.9-64.7 16.5-132 84.1-170.2z" />
+                </clipPath>
+            </defs>
+            {% set path = "/svgs/body/" + svgs["body"] + '-body.html' %}{% include path ignore missing %}
+            <g clip-path="url(#pattern-clip-{{ moji_id }})" style="transform: translate(50px, 0);">
+                {% set path = "/svgs/pattern/" + svgs["pattern"] + '-pattern.html' %}{% include path ignore missing %}
+            </g>
+            <g clip-path="url(#body-clip-{{ moji_id }})" style="transform: translate(50px, 0);">
+                {% set path = "/svgs/eyes/" + svgs["eyes"] + '-eyes.html' %}{% include path ignore missing %}
+                {% set path = "/svgs/mouth/" + svgs["mouth"] + '-mouth.html' %}{% include path ignore missing %}
+            </g>
+        </g>
+        <g style="transform: translate(25px, 0) skew(1deg, 1deg);">
+            {% set path = "/svgs/headwear/" + svgs["headwear"] + '-headwear.html' %}{% include path ignore missing %}
+        </g>
+    {% endwith %}
+    <script href="https://unpkg.com/gsap/dist/gsap.min.js"></script>
+    <script href="/static/js/moji.js"></script>
+    <script>new Moji({{ svgs['id'] }});</script>
+</svg>

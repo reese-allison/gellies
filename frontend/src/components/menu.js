@@ -14,7 +14,7 @@ class Menu extends Component {
             e_html: '',
             body: 'devil',
             b_html: '',
-            hat: '',
+            headwear: '',
             h_html: '',
             pattern: '',
             p_html: '',
@@ -52,7 +52,7 @@ class Menu extends Component {
             'eyes' : 'e_html',
             'mouth' : 'm_html',
             'pattern' : 'p_html',
-            'hat' : 'h_html'
+            'headwear' : 'h_html' //This list is still required for states
         }
         this.setState({[name]: value}, () =>{
             this.fetch_html(name, tag_list[name] //Gradient Swap fixed
@@ -63,12 +63,12 @@ class Menu extends Component {
 
     fetch_html(url, tag){
         const local_route = {
-            'gradient': "api/part/gradients/"+this.state.gradient,
-            'body': "api/part/bodies/"+this.state.body,
+            'gradient': "api/part/gradient/"+this.state.gradient,
+            'body': "api/part/body/"+this.state.body,
             'eyes': "api/part/eyes/"+this.state.eyes,
-            'mouth': "api/part/mouths/"+this.state.mouth,
-            'hat': "api/part/hats/"+this.state.hat,
-            'pattern': "api/part/patterns/"+this.state.pattern
+            'mouth': "api/part/mouth/"+this.state.mouth,
+            'headwear': "api/part/headwear/"+this.state.headwear,
+            'pattern': "api/part/pattern/"+this.state.pattern //List is no longer needed, shorten
         }
         fetch(local_route[url])
         .then(response => {
@@ -102,6 +102,7 @@ class Menu extends Component {
     }
     
 
+    //Patterns are rendering as overlays
     render() {
         const pageclass = pageStyle();
         //console.log(this.state)
@@ -112,7 +113,7 @@ class Menu extends Component {
                     <g id="gradients" dangerouslySetInnerHTML={{__html: this.state.g_html}}></g>
                 </defs>
                 <g id="bodies" dangerouslySetInnerHTML={{__html: this.state.b_html}}></g>
-                <g id="hats" dangerouslySetInnerHTML={{__html: this.state.h_html}}></g>
+                <g id="headwear" dangerouslySetInnerHTML={{__html: this.state.h_html}}></g>
                 <g id="eyes" dangerouslySetInnerHTML={{__html: this.state.e_html}}></g>
                 <g id="mouths" dangerouslySetInnerHTML={{__html: this.state.m_html}}></g> 
                 <g id="patterns" dangerouslySetInnerHTML={{__html: this.state.p_html}}></g>

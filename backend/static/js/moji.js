@@ -49,7 +49,7 @@ class Moji {
         this.ebb.add(
             gsap.to(this.hat, {
                 duration: 2,
-                y: -1.5,
+                y: 3,
                 ease: "linear",
             }), _range
         );
@@ -149,11 +149,10 @@ class Moji {
             }
         }, 0)
         .to(this.shadow, .2, {
-            y: 100,
             transformOrigin: "50% 50%",
-            scaleX: 1.075,
-            scaleY: 1.075,
-            opacity: .5,
+            scaleX: .9,
+            scaleY: .9,
+            opacity: .65,
             onComplete: () => {
                 jump_tl.reverse();
             }
