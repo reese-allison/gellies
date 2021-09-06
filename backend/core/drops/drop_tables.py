@@ -18,7 +18,8 @@ all_drops = {
         ['dot', 100],
         ['swirl', 100],
         ['frog', 100],
-        ['sleepy', 100]
+        ['sleepy', 100],
+        ['hungry', 100]
     ],
     'body': [
         ['devil', 100],
@@ -58,6 +59,7 @@ all_drops = {
         ["firefly", 100]
     ],
     'mouth': [
+        ['swirl', 100],
         ['cute', 100],
         ['bored', 100],
         ['snaggle', 100],
@@ -73,7 +75,8 @@ all_drops = {
         ['pumpkin', 100],
         ['knockout', 100],
         ['surprised', 100],
-        ['sabor-tooth', 100]
+        ['sabor-tooth', 100],
+        ['hungry', 100]
     ],
     'headwear': [
         ['no', 100],
@@ -89,6 +92,7 @@ all_drops = {
         ['freckle', 100],
         ['scar_(left)', 100],
         ['scar_(right)', 100],
+        ['rosy', 100]
     ]
 }
 
