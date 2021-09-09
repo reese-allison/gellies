@@ -14,10 +14,12 @@ class Menu extends Component {
             e_html: '',
             body: 'devil',
             b_html: '',
-            headwear: '',
+            headwear: 'tophat',
             h_html: '',
-            pattern: '',
+            pattern: 'whisker',
             p_html: '',
+            shadow: '',
+            clip: '',
             list: Array(),
             head_keys: Array(),
             list_called: false
@@ -55,22 +57,13 @@ class Menu extends Component {
             'headwear' : 'h_html' //This list is still required for states
         }
         this.setState({[name]: value}, () =>{
-            this.fetch_html(name, tag_list[name] //Gradient Swap fixed
-            )
+            this.fetch_html(name, tag_list[name])
         } )
         //console.log('onChange Called!')
     }
 
-    fetch_html(url, tag){
-        const local_route = {
-            'gradient': "api/part/gradient/"+this.state.gradient,
-            'body': "api/part/body/"+this.state.body,
-            'eyes': "api/part/eyes/"+this.state.eyes,
-            'mouth': "api/part/mouth/"+this.state.mouth,
-            'headwear': "api/part/headwear/"+this.state.headwear,
-            'pattern': "api/part/pattern/"+this.state.pattern //List is no longer needed, shorten
-        }
-        fetch(local_route[url])
+    fetch_html(part, tag){
+        fetch('api/part/'+part+'/'+this.state[part])
         .then(response => {
             return response.text();
         })
@@ -88,9 +81,12 @@ class Menu extends Component {
             return call.json();
         })
         .then(response => {
-            this.setState({list: response}, () =>{
+            //console.log(response)
+            this.setState({list: response['body']}, () =>{
                 this.setState({head_keys: Object.keys(this.state.list)})
                 this.setState({list_called: true})
+                this.setState({shadow: response['shadow']}) //added shadow and proper pattern placement
+                this.setState({clip: response['bodyclip']})
             })
         }).catch(error => {
             console.log(error)
@@ -99,10 +95,10 @@ class Menu extends Component {
         this.fetch_html('body', 'b_html')
         this.fetch_html('eyes', 'e_html')
         this.fetch_html('mouth', 'm_html')
+        this.fetch_html('headwear', 'h_html')
+        this.fetch_html('pattern', 'p_html')
     }
     
-
-    //Patterns are rendering as overlays
     render() {
         const pageclass = pageStyle();
         //console.log(this.state)
@@ -111,23 +107,23 @@ class Menu extends Component {
             <svg width="477" height="509" viewBox="-50 -50 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <g id="gradients" dangerouslySetInnerHTML={{__html: this.state.g_html}}></g>
+                    <g id="body-clip" dangerouslySetInnerHTML={{__html: this.state.clip}}></g>
                 </defs>
+                <g id="shadow" dangerouslySetInnerHTML={{__html: this.state.shadow}}></g>
                 <g id="bodies" dangerouslySetInnerHTML={{__html: this.state.b_html}}></g>
                 <g id="headwear" dangerouslySetInnerHTML={{__html: this.state.h_html}}></g>
-                <g id="eyes" dangerouslySetInnerHTML={{__html: this.state.e_html}}></g>
-                <g id="mouths" dangerouslySetInnerHTML={{__html: this.state.m_html}}></g> 
-                <g id="patterns" dangerouslySetInnerHTML={{__html: this.state.p_html}}></g>
-                
-                 
+                <g clip-path="url(#body-clip-menu)">
+                    <g id="patterns" dangerouslySetInnerHTML={{__html: this.state.p_html}}></g>
+                    <g id="eyes" dangerouslySetInnerHTML={{__html: this.state.e_html}}></g>
+                    <g id="mouths" dangerouslySetInnerHTML={{__html: this.state.m_html}}></g> 
+                </g>
             </svg>
             <div id="select_list">
-                <this.renderSelection></this.renderSelection>
+                <this.renderSelection/>
             </div>
         </div>)
     }
 }
-
-
 
 class SelectList extends Component {
     constructor(props){
@@ -135,7 +131,6 @@ class SelectList extends Component {
         this.state={
             sub_list: Array(),
             key: Array(),
-
             props_called:false
         }
         //console.log("SELECTLIST INITIALIZED")
