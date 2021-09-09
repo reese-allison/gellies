@@ -30,6 +30,7 @@ all_drops = {
         ['alien', 100],
         ['axolotl', 100],
         ['bunny', 100],
+        ['monster', 100]
     ],
     'gradient': [
         ["avocado", 100],
@@ -92,7 +93,8 @@ all_drops = {
         ['freckle', 100],
         ['scar_(left)', 100],
         ['scar_(right)', 100],
-        ['rosy', 100]
+        ['rosy', 100],
+        ['patchwork', 100]
     ]
 }
 

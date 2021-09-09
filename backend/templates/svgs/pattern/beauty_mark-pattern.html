@@ -1,1 +1,7 @@
-<circle fill="#000" cx="304.8" cy="394.6" r="3" />
+{% if orientation == 'left' %}
+    <circle style="transform: translate(-40px, 0);" fill="#000" cx="304.8" cy="394.6" r="3" />
+{% elif orientation == 'right' %}
+    <circle style="transform: translate(50px, 0);" fill="#000" cx="304.8" cy="394.6" r="3" />
+{% elif orientation == 'front' %}
+    <circle fill="#000" cx="304.8" cy="394.6" r="3" />
+{% endif %}
