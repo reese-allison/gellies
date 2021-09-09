@@ -1,6 +1,9 @@
 import { createTheme, responsiveFontSizes } from '@material-ui/core/styles';
 
 var theme = createTheme({
+    status:{
+      error: '#F7523B' 
+    },
     palette: {
       primary: {
         main: '#3E517A'
