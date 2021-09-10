@@ -10,6 +10,10 @@
                 {% set path = "/svgs/gradient/" + svgs["gradient"] + '-gradient.html' %}{% include path ignore missing %}
                 {% include "/moji/body-clip.html" %}
             </defs>
+            <g clip-path="url(#body-clip-{{ moji_id }})">
+                {% set path = "/svgs/eyes/" + svgs["eyes"] + '-eyes.html' %}{% include path ignore missing %}
+                {% set path = "/svgs/mouth/" + svgs["mouth"] + '-mouth.html' %}{% include path ignore missing %}
+            </g>
             {% set path = "/svgs/body/" + svgs["body"] + '-body.html' %}{% include path ignore missing %}
         </g>
         {% with orientation='front' %}
