@@ -1,14 +1,15 @@
+{% set template = '
+    <ellipse style="fill:#ffaaaa;stroke:none;opacity:.8;" cx="109" cy="378" rx="24" ry="14" />
+    <ellipse style="fill:#ffaaaa;stroke:none;opacity:.8;" cx="374" cy="378" rx="24" ry="14" />
+' %}
 {% if orientation == 'left' %}
     <g style="transform: translate(-40px, 0);">
-        <ellipse style="fill:#ffaaaa;stroke:none;opacity:.8;" cx="109" cy="378" rx="24" ry="14" />
-        <ellipse style="fill:#ffaaaa;stroke:none;opacity:.8;" cx="374" cy="378" rx="24" ry="14" />
+        {{ template | safe }}
     </g>
 {% elif orientation == 'right' %}
     <g style="transform: translate(50px, 0);">
-        <ellipse style="fill:#ffaaaa;stroke:none;opacity:.8;" cx="109" cy="378" rx="24" ry="14" />
-        <ellipse style="fill:#ffaaaa;stroke:none;opacity:.8;" cx="374" cy="378" rx="24" ry="14" />
+        {{ template | safe }}
     </g>
 {% elif orientation == 'front' %}
-    <ellipse style="fill:#ffaaaa;stroke:none;opacity:.8;" cx="109" cy="378" rx="24" ry="14" />
-    <ellipse style="fill:#ffaaaa;stroke:none;opacity:.8;" cx="374" cy="378" rx="24" ry="14" />
+    {{ template | safe }}
 {% endif %}

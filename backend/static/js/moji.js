@@ -88,6 +88,13 @@ class Moji {
             onComplete: () => {
                 bounce_tl.reverse();
             }
+        }, 0)
+        .to(this.shadow, .3, {
+            transformOrigin: "50% 50%",
+            scale: 1.04,
+            onComplete: () => {
+                bounce_tl.reverse();
+            }
         }, 0);
     }
 
@@ -123,6 +130,13 @@ class Moji {
             onComplete: () => {
                 second_bounce_tl.reverse();
             }
+        }, 0)
+        .to(this.shadow, .3, {
+            transformOrigin: "50% 50%",
+            scale: 1.04,
+            onComplete: () => {
+                second_bounce_tl.reverse();
+            }
         }, 0);
 
         first_bounce_tl.to(this.moji, .3, {
@@ -140,6 +154,13 @@ class Moji {
             onComplete: () => {
                 first_bounce_tl.reverse();
             }
+        }, 0)
+        .to(this.shadow, .3, {
+            transformOrigin: "50% 50%",
+            scale: 1.02,
+            onComplete: () => {
+                first_bounce_tl.reverse();
+            }
         }, 0);
 
         jump_tl.to(this.moji, .2, {
@@ -150,8 +171,7 @@ class Moji {
         }, 0)
         .to(this.shadow, .2, {
             transformOrigin: "50% 50%",
-            scaleX: .9,
-            scaleY: .9,
+            scale: .9,
             opacity: .65,
             onComplete: () => {
                 jump_tl.reverse();

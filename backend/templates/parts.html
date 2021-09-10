@@ -12,22 +12,27 @@
                 {% include "/moji/body-clip.html" %}
             </defs>
             <g id="body" class="moji">
-                {% if type == 'gradient' %}
-                    {% include "/svgs/body/cute-body.html" %}
-                {% elif type == 'body' %}
-                    {% include "/svgs/gradient/bone-gradient.html" %}
-                    {% set path = "/svgs/" + type + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
-                {% elif type == 'headwear' %}
-                    {% include "/svgs/body/cute-body.html" %}
-                    {% include "/svgs/gradient/bone-gradient.html" %}
-                    {% set path = "/svgs/" + type + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
-                {% else %}
-                    {% include "/svgs/body/cute-body.html" %}
-                    {% include "/svgs/gradient/bone-gradient.html" %}
-                    <g clip-path="url(#body-clip-{{ moji_id }})">
+                {% with svgs = dict(), orientation = 'front' %}
+                    {% if type == 'gradient' %}
+                        {% include "/svgs/body/cute-body.html" %}
+                    {% elif type == 'body' %}
+                        {% include "/svgs/gradient/bone-gradient.html" %}
                         {% set path = "/svgs/" + type + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
-                    </g>
-                {% endif %}
+                    {% elif type == 'headwear' %}
+                        {% include "/svgs/body/cute-body.html" %}
+                        {% include "/svgs/gradient/bone-gradient.html" %}
+                        {% set path = "/svgs/" + type + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
+                        {% with orientation = 'back' %}
+                            {% set path = "/svgs/" + type + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
+                        {% endwith %}
+                    {% else %}
+                        {% include "/svgs/body/cute-body.html" %}
+                        {% include "/svgs/gradient/bone-gradient.html" %}
+                        <g clip-path="url(#body-clip-{{ moji_id }})">
+                            {% set path = "/svgs/" + type + "/" + moji + '-' + type +'.html' %}{% include path ignore missing %}
+                        </g>
+                    {% endif %}
+                {% endwith %}
             </g>
         </g>
     </svg>
