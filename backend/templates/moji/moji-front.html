@@ -15,7 +15,9 @@
         </g>
         {% set path = "/svgs/headwear/" + svgs["headwear"] + '-headwear.html' %}{% include path ignore missing %}
     {% endwith %}
-    <script href="https://unpkg.com/gsap/dist/gsap.min.js"></script>
-    <script href="/static/js/moji.js"></script>
-    <script>new Moji({{ svgs['id'] }});</script>
+    {% if animations %}
+        <script href="https://unpkg.com/gsap/dist/gsap.min.js"></script>
+        <script href="/static/js/moji.js"></script>
+        <script>new Moji("{{ svgs['id'] }}");</script>
+    {% endif %}
 </svg>

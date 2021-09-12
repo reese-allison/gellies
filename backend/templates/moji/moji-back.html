@@ -1,10 +1,16 @@
 <svg id="svg-{{ svgs['id'] }}" width="477" height="477" style="transform:scale(-1, 1);transform-origin:238.5px 0;" viewBox="-50 -50 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
     <style>svg {shape-rendering:optimizeSpeed;text-rendering:optimizeSpeed;}</style>
     {% with moji_id=svgs['id'], orientation='back' %}
-        {% with orientation='back' %}
-            {% set path = "/svgs/headwear/" + svgs["headwear"] + '-headwear.html' %}{% include path ignore missing %}
-        {% endwith %}
-        {% include "/svgs/shadow.html" ignore missing %}
+        {% set path = "/svgs/headwear/" + svgs["headwear"] + '-headwear.html' %}
+        {% set hat %}
+            {% include path ignore missing %}
+        {% endset %}
+        {% if not hat | trim %}
+            {% with orientation='front' %}
+                {% include path ignore missing %}
+            {% endwith %}
+        {% endif %}
+        {% include "/svgs/shadow.html" %}
         <g id="moji-{{ moji_id }}">
             <defs>
                 {% set path = "/svgs/gradient/" + svgs["gradient"] + '-gradient.html' %}{% include path ignore missing %}
@@ -16,11 +22,11 @@
             </g>
             {% set path = "/svgs/body/" + svgs["body"] + '-body.html' %}{% include path ignore missing %}
         </g>
-        {% with orientation='front' %}
-            {% set path = "/svgs/headwear/" + svgs["headwear"] + '-headwear.html' %}{% include path ignore missing %}
-        {% endwith %}
+        {{ hat }}
     {% endwith %}
-    <script href="https://unpkg.com/gsap/dist/gsap.min.js"></script>
-    <script href="/static/js/moji.js"></script>
-    <script>new Moji({{ svgs['id'] }});</script>
+    {% if animations %}
+        <script href="https://unpkg.com/gsap/dist/gsap.min.js"></script>
+        <script href="/static/js/moji.js"></script>
+        <script>new Moji("{{ svgs['id'] }}");</script>
+    {% endif %}
 </svg>

@@ -13,7 +13,7 @@ class Moji extends Component{
     }
 
     render(){
-        let url = `/api/moji/?orientation=${this.state.orientation}`
+        let url = `/api/random-moji/?orientation=${this.state.orientation}`
         return (
             <object width="100%" height="100%" type="image/svg+xml" data={url} />
         )

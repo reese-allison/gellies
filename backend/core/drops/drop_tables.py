@@ -114,27 +114,18 @@ def weighted_random(pairs):
         r -= weight
         if r <= 0: return value
 
-def get_part_list():
-    table = tables['all']
-    svg_list = {
-        'eyes':[],
-        'mouth':[],
-        'body':[],
-        'gradient':[],
-        'headwear': [],
-        'pattern': [] #Can be shortened
-    }
-    for element in table:
-        for x in table[element]:
-            svg_list[element].append(x[0])
-    #svg_list['id'] = 'menu'
-    return svg_list
 
-def get_part(type, number):
+def get_component(component):
     table = tables['all']
-    return table[type][number][0]
+    return [i[0] for i in table[component]]
 
-def get_moji(table_name):
+
+def get_all_components():
+    table = tables['all']
+    return { c: [i[0] for i in table[c]] for c in table }
+
+
+def get_random_moji(table_name):
     table = tables[table_name]
     components = {'eyes', 'mouth', 'body', 'gradient', 'headwear', 'pattern'}
     svgs = { i: weighted_random(table[i]) for i in components }
