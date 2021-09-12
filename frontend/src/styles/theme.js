@@ -1,6 +1,30 @@
 import { createTheme, responsiveFontSizes } from '@material-ui/core/styles';
 
 var theme = createTheme({
+    overrides: {
+      MuiCssBaseline: {
+        '@global': {
+          '*': {
+            'scrollbar-color': '#472836 !important',
+            'scrollbar-width': 'thin !important',
+            'scroll-behavior': 'smooth',
+            '&::-webkit-scrollbar': {
+                width: '8px',
+                height: '8px'
+            },
+            '&::-webkit-scrollbar-track': {
+                backgroundColor: 'transparent'
+            },
+            '&::-webkit-scrollbar-thumb': {
+                backgroundColor: '#472836',
+                borderRadius: '20px',
+                '-webkit-border-radius': '20px'
+            },
+          },
+        },
+      },
+    },
+    spacing: 5,
     status:{
       error: '#F7523B' 
     },

@@ -120,11 +120,6 @@ def get_component(component):
     return [i[0] for i in table[component]]
 
 
-def get_all_components():
-    table = tables['all']
-    return { c: [i[0] for i in table[c]] for c in table }
-
-
 def get_random_moji(table_name):
     table = tables[table_name]
     components = {'eyes', 'mouth', 'body', 'gradient', 'headwear', 'pattern'}

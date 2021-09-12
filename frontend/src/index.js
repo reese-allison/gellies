@@ -4,7 +4,6 @@ import { ThemeProvider, makeStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Nav from './components/nav';
-import Parts from './components/parts';
 import Scene from './components/scene';
 import Menu from './components/menu';
 import theme from './styles/theme.js';
@@ -34,7 +33,6 @@ const App = () => {
             <Router>
                 <Home path="/"/>
                 <Scene anchors={anchors} width="100%" background="/static/images/beach.gif" path="/moji/"/>
-                <Parts path="/parts/"/>
                 <Menu path='/menu'/>
                 <Error type='404' default/>
             </Router>

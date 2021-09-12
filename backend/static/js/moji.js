@@ -31,7 +31,7 @@ class Moji {
         this.moji = document.getElementById(`moji-${ this.id }`);
         this.mouth = document.getElementById(`moji-${ this.id }-mouth`);
         this.shadow = document.getElementById(`moji-${ this.id }-shadow`);
-        this.hat = document.getElementById(`moji-${ this.id }-hat`);
+        this.headwear = document.getElementById(`moji-${ this.id }-headwear`);
 
         let inner_eyes = document.querySelectorAll(`#moji-${ this.id } .inner-eye`);
         this.eye_movement = gsap.set(eye_movement, {onRepeat: eye_movement, onRepeatParams: [inner_eyes], repeat: -1, repeatDelay: 4});
@@ -47,7 +47,7 @@ class Moji {
             }), _range
         );
         this.ebb.add(
-            gsap.to(this.hat, {
+            gsap.to(this.headwear, {
                 duration: 2,
                 y: 3,
                 ease: "linear",
@@ -82,7 +82,7 @@ class Moji {
             onComplete: () => {
                 bounce_tl.reverse();
             }
-        }, 0).to(this.hat, .3, {
+        }, 0).to(this.headwear, .3, {
             y: 65,
             ease: "power1.inOut",
             onComplete: () => {
@@ -124,7 +124,7 @@ class Moji {
                 second_bounce_tl.reverse();
             }
         }, 0)
-        .to(this.hat, .3, {
+        .to(this.headwear, .3, {
             y: (Math.random() > .3) ? 65 : -20,
             ease: "power1.inOut",
             onComplete: () => {
@@ -148,7 +148,7 @@ class Moji {
                 first_bounce_tl.reverse();
             }
         }, 0)
-        .to(this.hat, .3, {
+        .to(this.headwear, .3, {
             y: 32,
             ease: "power1.inOut",
             onComplete: () => {
@@ -177,7 +177,7 @@ class Moji {
                 jump_tl.reverse();
             }
         }, 0)
-        .to(this.hat, .2, {
+        .to(this.headwear, .2, {
             y: -100,
             transformOrigin: "50% 50%",
             onComplete: () => {
