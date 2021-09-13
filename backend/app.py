@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, Response
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, ORJSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import json
@@ -26,7 +26,7 @@ async def get_moji(request: Request, orientation: str = None):
 async def get_parts(request: Request, component: str):
     components = get_component(component)
     components = {k: t.get_template("parts.html").render({'request': request, 'type': component, 'id': k}) for k in components}
-    return JSONResponse(components)
+    return ORJSONResponse(components, headers={'Cache-Control': 'public, max-age=604800'})
 
 
 @app.get("/build/", response_class=HTMLResponse)

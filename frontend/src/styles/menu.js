@@ -7,7 +7,7 @@ const menuStyles = makeStyles(theme => ({
         fontFamily: `'Grandstander', cursive;`,
         fontSize: '1.3rem',
         [theme.breakpoints.down('md')]: {
-            fontSize: '1.5rem',
+            fontSize: '1.6rem',
         },
         fontWeight: 'bold',
         textShadow: Array(14).join('#000 0px 0px 2px, ') + '#000 0px 0px 2px;',

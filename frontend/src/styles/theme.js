@@ -1,4 +1,4 @@
-import { createTheme, responsiveFontSizes } from '@material-ui/core/styles';
+import { createTheme, responsiveFontSizes, lighten, darken} from '@material-ui/core/styles';
 
 var theme = createTheme({
     overrides: {
@@ -25,18 +25,21 @@ var theme = createTheme({
       },
     },
     spacing: 5,
-    status:{
-      error: '#F7523B' 
-    },
     palette: {
+      success: {
+        main: '#42FFD8'
+      },
+      error: {
+        main: '#F7523B'
+      },
       primary: {
         main: '#3E517A'
       },
       secondary: {
-        main: '#FCF5C7',
+        main: '#FCF5C7'
       },
       tertiary: {
-        main: '#472836',
+        main: '#472836'
       },
       contrastThreshold: 3,
       tonalOffset: 0.4,
@@ -58,5 +61,7 @@ var theme = createTheme({
     },
 });
 theme = responsiveFontSizes(theme);
+theme.palette.tertiary.light = lighten(theme.palette.tertiary.main, theme.palette.tonalOffset);
+theme.palette.tertiary.dark = darken(theme.palette.tertiary.main, theme.palette.tonalOffset);
 
 export default theme

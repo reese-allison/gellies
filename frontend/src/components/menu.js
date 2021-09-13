@@ -38,6 +38,7 @@ class Menu extends Component {
     }
 
     componentDidMount(){
+        this.showComponents('body');
         window.addEventListener('resize', this.updateDimensions);
     }
 
@@ -52,18 +53,23 @@ class Menu extends Component {
     }
 
     showComponents(component) {
-        this.setState({component: component}, ()=>{
+        if(component in this.state.parts){
+            this.setState({component: component});
+        }
+        else{
             fetch('/api/parts/' + component)
             .then(response => {
                 return response.json();
             })
             .then(content => {
-                this.setState({parts: content});
+                let new_parts = { ...this.state.parts }
+                new_parts[component] = content
+                this.setState({parts: new_parts, component: component});
             })
             .catch(function(error){
                 console.log(error);
             });
-        });
+        }
     }
 
     setComponent(value){
@@ -79,38 +85,49 @@ class Menu extends Component {
     render(){
         const classes = menuStyles();
         let vertical = window.innerHeight > window.innerWidth;
+        let parts = this.state.parts[this.state.component] || {};
+        let selected_part = this.state.components[this.state.component];
         return(
             <Container>
                 <Box m={4}>
                     <Grid container spacing={3}>
-                        <Grid item xs={vertical ? 12 : 6}>
-                            <div style={{ maxHeight: '100%', height: vertical ? '85vw' : '85vh'}}>
+                        <Grid item xs={vertical ? 12 : 6} style={{borderRadius: 20, backgroundColor: theme.palette.secondary.main}}>
+                            <div style={{ maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
                                 <object width="100%" height="100%" type="image/svg+xml" data={this.state.url} />
                             </div>
                         </Grid>
-                        <Grid item xs={vertical ? 12 : 6}>
-                            <div style={vertical ? {height: 'auto', overflowX: 'scroll'} : {height: window.innerHeight * .65, overflowY: 'scroll'}}>
-                                <div style={vertical ? {width: 'max-content', height: '20em'} : {}}>
-                                    {Object.keys(this.state.parts).map((key, index) => {
-                                        let styles = {float: 'left', height:'20em', width: '20em'};
-                                        return(
-                                            <div 
-                                                style={this.state.components[this.state.component] == key ? {...styles, 'border': `3px dashed ${theme.palette.tertiary.main}`} : styles}
-                                                onClick={() => this.setComponent(key)} 
-                                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(this.state.parts[key]) }}
-                                            ></div>
-                                        )
-                                    })}
+                        <Grid item xs={vertical ? 12 : 6} style={{borderRadius: 20}}>
+                            <div style={{ maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
+                                <div style={vertical ? {height: 'auto', overflowX: 'scroll'} : {maxHeight: vertical ? '79vw' : '79vh', height: vertical ? '79vw' : '79vh', overflowY: 'scroll'}}>
+                                    <div style={vertical ? {width: 'max-content', height: '20em'} : {}}>
+                                        {Object.keys(parts).map((key, index) => {
+                                            let styles = {
+                                                backgroundColor: theme.palette.secondary.main,
+                                                margin: 5,
+                                                borderRadius:10,
+                                                float: 'left',
+                                                height:'20em',
+                                                width: '20em'
+                                            };
+                                            return(
+                                                <div 
+                                                    style={selected_part == key ? {...styles, backgroundColor: theme.palette.success.light, border: `3px dashed ${theme.palette.tertiary.main}`} : styles}
+                                                    onClick={() => this.setComponent(key)} 
+                                                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(parts[key]) }}
+                                                ></div>
+                                            )
+                                        })}
+                                    </div>
                                 </div>
+                                <ButtonGroup fullWidth={true} variant="contained" color="primary" aria-label="contained primary button group">
+                                    <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('body')}>Body</Button>
+                                    <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('eyes')}>Eyes</Button>
+                                    <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('mouth')}>Mouth</Button>
+                                    <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('pattern')}>Pattern</Button>
+                                    <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('headwear')}>Headwear</Button>
+                                    <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('gradient')}>Color</Button>
+                                </ButtonGroup>
                             </div>
-                            <ButtonGroup fullWidth={true} variant="contained" color="primary" aria-label="contained primary button group">
-                                <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('body')}>Body</Button>
-                                <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('eyes')}>Eyes</Button>
-                                <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('mouth')}>Mouth</Button>
-                                <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('pattern')}>Pattern</Button>
-                                <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('headwear')}>Headwear</Button>
-                                <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('gradient')}>Color</Button>
-                            </ButtonGroup>
                         </Grid>
                     </Grid>
                 </Box>
