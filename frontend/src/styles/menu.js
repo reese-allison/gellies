@@ -6,6 +6,9 @@ const menuStyles = makeStyles(theme => ({
         color: theme.palette.primary.contrastText,
         fontFamily: `'Grandstander', cursive;`,
         fontSize: '1.3rem',
+        [theme.breakpoints.down('md')]: {
+            fontSize: '1.5rem',
+        },
         fontWeight: 'bold',
         textShadow: Array(14).join('#000 0px 0px 2px, ') + '#000 0px 0px 2px;',
         WebkitFontSmoothing: true,

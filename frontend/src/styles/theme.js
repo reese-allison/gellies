@@ -24,6 +24,7 @@ var theme = createTheme({
         },
       },
     },
+    spacing: 5,
     status:{
       error: '#F7523B' 
     },
@@ -33,6 +34,9 @@ var theme = createTheme({
       },
       secondary: {
         main: '#FCF5C7',
+      },
+      tertiary: {
+        main: '#472836',
       },
       contrastThreshold: 3,
       tonalOffset: 0.4,
