@@ -33,5 +33,5 @@ async def get_parts(request: Request, component: str):
 async def get_build(request: Request):
     components = dict(request.query_params)
     components['id'] = 'build'
-    data = t.get_template(f"moji/moji-front.html").render({"svgs": components})
+    data = t.get_template(f"build.html").render({"svgs": components})
     return Response(content=data, media_type="image/svg+xml")

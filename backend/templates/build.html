@@ -1,0 +1,23 @@
+<svg id="svg-{{ svgs['id'] }}" height="100%" width="100%" viewBox="-50 50 600 550" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <style>svg {shape-rendering:optimizeSpeed;text-rendering:optimizeSpeed;}</style>
+    {% with moji_id=svgs['id'], orientation='front' %}
+        {% include "/svgs/shadow.html" %}
+        <g id="moji-{{ moji_id }}">
+            <defs>
+                {% set path = "/svgs/gradient/" + svgs["gradient"] + '-gradient.html' %}{% include path ignore missing %}
+                {% include "/moji/body-clip.html" %}
+            </defs>
+            {% set path = "/svgs/body/" + svgs["body"] + '-body.html' %}{% include path ignore missing %}
+            <g clip-path="url(#body-clip-{{ moji_id }})">
+                {% set path = "/svgs/eyes/" + svgs["eyes"] + '-eyes.html' %}{% include path ignore missing %}
+                {% set path = "/svgs/mouth/" + svgs["mouth"] + '-mouth.html' %}{% include path ignore missing %}
+            </g>
+        </g>
+        {% set path = "/svgs/headwear/" + svgs["headwear"] + '-headwear.html' %}{% include path ignore missing %}
+    {% endwith %}
+    {% if animations %}
+        <script href="https://unpkg.com/gsap/dist/gsap.min.js"></script>
+        <script href="/static/js/moji.js"></script>
+        <script>new Moji("{{ svgs['id'] }}");</script>
+    {% endif %}
+</svg>

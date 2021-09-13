@@ -5,6 +5,8 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import DOMPurify from 'dompurify';
 
+import menuStyles from '../styles/menu';
+
 
 /**  @jsx h */
 /** @jsxFrag Fragment */
@@ -58,35 +60,37 @@ class Menu extends Component {
     }
 
     render(){
+        const classes = menuStyles();
         return(
             <Container>
                 <Grid container spacing={3}>
-                    <Grid item xs={12} md={4}>
-                        <object width="100%" height="100%" type="image/svg+xml" data={this.state.url} />
+                    <Grid item xs={12}>
+                        <div style={{ minHeight: '40vw', height: '50vh'}}>
+                            <object width="100%" height="100%" type="image/svg+xml" data={this.state.url} />
+                        </div>
                     </Grid>
-                    <Grid item xs={12} md={8}>
+                    <Grid item xs={12}>
                         <ButtonGroup fullWidth={true} variant="contained" color="primary" aria-label="contained primary button group">
-                            <Button size='small' onClick={() => this.showComponents('body')}><h2>Bodies</h2></Button>
-                            <Button size='small' onClick={() => this.showComponents('eyes')}><h2>Eyes</h2></Button>
-                            <Button size='small' onClick={() => this.showComponents('mouth')}><h2>Mouths</h2></Button>
-                            <Button size='small' onClick={() => this.showComponents('pattern')}><h2>Patterns</h2></Button>
-                            <Button size='small' onClick={() => this.showComponents('headwear')}><h2>Headwear</h2></Button>
-                            <Button size='small' onClick={() => this.showComponents('gradient')}><h2>Gradients</h2></Button>
+                            <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('body')}>Bodies</Button>
+                            <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('eyes')}>Eyes</Button>
+                            <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('mouth')}>Mouths</Button>
+                            <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('pattern')}>Patterns</Button>
+                            <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('headwear')}>Headwear</Button>
+                            <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('gradient')}>Gradients</Button>
                         </ButtonGroup>
-                        <div style={{maxHeight: '75vh', overflowY: 'scroll'}}>
-                            <Grid container>
+                        <div style={{height: 'auto', overflowX: 'scroll'}}>
+                            <div style={{width: 'max-content'}}>
                                 {Object.keys(this.state.parts).map((key, index) => {
+                                    let styles = {float: 'left', height:'20em', width: '20em'};
                                     return(
-                                        <Grid xs={4}>
-                                            <div 
-                                                style={this.state.components[this.state.component] == key ? {'border': '3px dashed black'} : {}}
-                                                onClick={() => this.setComponent(key)} 
-                                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(this.state.parts[key]) }}
-                                            ></div>
-                                        </Grid>
+                                        <div 
+                                            style={this.state.components[this.state.component] == key ? {...styles, 'border': '3px dashed black'} : styles}
+                                            onClick={() => this.setComponent(key)} 
+                                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(this.state.parts[key]) }}
+                                        ></div>
                                     )
                                 })}
-                            </Grid>
+                            </div>
                         </div>
                     </Grid>
                 </Grid>

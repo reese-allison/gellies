@@ -1,5 +1,5 @@
 {% set moji_id = id.replace(" ", "").replace("(", "").replace(")", "S") %}
-<svg style="cursor:pointer;" id="svg-{{ id }}" viewBox="-50 50 600 550" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg style="cursor:pointer;" id="svg-{{ id }}" height="100%" width="100%" viewBox="-50 50 600 550" fill="none" xmlns="http://www.w3.org/2000/svg">
     <style>svg {shape-rendering:optimizeSpeed;text-rendering:optimizeSpeed;}</style>
     <text font-family="Grandstander" fill="#000" font-size="36px" dominant-baseline="middle" text-anchor="middle" x="238.5" y="100%">{{ id.replace("_", " ")|title }} {{ type|title }}</text>
     {% include "/svgs/shadow.html" ignore missing %}

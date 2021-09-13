@@ -24,7 +24,6 @@ var theme = createTheme({
         },
       },
     },
-    spacing: 5,
     status:{
       error: '#F7523B' 
     },
