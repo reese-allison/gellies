@@ -91,7 +91,7 @@ class Moji {
         }, 0)
         .to(this.shadow, .3, {
             transformOrigin: "50% 50%",
-            scale: 1.04,
+            scale: 1.1,
             onComplete: () => {
                 bounce_tl.reverse();
             }
@@ -133,7 +133,7 @@ class Moji {
         }, 0)
         .to(this.shadow, .3, {
             transformOrigin: "50% 50%",
-            scale: 1.04,
+            scale: 1.1,
             onComplete: () => {
                 second_bounce_tl.reverse();
             }
@@ -157,7 +157,7 @@ class Moji {
         }, 0)
         .to(this.shadow, .3, {
             transformOrigin: "50% 50%",
-            scale: 1.02,
+            scale: 1.05,
             onComplete: () => {
                 first_bounce_tl.reverse();
             }

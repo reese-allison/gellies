@@ -3,6 +3,7 @@ from random import randint
 
 all_drops = {
     'eyes': [
+        ['dot', 100],
         ['shiny', 100],
         ['cat', 100],
         ['cute', 100],
@@ -15,24 +16,24 @@ all_drops = {
         ['surprised', 100],
         ['winking_(right)', 100],
         ['winking_(left)', 100],
-        ['dot', 100],
         ['swirl', 100],
         ['frog', 100],
         ['sleepy', 100],
         ['hungry', 100]
     ],
     'body': [
+        ['cute', 100],
         ['devil', 100],
         ['deer', 100],
         ['teddy', 100],
         ['cat', 100],
-        ['cute', 100],
         ['alien', 100],
         ['axolotl', 100],
         ['bunny', 100],
         ['monster', 100]
     ],
     'gradient': [
+        ["lemon", 100],
         ["avocado", 100],
         ["blueberry", 100],
         ["bone", 100],
@@ -54,17 +55,16 @@ all_drops = {
         ["dough", 100],
         ["ice", 100],
         ["pear", 100],
-        ["lemon", 100],
         ["fire", 100],
         ["water", 100],
         ["firefly", 100]
     ],
     'mouth': [
+        ['no', 100],
         ['swirl', 100],
         ['cute', 100],
         ['bored', 100],
         ['snaggle', 100],
-        ['no', 100],
         ['frown', 100],
         ['buck_teeth', 100],
         ['fanged', 100],

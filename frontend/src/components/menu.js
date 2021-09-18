@@ -120,12 +120,12 @@ class Menu extends Component {
                                     </div>
                                 </div>
                                 <ButtonGroup fullWidth={true} variant="contained" color="primary" aria-label="contained primary button group">
-                                    <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('body')}>Body</Button>
-                                    <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('eyes')}>Eyes</Button>
-                                    <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('mouth')}>Mouth</Button>
-                                    <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('pattern')}>Pattern</Button>
-                                    <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('headwear')}>Headwear</Button>
-                                    <Button className={classes.menuButton} size='large' onClick={() => this.showComponents('gradient')}>Color</Button>
+                                    <Button style={this.state.component=='body' ? {textDecoration: 'underline'} : {}} className={classes.menuButton} size='large' onClick={() => this.showComponents('body')}>Body</Button>
+                                    <Button style={this.state.component=='eyes' ? {textDecoration: 'underline'} : {}} className={classes.menuButton} size='large' onClick={() => this.showComponents('eyes')}>Eyes</Button>
+                                    <Button style={this.state.component=='mouth' ? {textDecoration: 'underline'} : {}} className={classes.menuButton} size='large' onClick={() => this.showComponents('mouth')}>Mouth</Button>
+                                    <Button style={this.state.component=='pattern' ? {textDecoration: 'underline'} : {}} className={classes.menuButton} size='large' onClick={() => this.showComponents('pattern')}>Pattern</Button>
+                                    <Button style={this.state.component=='headwear' ? {textDecoration: 'underline'} : {}} className={classes.menuButton} size='large' onClick={() => this.showComponents('headwear')}>Headwear</Button>
+                                    <Button style={this.state.component=='gradient' ? {textDecoration: 'underline'} : {}} className={classes.menuButton} size='large' onClick={() => this.showComponents('gradient')}>Color</Button>
                                 </ButtonGroup>
                             </div>
                         </Grid>
