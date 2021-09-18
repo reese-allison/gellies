@@ -1,3 +1,6 @@
+import gsap from "gsap";
+
+
 function randomRange(min, max) { 
     return Math.random() * (max - min) + min;
 }
@@ -23,7 +26,7 @@ function eye_movement(inner_eyes){
 }
 
 
-class Moji {
+class MojiAnimations {
     constructor(id){
         this.id = id
         this.busy = false;
@@ -36,7 +39,7 @@ class Moji {
         let inner_eyes = document.querySelectorAll(`#moji-${ this.id } .inner-eye`);
         this.eye_movement = gsap.set(eye_movement, {onRepeat: eye_movement, onRepeatParams: [inner_eyes], repeat: -1, repeatDelay: 4});
 
-        this.ebb = new TimelineMax({repeat:-1, repeatDelay:.5, yoyo:true});
+        this.ebb = gsap.timeline({repeat:-1, repeatDelay:.5, yoyo:true});
         let _range = randomRange(0, 2);
         this.ebb.add(
             gsap.to(this.moji, {
@@ -70,11 +73,12 @@ class Moji {
             return;
         }
         this.active();
-        let bounce_tl = new TimelineMax({ onReverseComplete: ()=>{
+        let bounce_tl = gsap.timeline({ onReverseComplete: ()=>{
             this.inactive();
         }});
 
-        bounce_tl.to(this.moji, .3, {
+        bounce_tl.to(this.moji, {
+            duration: .3,
             transformOrigin: "50% 100%",
             scaleX: 1.1,
             scaleY: 0.8,
@@ -82,14 +86,16 @@ class Moji {
             onComplete: () => {
                 bounce_tl.reverse();
             }
-        }, 0).to(this.headwear, .3, {
+        }, 0).to(this.headwear, {
+            duration: .3,
             y: 65,
             ease: "power1.inOut",
             onComplete: () => {
                 bounce_tl.reverse();
             }
         }, 0)
-        .to(this.shadow, .3, {
+        .to(this.shadow, {
+            duration: .3,
             transformOrigin: "50% 50%",
             scale: 1.1,
             onComplete: () => {
@@ -103,19 +109,20 @@ class Moji {
             return;
         }
         this.active();
-        let second_bounce_tl = new TimelineMax({ paused: true, onReverseComplete: ()=>{
+        let second_bounce_tl = gsap.timeline({ paused: true, onReverseComplete: ()=>{
             this.inactive();
         }});
 
-        let jump_tl = new TimelineMax({ paused: true, onReverseComplete: ()=>{
+        let jump_tl = gsap.timeline({ paused: true, onReverseComplete: ()=>{
             second_bounce_tl.resume();
         }});
 
-        let first_bounce_tl = new TimelineMax({ onReverseComplete: ()=>{
+        let first_bounce_tl = gsap.timeline({ onReverseComplete: ()=>{
             jump_tl.resume();
         }});
 
-        second_bounce_tl.to(this.moji, .3, {
+        second_bounce_tl.to(this.moji, {
+            duration: .3,
             transformOrigin: "50% 100%",
             scaleX: 1.1,
             scaleY: 0.8,
@@ -124,14 +131,16 @@ class Moji {
                 second_bounce_tl.reverse();
             }
         }, 0)
-        .to(this.headwear, .3, {
+        .to(this.headwear, {
+            duration: .3,
             y: (Math.random() > .3) ? 65 : -20,
             ease: "power1.inOut",
             onComplete: () => {
                 second_bounce_tl.reverse();
             }
         }, 0)
-        .to(this.shadow, .3, {
+        .to(this.shadow, {
+            duration: .3,
             transformOrigin: "50% 50%",
             scale: 1.1,
             onComplete: () => {
@@ -139,7 +148,8 @@ class Moji {
             }
         }, 0);
 
-        first_bounce_tl.to(this.moji, .3, {
+        first_bounce_tl.to(this.moji, {
+            duration: .3,
             transformOrigin: "50% 100%",
             scaleX: 1.05,
             scaleY: 0.9,
@@ -148,14 +158,16 @@ class Moji {
                 first_bounce_tl.reverse();
             }
         }, 0)
-        .to(this.headwear, .3, {
+        .to(this.headwear, {
+            duration: .3,
             y: 32,
             ease: "power1.inOut",
             onComplete: () => {
                 first_bounce_tl.reverse();
             }
         }, 0)
-        .to(this.shadow, .3, {
+        .to(this.shadow, {
+            duration: .3,
             transformOrigin: "50% 50%",
             scale: 1.05,
             onComplete: () => {
@@ -163,13 +175,15 @@ class Moji {
             }
         }, 0);
 
-        jump_tl.to(this.moji, .2, {
+        jump_tl.to(this.moji, {
+            duration: .2,
             y: -100,
             onComplete: () => {
                 jump_tl.reverse();
             }
         }, 0)
-        .to(this.shadow, .2, {
+        .to(this.shadow, {
+            duration: .2,
             transformOrigin: "50% 50%",
             scale: .9,
             opacity: .65,
@@ -177,7 +191,8 @@ class Moji {
                 jump_tl.reverse();
             }
         }, 0)
-        .to(this.headwear, .2, {
+        .to(this.headwear, {
+            duration: .2,
             y: -100,
             transformOrigin: "50% 50%",
             onComplete: () => {
@@ -196,3 +211,5 @@ class Moji {
         this.ebb.resume();
     }
 }
+
+window.MojiAnimations = MojiAnimations;
