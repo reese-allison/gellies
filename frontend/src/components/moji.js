@@ -4,6 +4,10 @@ import gsap from "gsap";
 import { randomNegative, randomRange, createURI } from '../common'
 
 
+// TODO ADD FPS OPTION FOR USERS
+gsap.ticker.fps(30);
+
+
 function eye_movement(inner_eyes){
     let eye_movement_delay = randomRange(0, 3);
     let x = randomRange(0, 5) * randomNegative();
