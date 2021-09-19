@@ -204,10 +204,18 @@ class Moji extends Component{
                     }), range
                 );
                 ebb.add(
+                    gsap.to(shadow, {
+                        scale: 1.03,
+                        duration: 2,
+                        ease: "linear",
+                        transformOrigin: "top"
+                    }), range
+                );
+                ebb.add(
                     gsap.to(headwear, {
                         duration: 2,
                         y: 3,
-                        ease: "linear",
+                        ease: "linear"
                     }), range
                 );
         

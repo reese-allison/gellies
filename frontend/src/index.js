@@ -2,7 +2,7 @@ import registerServiceWorker from './service-worker';
 registerServiceWorker();
 
 import { Router } from 'preact-router';
-import { h, Fragment, Component, render } from 'preact';
+import { h, Fragment, render } from 'preact';
 import { ThemeProvider, makeStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -28,7 +28,7 @@ const App = () => {
         {width: .2, orientation: 'right', style: {bottom: '4%', left: '5%'}},
         {width: .08, orientation: 'left', style: {bottom: '44%', right: '12%'}}
     ];
-    const classes = appStyles();
+    appStyles();
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
