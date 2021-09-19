@@ -12,6 +12,7 @@ class Scene extends Component{
         super(props);
         this.ref = createRef();
         this.state = {
+            rendered: false,
             width: props.width,
             background: props.background,
             anchors: props.anchors
@@ -27,10 +28,12 @@ class Scene extends Component{
     }
 
     componentDidMount(){
-        this.setState({
-            moji_width: this.ref.current.offsetWidth
-        });
-        window.addEventListener('resize', this.handleResize);
+        this.setState({rendered: true}, ()=>{
+            this.setState({
+                moji_width: this.ref.current.offsetWidth
+            });
+            window.addEventListener('resize', this.handleResize);
+        })
     }
 
     render(){
