@@ -16,7 +16,8 @@
         {% set path = "/svgs/headwear/" + svgs["headwear"] + '-headwear.html' %}{% include path ignore missing %}
     {% endwith %}
     {% if animations %}
-        <script href="/moji_animations.js"></script>
-        <script>new MojiAnimations("{{ svgs['id'] }}");</script>
+        {% with moji_id=svgs["id"] %}
+            {% include "/moji/animations.html" %}
+        {% endwith %}
     {% endif %}
 </svg>

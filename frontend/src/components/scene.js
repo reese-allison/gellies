@@ -44,7 +44,7 @@ class Scene extends Component{
                         moji_style.height = x.width * this.state.moji_width + 'px';
                         return(
                             <div style={Object.assign({position: 'absolute'}, moji_style)}>
-                                <Moji orientation={x.orientation}/>
+                                <Moji orientation={x.orientation} id={x.id}/>
                             </div>
                         );
                     })}

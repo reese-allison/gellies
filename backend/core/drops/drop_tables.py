@@ -124,5 +124,4 @@ def get_random_moji(table_name):
     table = tables[table_name]
     components = {'eyes', 'mouth', 'body', 'gradient', 'headwear', 'pattern'}
     svgs = { i: weighted_random(table[i]) for i in components }
-    svgs['id'] = randint(1, 100000000)
     return svgs

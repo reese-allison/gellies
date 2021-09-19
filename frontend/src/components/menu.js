@@ -93,7 +93,7 @@ class Menu extends Component {
                     <Grid container spacing={3}>
                         <Grid item xs={vertical ? 12 : 6} style={{borderRadius: 20, backgroundColor: theme.palette.secondary.main}}>
                             <div style={{ maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
-                                <object width="100%" height="100%" type="image/svg+xml" data={this.state.url} />
+                                <object typemustmatch={true} width="100%" height="100%" type="image/svg+xml" data={this.state.url} />
                             </div>
                         </Grid>
                         <Grid item xs={vertical ? 12 : 6} style={{borderRadius: 20}}>

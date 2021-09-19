@@ -5,16 +5,11 @@ const WorkboxPlugin = require('workbox-webpack-plugin');
 function buildConfig(env) {
   return{
     mode: env.development ? 'development' : env.production ? 'production' : null,
-    entry: {
-      main: path.resolve(__dirname, "src/index.js"),
-      moji_animations: path.resolve(__dirname, "src/moji-animations.js")
+    entry: { 
+      main: path.resolve(__dirname, "src/index.js")
     },
-    output: {
-      path: path.resolve(__dirname, "dist"),
-      library: {
-        name: '[name]',
-        type: 'umd'
-      }
+    output: { 
+      path: path.resolve(__dirname, "dist")
     },
     module: {
       rules: [
@@ -40,7 +35,6 @@ function buildConfig(env) {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        chunks: ['main'],
         template: path.join(__dirname, "src", "index.html"),
         minify: true,
       }),
