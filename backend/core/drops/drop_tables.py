@@ -98,14 +98,6 @@ all_drops = {
     ]
 }
 
-random_gradients = deepcopy(all_drops)
-random_gradients['gradient'] = [['random', 1]]
-
-tables = {
-    'all': all_drops,
-    'gradient': random_gradients
-}
-
 
 def weighted_random(pairs):
     total = sum(pair[1] for pair in pairs)
@@ -116,12 +108,9 @@ def weighted_random(pairs):
 
 
 def get_component(component):
-    table = tables['all']
-    return [i[0] for i in table[component]]
+    return [i[0] for i in all_drops[component]]
 
 
-def get_random_moji(table_name):
-    table = tables[table_name]
+def get_random_moji():
     components = {'eyes', 'mouth', 'body', 'gradient', 'headwear', 'pattern'}
-    svgs = { i: weighted_random(table[i]) for i in components }
-    return svgs
+    return { i: weighted_random(all_drops[i]) for i in components }

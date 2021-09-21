@@ -2,6 +2,7 @@ import { h, Fragment, Component, createRef } from 'preact';
 import { debounce } from '@material-ui/core';
 
 import Moji from './moji';
+import sceneStyles from '../styles/scene'
 
 
 /** @jsx h */
@@ -37,8 +38,9 @@ class Scene extends Component{
     }
 
     render(){
+        const classes = sceneStyles();
         return (
-            <div>
+            <div className={classes.scene}>
                 <div ref={this.ref} style={{ position: 'relative', width: this.state.width }}>
                     {this.state.anchors.map((x, i) => {
                         let moji_style = {}
@@ -47,7 +49,15 @@ class Scene extends Component{
                         moji_style.height = x.width * this.state.moji_width + 'px';
                         return(
                             <div style={Object.assign({position: 'absolute'}, moji_style)}>
-                                <Moji orientation={x.orientation} id={x.id}/>
+                                <Moji 
+                                    eyes={x.eyes} 
+                                    mouth={x.mouth} 
+                                    gradient={x.gradient} 
+                                    body={x.body} 
+                                    orientation={x.orientation}
+                                    headwear={x.headwear}
+                                    id={x.id}
+                                />
                             </div>
                         );
                     })}

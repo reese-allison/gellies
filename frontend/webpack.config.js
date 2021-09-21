@@ -16,6 +16,7 @@ function buildConfig(env) {
         {
           test: /\.?js$/,
           exclude: /node_modules/,
+          sideEffects: false,
           use: {
             loader: "babel-loader",
             options: {
@@ -25,10 +26,12 @@ function buildConfig(env) {
         },
         {
           test: /\.css$/i,
+          sideEffects: false,
           use: ["style-loader", "css-loader"],
         },
         {
           test: /\.(woff|woff2|eot|ttf|png|jpeg|jpg|svg|gif)$/,
+          sideEffects: false,
           use: 'asset/resource'
         }
       ],
@@ -59,7 +62,10 @@ function buildConfig(env) {
         "react-dom": "preact/compat",
         "react/jsx-runtime": "preact/jsx-runtime"
       }
-    }
+    },
+    optimization: {
+      mangleWasmImports: true,
+    },
   }
 }
 

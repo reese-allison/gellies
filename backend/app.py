@@ -15,7 +15,7 @@ t = Jinja2Templates(directory="backend/templates")
 
 @app.get("/random-moji/", response_class=HTMLResponse)
 async def get_moji(request: Request, moji_id: str, orientation: str = None):
-    svgs = get_random_moji('all')
+    svgs = get_random_moji()
     svgs['id'] = moji_id
     if not orientation:
         orientation = 'front'
