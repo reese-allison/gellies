@@ -293,7 +293,7 @@ class Moji extends Component{
         let moji_style = ['left', 'right'].includes(this.state.orientation) ? 
             "transform:rotateY(15deg);transform-origin:center top;" : 
             '';
-        let face_style = this.state.orientation === 'left' ? 
+        let orientation_style = this.state.orientation === 'left' ? 
             "transform: translate(-40px, 0);" : 
             this.state.orientation === 'right' ?
             "transform: translate(50px, 0);" :
@@ -311,9 +311,9 @@ class Moji extends Component{
                 </g>
                 <g ref={this.refs.moji} onClick={this.state.click ? this.onClick : null}>
                     <Suspense fallback={<DefaultBody />}>
-                        <Body id={this.state.id} orientation={this.state.orientation} pattern={this.state.components.pattern} />
+                        <Body style={orientation_style} id={this.state.id} orientation={this.state.orientation} pattern={this.state.components.pattern} />
                     </Suspense>
-                    <g style={face_style} clip-path={`url(#body-clip-${ this.state.id })`}>
+                    <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
                         <Suspense fallback={<DefaultEyes />}>
                             <Eyes id={this.state.id} ref={this.eyesMounted} />
                         </Suspense>

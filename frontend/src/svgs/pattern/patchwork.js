@@ -6,7 +6,7 @@ import { h, Fragment } from 'preact';
 
 export default (props) => {
     return (
-        <g>
+        <g style={props.style}>
             <path style="fill:#ccffcc;fill-opacity:.5;"  d="M 430.4,178.1 C 512.6,234.5 560.5,338.9 530.9,432.9 515.0,496.9 459.6,542.5 398.5,553.3 299.6,576.8 155.7,568.9 62.8,549.7 33.2,542.8 5.0,527.8 -17.5,505.0 Z" />
             <g>
                 <path style="opacity:0.9;fill:#000000;stroke:#000000;stroke-width:0.5" d="m 86,416.2 c 2.2,-1.3 4.8,-5.2 4,-2.5 -0.2,0.7 -1,1.8 -3.3,3.2 -2.3,1.4 -3.8,2 -4.6,2 -3.9,-0.3 1.3,-1.1 3.9,-2.7 z"/>
