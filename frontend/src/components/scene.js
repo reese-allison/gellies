@@ -56,6 +56,7 @@ class Scene extends Component{
                                     body={x.body} 
                                     orientation={x.orientation}
                                     headwear={x.headwear}
+                                    pattern={x.pattern}
                                     id={x.id}
                                 />
                             </div>

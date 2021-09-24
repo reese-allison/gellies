@@ -1,3 +1,10 @@
+import { Component } from 'preact';
+import { lazy } from 'preact/compat';
+import DefaultBody from './svgs/default-body';
+import DefaultEyes from './svgs/default-eyes';
+import DefaultGradient from './svgs/default-gradient';
+
+
 function randomRange(min, max) { 
     return Math.random() * (max - min) + min;
 }
@@ -8,4 +15,23 @@ function randomNegative() {
 }
 
 
-export { randomRange, randomNegative }
+function maybeLoadTemplate(folder, template){
+    if(template === null || template === '' || template === undefined){
+        if(folder === 'body'){
+            return DefaultBody;
+        }
+        if(folder === 'eyes'){
+            return DefaultEyes;
+        }
+        if(folder === 'gradient'){
+            return DefaultGradient
+        }
+        return Component;
+    }
+    else{
+        return lazy(() => import(`./svgs/${folder}/${template}`));
+    }
+}
+
+
+export { randomRange, randomNegative, maybeLoadTemplate }

@@ -1,18 +1,22 @@
 import { h, Fragment, Component, createRef } from 'preact';
-import { lazy, Suspense } from 'preact/compat';
+import { Suspense } from 'preact/compat';
 import { v4 as uuid } from 'uuid';
 import gsap from "gsap";
-import { randomNegative, randomRange } from '../common'
+import { randomNegative, randomRange, maybeLoadTemplate } from '../common';
 
-import Shadow from '../svgs/shadow'
-import Clip from '../svgs/clip'
+import Shadow from '../svgs/shadow';
+import Clip from '../svgs/clip';
+
+import DefaultBody from '../svgs/default-body';
+import DefaultEyes from '../svgs/default-eyes';
+import DefaultGradient from '../svgs/default-gradient';
 
 
 // TODO ADD FPS OPTION FOR USERS
-gsap.ticker.fps(30);
+gsap.ticker.fps(60);
 
 
-function eye_movement(inner_eyes){
+function eyeMovement(inner_eyes){
     let eye_movement_delay = randomRange(0, 3);
     let x = randomRange(0, 5) * randomNegative();
     let y = randomRange(0, 5) * randomNegative();
@@ -33,8 +37,10 @@ function eye_movement(inner_eyes){
 class Moji extends Component{
     constructor(props){
         super(props);
+        if(props.id === null){
+            props.id = uuid();        
+        }
 
-        let random = props.id === undefined ? true : false;
         this.busy = false;
         this.animations = {
             ebb: null,
@@ -46,10 +52,10 @@ class Moji extends Component{
             headwear: null
         }
         this.state = {
-            random: random,
-            id: random ? uuid() : props.id,
+            id: props.id,
+            orientation: props.orientation,
+            click: props.click,
             components: {
-                orientation: props.orientation,
                 gradient: props.gradient,
                 body: props.body,
                 eyes: props.eyes,
@@ -80,7 +86,7 @@ class Moji extends Component{
 
         bounce_tl.to(this.refs.moji.current, {
             duration: .3,
-            transformOrigin: "50% 100%",
+            transformOrigin: "bottom center",
             scaleX: 1.1,
             scaleY: 0.8,
             ease: "power1.inOut",
@@ -97,7 +103,7 @@ class Moji extends Component{
         }, 0)
         .to(this.refs.shadow.current, {
             duration: .3,
-            transformOrigin: "50% 50%",
+            transformOrigin: "center",
             scale: 1.1,
             onComplete: () => {
                 bounce_tl.reverse();
@@ -126,7 +132,7 @@ class Moji extends Component{
 
         second_bounce_tl.to(this.refs.moji.current, {
             duration: .3,
-            transformOrigin: "50% 100%",
+            transformOrigin: "bottom center",
             scaleX: 1.1,
             scaleY: 0.8,
             ease: "power1.inOut",
@@ -144,7 +150,7 @@ class Moji extends Component{
         }, 0)
         .to(this.refs.shadow.current, {
             duration: .3,
-            transformOrigin: "50% 50%",
+            transformOrigin: "center",
             scale: 1.1,
             onComplete: () => {
                 second_bounce_tl.reverse();
@@ -153,7 +159,7 @@ class Moji extends Component{
 
         first_bounce_tl.to(this.refs.moji.current, {
             duration: .3,
-            transformOrigin: "50% 100%",
+            transformOrigin: "bottom center",
             scaleX: 1.05,
             scaleY: 0.9,
             ease: "power1.inOut",
@@ -171,7 +177,7 @@ class Moji extends Component{
         }, 0)
         .to(this.refs.shadow.current, {
             duration: .3,
-            transformOrigin: "50% 50%",
+            transformOrigin: "center",
             scale: 1.05,
             onComplete: () => {
                 first_bounce_tl.reverse();
@@ -187,7 +193,7 @@ class Moji extends Component{
         }, 0)
         .to(this.refs.shadow.current, {
             duration: .2,
-            transformOrigin: "50% 50%",
+            transformOrigin: "center",
             scale: .9,
             opacity: .65,
             onComplete: () => {
@@ -197,7 +203,7 @@ class Moji extends Component{
         .to(this.refs.headwear.base, {
             duration: .2,
             y: -100,
-            transformOrigin: "50% 50%",
+            transformOrigin: "center",
             onComplete: () => {
                 jump_tl.reverse();
             }
@@ -212,8 +218,8 @@ class Moji extends Component{
         }
         else{
             const q = gsap.utils.selector(el.base);
-            let eye_animations = gsap.set(eye_movement, {
-                onRepeat: eye_movement, 
+            let eye_animations = gsap.set(eyeMovement, {
+                onRepeat: eyeMovement, 
                 onRepeatParams: [q('.inner-eye')], 
                 repeat: -1, 
                 repeatDelay: 4
@@ -263,6 +269,10 @@ class Moji extends Component{
         }
     }
 
+    componentWillReceiveProps(nextProps){
+        this.setState({components: {...nextProps}});
+    }
+
     onClick(e){
         e.preventDefault();
         if(Math.random() > .3){
@@ -274,16 +284,24 @@ class Moji extends Component{
     }
 
     render(){
-        const Body = this.state.components.body ? lazy(() => import(`../svgs/body/${this.state.components.body}`)) : Component;
-        const Eyes = this.state.components.eyes ? lazy(() => import(`../svgs/eyes/${this.state.components.eyes}`)) : Component;
-        const Gradient = this.state.components.gradient ? lazy(() => import(`../svgs/gradient/${this.state.components.gradient}`)) : Component;
-        const Mouth = this.state.components.mouth ? lazy(() => import(`../svgs/mouth/${this.state.components.mouth}`)) : Component;
-        const Headwear = this.state.components.headwear ? lazy(() => import(`../svgs/headwear/${this.state.components.headwear}`)) : Component;
+        const Body = maybeLoadTemplate('body', this.state.components.body);
+        const Eyes = maybeLoadTemplate('eyes', this.state.components.eyes);
+        const Gradient = maybeLoadTemplate('gradient', this.state.components.gradient);
+        const Mouth = maybeLoadTemplate('mouth', this.state.components.mouth);
+        const Headwear = maybeLoadTemplate('headwear', this.state.components.headwear);
 
+        let moji_style = ['left', 'right'].includes(this.state.orientation) ? 
+            "transform:rotateY(15deg);transform-origin:center top;" : 
+            '';
+        let face_style = this.state.orientation === 'left' ? 
+            "transform: translate(-40px, 0);" : 
+            this.state.orientation === 'right' ?
+            "transform: translate(50px, 0);" :
+            "";
         return (
-            <svg width="100%" height="100%" fill="none" viewBox="-50 -50 600 600" xmlns="http://www.w3.org/2000/svg">
+            <svg style={moji_style} width="100%" height="100%" fill="none" viewBox="-50 -50 600 600" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                    <Suspense>
+                    <Suspense fallback={<DefaultGradient />}>
                         <Gradient id={this.state.id} />
                     </Suspense>
                     <Clip id={this.state.id} />
@@ -291,12 +309,12 @@ class Moji extends Component{
                 <g ref={this.refs.shadow}>
                     <Shadow id={this.state.id} />
                 </g>
-                <g ref={this.refs.moji} onClick={this.onClick}>
-                    <Suspense>
-                        <Body id={this.state.id} />
+                <g ref={this.refs.moji} onClick={this.state.click ? this.onClick : null}>
+                    <Suspense fallback={<DefaultBody />}>
+                        <Body id={this.state.id} orientation={this.state.orientation} pattern={this.state.components.pattern} />
                     </Suspense>
-                    <g clip-path={`url(#body-clip-${ this.state.id })`}>
-                        <Suspense>
+                    <g style={face_style} clip-path={`url(#body-clip-${ this.state.id })`}>
+                        <Suspense fallback={<DefaultEyes />}>
                             <Eyes id={this.state.id} ref={this.eyesMounted} />
                         </Suspense>
                         <Suspense>
@@ -310,6 +328,11 @@ class Moji extends Component{
             </svg>
         );
     }
+}
+
+Moji.defaultProps = {
+    id: null,
+    click: true
 }
 
 export default Moji;

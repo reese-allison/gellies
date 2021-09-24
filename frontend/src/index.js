@@ -25,8 +25,8 @@ const appStyles = makeStyles(theme => ({
 
 const App = () => {
     let anchors = [
-        {width: .2, gradient: 'lemon', body: 'alien', eyes: 'cute', mouth: 'cute', orientation: 'right', style: {bottom: '4%', left: '5%'}},
-        {width: .08, headwear: 'tophat', gradient: 'lemon', body: 'cute', eyes: 'dot', mouth: 'cute', orientation: 'left', style: {bottom: '44%', right: '12%'}}
+        {width: .2, pattern: 'patchwork', gradient: 'lemon', body: 'alien', eyes: 'cute', mouth: 'cute', orientation: 'right', style: {bottom: '4%', left: '5%'}},
+        {width: .08, headwear: 'tophat', gradient: 'lemon', eyes: 'dot', mouth: 'cute', orientation: 'left', style: {bottom: '44%', right: '12%'}}
     ];
     appStyles();
     return (

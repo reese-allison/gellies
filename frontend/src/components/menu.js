@@ -1,13 +1,9 @@
 import { h, Fragment, Component } from 'preact';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Box from '@material-ui/core/Box';
-import DOMPurify from 'dompurify';
+import { Grid, Container, Button, ButtonGroup, Box } from '@material-ui/core';
 
 import theme from '../styles/theme';
 import menuStyles from '../styles/menu';
+import Moji from './moji';
 
 
 /**  @jsx h */
@@ -21,16 +17,11 @@ class Menu extends Component {
             width: window.innerWidth,
             components: {
                 gradient: 'lemon',
-                mouth: 'no',
                 eyes: 'dot',
-                body: 'cute',
-                headwear: 'no',
-                pattern: 'no'
             },
             parts: {},
             component: null
         }
-        this.state.url = `/api/build/?${new URLSearchParams(this.state.components).toString()}`
 
         this.showComponents = this.showComponents.bind(this);
         this.setComponent = this.setComponent.bind(this);
@@ -42,40 +33,34 @@ class Menu extends Component {
         window.addEventListener('resize', this.updateDimensions);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(){
         window.removeEventListener('resize', this.updateDimensions);
     }
 
-    componentDidUpdate(prevProps, prevState){
-        if(prevState.components != this.state.components){
-            this.setState({url: `/api/build/?${new URLSearchParams(this.state.components).toString()}`})
-        }
-    }
-
-    showComponents(component) {
+    showComponents(component){
         if(component in this.state.parts){
             this.setState({component: component});
         }
         else{
-            fetch('/api/parts/' + component)
-            .then(response => {
-                return response.json();
-            })
-            .then(content => {
+            import(`../svgs/${component}/index`).then(item => {
                 let new_parts = { ...this.state.parts }
-                new_parts[component] = content
+                new_parts[component] = {...item}
                 this.setState({parts: new_parts, component: component});
-            })
-            .catch(function(error){
-                console.log(error);
             });
         }
     }
 
     setComponent(value){
-        let new_components = { ...this.state.components }
-        new_components[this.state.component] = value
-        this.setState({ components: new_components })
+        if(this.state.components[this.state.component] === value){
+            let new_components = { ...this.state.components };
+            delete new_components[this.state.component];
+            this.setState({ components: new_components });
+        }
+        else{
+            let new_components = { ...this.state.components };
+            new_components[this.state.component] = value;
+            this.setState({ components: new_components });
+        }
     }
 
     updateDimensions(){
@@ -93,7 +78,14 @@ class Menu extends Component {
                     <Grid container spacing={3}>
                         <Grid item xs={vertical ? 12 : 6} style={{borderRadius: 20, backgroundColor: theme.palette.secondary.main}}>
                             <div style={{ maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
-                                <object typemustmatch={true} width="100%" height="100%" type="image/svg+xml" data={this.state.url} />
+                                <Moji 
+                                    eyes={this.state.components.eyes} 
+                                    mouth={this.state.components.mouth} 
+                                    gradient={this.state.components.gradient} 
+                                    body={this.state.components.body} 
+                                    headwear={this.state.components.headwear}
+                                    pattern={this.state.components.pattern}
+                                />
                             </div>
                         </Grid>
                         <Grid item xs={vertical ? 12 : 6} style={{borderRadius: 20}}>
@@ -109,12 +101,14 @@ class Menu extends Component {
                                                 height:'20em',
                                                 width: '20em'
                                             };
+                                            let props = { [this.state.component]: key, click: false }
                                             return(
                                                 <div 
                                                     style={selected_part == key ? {...styles, backgroundColor: theme.palette.success.light, border: `3px dashed ${theme.palette.tertiary.main}`} : styles}
-                                                    onClick={() => this.setComponent(key)} 
-                                                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(parts[key]) }}
-                                                ></div>
+                                                    onClick={() => this.setComponent(key)}
+                                                >
+                                                    <Moji {...props}/>
+                                                </div>
                                             )
                                         })}
                                     </div>
