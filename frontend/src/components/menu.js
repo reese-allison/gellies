@@ -1,9 +1,14 @@
 import { h, Fragment, Component } from 'preact';
-import { Grid, Container, Button, ButtonGroup, Box } from '@material-ui/core';
+import { Grid, Container, IconButton, Button, ButtonGroup, Box } from '@material-ui/core';
+import { v4 as uuid } from 'uuid';
 
 import theme from '../styles/theme';
 import menuStyles from '../styles/menu';
 import Moji from './moji';
+import { RotateRight, RotateLeft } from '@material-ui/icons';
+
+
+const ORIENTATIONS = ['left', 'front', 'right', 'back'];
 
 
 /**  @jsx h */
@@ -13,12 +18,10 @@ class Menu extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            orientation: 'front',
             height: window.innerHeight,
             width: window.innerWidth,
-            components: {
-                gradient: 'lemon',
-                eyes: 'dot',
-            },
+            components: {},
             parts: {},
             component: null
         }
@@ -26,6 +29,8 @@ class Menu extends Component {
         this.showComponents = this.showComponents.bind(this);
         this.setComponent = this.setComponent.bind(this);
         this.updateDimensions = this.updateDimensions.bind(this);
+        this.rotateLeft = this.rotateLeft.bind(this);
+        this.rotateRight = this.rotateRight.bind(this);
     }
 
     componentDidMount(){
@@ -67,6 +72,21 @@ class Menu extends Component {
         this.setState({ width: window.innerWidth, height: window.innerHeight }); 
     }
 
+    rotateLeft(){
+        let idx = ORIENTATIONS.indexOf(this.state.orientation);
+        this.setState({orientation: ORIENTATIONS.at(idx - 1)});
+    }
+
+    rotateRight(){
+        let idx = ORIENTATIONS.indexOf(this.state.orientation);
+        if(ORIENTATIONS.at(idx + 1) === undefined){
+            this.setState({orientation: ORIENTATIONS.at(0)});
+        }
+        else{
+            this.setState({orientation: ORIENTATIONS.at(idx + 1)});
+        }
+    }
+
     render(){
         const classes = menuStyles();
         let vertical = window.innerHeight > window.innerWidth;
@@ -76,8 +96,8 @@ class Menu extends Component {
             <Container>
                 <Box m={4}>
                     <Grid container spacing={3}>
-                        <Grid item xs={vertical ? 12 : 6} style={{borderRadius: 20, backgroundColor: theme.palette.secondary.main}}>
-                            <div style={{ maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
+                        <Grid item xs={vertical ? 12 : 6} style={{borderRadius: 20}}>
+                            <div style={{ position: 'relative', backgroundColor: theme.palette.secondary.main, maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
                                 <Moji 
                                     eyes={this.state.components.eyes} 
                                     mouth={this.state.components.mouth} 
@@ -85,7 +105,14 @@ class Menu extends Component {
                                     body={this.state.components.body} 
                                     headwear={this.state.components.headwear}
                                     pattern={this.state.components.pattern}
+                                    orientation={this.state.orientation}
                                 />
+                                <IconButton onClick={this.rotateLeft} size="large" style={{'bottom': 0, 'position': 'absolute', 'left': 0}}>
+                                    <RotateRight style={{height: '1.5em', width: '1.5em'}} />
+                                </IconButton>
+                                <IconButton onClick={this.rotateRight} size="large" style={{'bottom': 0, 'position': 'absolute', 'right': 0}}>
+                                    <RotateLeft style={{height: '1.5em', width: '1.5em'}} />
+                                </IconButton>
                             </div>
                         </Grid>
                         <Grid item xs={vertical ? 12 : 6} style={{borderRadius: 20}}>
@@ -93,6 +120,7 @@ class Menu extends Component {
                                 <div style={vertical ? {height: 'auto', overflowX: 'scroll'} : {maxHeight: vertical ? '79vw' : '79vh', height: vertical ? '79vw' : '79vh', overflowY: 'scroll'}}>
                                     <div style={vertical ? {width: 'max-content', height: '20em'} : {}}>
                                         {Object.keys(parts).map((key, index) => {
+                                            let identifier = uuid();
                                             let styles = {
                                                 backgroundColor: theme.palette.secondary.main,
                                                 margin: 5,
@@ -101,13 +129,12 @@ class Menu extends Component {
                                                 height:'20em',
                                                 width: '20em'
                                             };
-                                            let props = { [this.state.component]: key, click: false }
+                                            let props = { [this.state.component]: key, animations: false }
                                             return(
                                                 <div 
                                                     style={selected_part == key ? {...styles, backgroundColor: theme.palette.success.light, border: `3px dashed ${theme.palette.tertiary.main}`} : styles}
-                                                    onClick={() => this.setComponent(key)}
-                                                >
-                                                    <Moji {...props}/>
+                                                    onClick={() => this.setComponent(key)}>
+                                                    <Moji key={identifier} {...props}/>
                                                 </div>
                                             )
                                         })}

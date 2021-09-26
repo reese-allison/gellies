@@ -105,12 +105,3 @@ def weighted_random(pairs):
     for (value, weight) in pairs:
         r -= weight
         if r <= 0: return value
-
-
-def get_component(component):
-    return [i[0] for i in all_drops[component]]
-
-
-def get_random_moji():
-    components = {'eyes', 'mouth', 'body', 'gradient', 'headwear', 'pattern'}
-    return { i: weighted_random(all_drops[i]) for i in components }

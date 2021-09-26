@@ -13,7 +13,7 @@ import DefaultGradient from '../svgs/default-gradient';
 
 
 // TODO ADD FPS OPTION FOR USERS
-gsap.ticker.fps(60);
+gsap.ticker.fps(30);
 
 
 function eyeMovement(inner_eyes){
@@ -54,15 +54,14 @@ class Moji extends Component{
         this.state = {
             id: props.id,
             orientation: props.orientation,
-            click: props.click,
-            components: {
-                gradient: props.gradient,
-                body: props.body,
-                eyes: props.eyes,
-                pattern: props.pattern,
-                mouth: props.mouth,
-                headwear: props.headwear,
-            }
+            animations: props.animations,
+            click: props.animations === false ? false : props.click,
+            gradient: props.gradient,
+            body: props.body,
+            eyes: props.eyes,
+            pattern: props.pattern,
+            mouth: props.mouth,
+            headwear: props.headwear
         };
 
         this.bounce = this.bounce.bind(this);
@@ -78,9 +77,9 @@ class Moji extends Component{
             return;
         }
         this.busy = true;
-        this.animations.ebb.pause();
+        this.state.animations && this.animations.ebb.pause();
         let bounce_tl = gsap.timeline({ onReverseComplete: ()=>{
-            this.animations.ebb.resume();
+            this.state.animations && this.animations.ebb.resume();
             this.busy = false;
         }});
 
@@ -116,9 +115,9 @@ class Moji extends Component{
             return;
         }
         this.busy = true;
-        this.animations.ebb.pause();
+        this.state.animations && this.animations.ebb.pause();
         let second_bounce_tl = gsap.timeline({ paused: true, onReverseComplete: ()=>{
-            this.animations.ebb.resume();
+            this.state.animations && this.animations.ebb.resume();
             this.busy = false;
         }});
 
@@ -212,11 +211,11 @@ class Moji extends Component{
 
     eyesMounted(el){
         if(el === null){
-            if(this.animations.eyes != null){
+            if(this.state.animations && this.animations.eyes != null){
                 this.animations.eyes.kill();
             }
         }
-        else{
+        else if(this.state.animations){
             const q = gsap.utils.selector(el.base);
             let eye_animations = gsap.set(eyeMovement, {
                 onRepeat: eyeMovement, 
@@ -229,7 +228,7 @@ class Moji extends Component{
     }
 
     setupEbb(){
-        if(this.refs.moji != null && this.refs.shadow != null && this.animations.ebb === null){
+        if(this.refs.moji != null && this.refs.shadow != null && this.animations.ebb === null && this.state.animations){
             let ebb = gsap.timeline({repeat:-1, repeatDelay:.5, yoyo:true});
             let range = randomRange(0, 2);
             ebb.add(
@@ -270,7 +269,15 @@ class Moji extends Component{
     }
 
     componentWillReceiveProps(nextProps){
-        this.setState({components: {...nextProps}});
+        const allowable_props = ['orientation', 'body', 'eyes', 'gradient', 'mouth', 'pattern', 'headwear'];
+        const filtered = Object.keys(nextProps)
+          .filter(key => allowable_props.includes(key))
+          .reduce((obj, key) => {
+            obj[key] = nextProps[key];
+            return obj;
+          }, {});
+        console.log(filtered)
+        this.setState(filtered);
     }
 
     onClick(e){
@@ -284,11 +291,11 @@ class Moji extends Component{
     }
 
     render(){
-        const Body = maybeLoadTemplate('body', this.state.components.body);
-        const Eyes = maybeLoadTemplate('eyes', this.state.components.eyes);
-        const Gradient = maybeLoadTemplate('gradient', this.state.components.gradient);
-        const Mouth = maybeLoadTemplate('mouth', this.state.components.mouth);
-        const Headwear = maybeLoadTemplate('headwear', this.state.components.headwear);
+        const Body = maybeLoadTemplate('body', this.state.body);
+        const Eyes = maybeLoadTemplate('eyes', this.state.eyes);
+        const Gradient = maybeLoadTemplate('gradient', this.state.gradient);
+        const Mouth = maybeLoadTemplate('mouth', this.state.mouth);
+        const Headwear = maybeLoadTemplate('headwear', this.state.headwear);
 
         let moji_style = ['left', 'right'].includes(this.state.orientation) ? 
             "transform:rotateY(15deg);transform-origin:center top;" : 
@@ -311,7 +318,7 @@ class Moji extends Component{
                 </g>
                 <g ref={this.refs.moji} onClick={this.state.click ? this.onClick : null}>
                     <Suspense fallback={<DefaultBody />}>
-                        <Body style={orientation_style} id={this.state.id} orientation={this.state.orientation} pattern={this.state.components.pattern} />
+                        <Body style={orientation_style} id={this.state.id} orientation={this.state.orientation} pattern={this.state.pattern} />
                     </Suspense>
                     <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
                         <Suspense fallback={<DefaultEyes />}>
@@ -332,7 +339,8 @@ class Moji extends Component{
 
 Moji.defaultProps = {
     id: null,
-    click: true
+    click: true,
+    animations: true,
 }
 
 export default Moji;
