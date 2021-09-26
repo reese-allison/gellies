@@ -64,6 +64,15 @@ export default (props) => {
                 </g>
             )
         }
+        else if (props.orientation === 'back'){
+            return (
+                <g>
+                    <Body orientation={props.orientation} />
+                    <RightEar />
+                    <LeftEar />
+                </g>
+            )  
+        }
         else{
             return (
                 <g>

@@ -269,14 +269,13 @@ class Moji extends Component{
     }
 
     componentWillReceiveProps(nextProps){
-        const allowable_props = ['orientation', 'body', 'eyes', 'gradient', 'mouth', 'pattern', 'headwear'];
+        const updateable_props = ['orientation', 'body', 'eyes', 'gradient', 'mouth', 'pattern', 'headwear'];
         const filtered = Object.keys(nextProps)
-          .filter(key => allowable_props.includes(key))
+          .filter(key => updateable_props.includes(key))
           .reduce((obj, key) => {
             obj[key] = nextProps[key];
             return obj;
           }, {});
-        console.log(filtered)
         this.setState(filtered);
     }
 
@@ -297,14 +296,22 @@ class Moji extends Component{
         const Mouth = maybeLoadTemplate('mouth', this.state.mouth);
         const Headwear = maybeLoadTemplate('headwear', this.state.headwear);
 
-        let moji_style = ['left', 'right'].includes(this.state.orientation) ? 
-            "transform:rotateY(15deg);transform-origin:center top;" : 
-            '';
-        let orientation_style = this.state.orientation === 'left' ? 
-            "transform: translate(-40px, 0);" : 
-            this.state.orientation === 'right' ?
-            "transform: translate(50px, 0);" :
-            "";
+        let moji_style = '';
+        if(['left', 'right'].includes(this.state.orientation)){
+            moji_style = "transform:rotateY(15deg);transform-origin:center top;"
+        }
+
+        let orientation_style = '';
+        let orientation_headwear_style = '';
+        if(this.state.orientation === 'left'){
+            orientation_style = "transform: translate(-40px, 0);"
+            orientation_headwear_style = "transform: skew(1deg, -1deg) scale(-1, 1);transform-origin:39.75% 0%;"
+        }
+        if(this.state.orientation === 'right'){
+            orientation_style = "transform: translate(50px, 0);"
+            orientation_headwear_style = "transform: skew(1deg, -1deg);"
+        }
+
         return (
             <svg style={moji_style} width="100%" height="100%" fill="none" viewBox="-50 -50 600 600" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -316,6 +323,20 @@ class Moji extends Component{
                 <g ref={this.refs.shadow}>
                     <Shadow id={this.state.id} />
                 </g>
+                {this.state.orientation === 'back' ?
+                <g style={"transform:scale(-1, 1);transform-origin:39.75% 0%;"} ref={this.refs.moji} onClick={this.state.click ? this.onClick : null}>
+                    <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
+                        <Suspense fallback={<DefaultEyes />}>
+                            <Eyes id={this.state.id} ref={this.eyesMounted} />
+                        </Suspense>
+                        <Suspense>
+                            <Mouth />
+                        </Suspense>
+                    </g> 
+                    <Suspense fallback={<DefaultBody />}>
+                        <Body style={orientation_style} id={this.state.id} orientation={this.state.orientation} pattern={this.state.pattern} />
+                    </Suspense>
+                </g> :
                 <g ref={this.refs.moji} onClick={this.state.click ? this.onClick : null}>
                     <Suspense fallback={<DefaultBody />}>
                         <Body style={orientation_style} id={this.state.id} orientation={this.state.orientation} pattern={this.state.pattern} />
@@ -327,10 +348,10 @@ class Moji extends Component{
                         <Suspense>
                             <Mouth />
                         </Suspense>
-                    </g>
-                </g>
+                    </g> 
+                </g>}
                 <Suspense ref={this.headwearMounted}>
-                    <Headwear id={this.state.id} />
+                    <Headwear style={orientation_headwear_style} id={this.state.id} />
                 </Suspense>
             </svg>
         );
