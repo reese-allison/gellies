@@ -8,6 +8,7 @@ import hungry from "./hungry";
 import pouty from "./pouty";
 import skeleton from "./skeleton";
 import sabortooth from "./sabortooth";
+import surprised from "./surprised";
 import smiley from "./smiley";
 import snaggle from "./snaggle";
 import pumpkin from "./pumpkin";
@@ -29,6 +30,7 @@ export {
     smiley,
     snaggle,
     pumpkin,
+    surprised,
     swirl,
     teddy,
     knockout
