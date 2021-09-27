@@ -47,8 +47,8 @@ class Moji extends Component{
             eyes: null
         }
         this.refs = {
-            moji: createRef(),
-            shadow: createRef(),
+            moji: null,
+            shadow: null,
             headwear: null
         }
         this.state = {
@@ -69,6 +69,8 @@ class Moji extends Component{
         this.onClick = this.onClick.bind(this);
 
         this.eyesMounted = this.eyesMounted.bind(this);
+        this.mojiMounted = this.mojiMounted.bind(this);
+        this.shadowMounted = this.shadowMounted.bind(this);
         this.headwearMounted = this.headwearMounted.bind(this);
     }
 
@@ -83,7 +85,7 @@ class Moji extends Component{
             this.busy = false;
         }});
 
-        bounce_tl.to(this.refs.moji.current, {
+        bounce_tl.to(this.refs.moji, {
             duration: .3,
             transformOrigin: "bottom center",
             scaleX: 1.1,
@@ -92,7 +94,8 @@ class Moji extends Component{
             onComplete: () => {
                 bounce_tl.reverse();
             }
-        }, 0).to(this.refs.headwear.base, {
+        }, 0)
+        .to(this.refs.headwear, {
             duration: .3,
             y: 65,
             ease: "power1.inOut",
@@ -100,7 +103,7 @@ class Moji extends Component{
                 bounce_tl.reverse();
             }
         }, 0)
-        .to(this.refs.shadow.current, {
+        .to(this.refs.shadow, {
             duration: .3,
             transformOrigin: "center",
             scale: 1.1,
@@ -129,7 +132,7 @@ class Moji extends Component{
             jump_tl.resume();
         }});
 
-        second_bounce_tl.to(this.refs.moji.current, {
+        second_bounce_tl.to(this.refs.moji, {
             duration: .3,
             transformOrigin: "bottom center",
             scaleX: 1.1,
@@ -139,7 +142,7 @@ class Moji extends Component{
                 second_bounce_tl.reverse();
             }
         }, 0)
-        .to(this.refs.headwear.base, {
+        .to(this.refs.headwear, {
             duration: .3,
             y: (Math.random() > .3) ? 65 : -20,
             ease: "power1.inOut",
@@ -147,7 +150,7 @@ class Moji extends Component{
                 second_bounce_tl.reverse();
             }
         }, 0)
-        .to(this.refs.shadow.current, {
+        .to(this.refs.shadow, {
             duration: .3,
             transformOrigin: "center",
             scale: 1.1,
@@ -156,7 +159,7 @@ class Moji extends Component{
             }
         }, 0);
 
-        first_bounce_tl.to(this.refs.moji.current, {
+        first_bounce_tl.to(this.refs.moji, {
             duration: .3,
             transformOrigin: "bottom center",
             scaleX: 1.05,
@@ -166,7 +169,7 @@ class Moji extends Component{
                 first_bounce_tl.reverse();
             }
         }, 0)
-        .to(this.refs.headwear.base, {
+        .to(this.refs.headwear, {
             duration: .3,
             y: 32,
             ease: "power1.inOut",
@@ -174,7 +177,7 @@ class Moji extends Component{
                 first_bounce_tl.reverse();
             }
         }, 0)
-        .to(this.refs.shadow.current, {
+        .to(this.refs.shadow, {
             duration: .3,
             transformOrigin: "center",
             scale: 1.05,
@@ -183,14 +186,14 @@ class Moji extends Component{
             }
         }, 0);
 
-        jump_tl.to(this.refs.moji.current, {
+        jump_tl.to(this.refs.moji, {
             duration: .2,
             y: -100,
             onComplete: () => {
                 jump_tl.reverse();
             }
         }, 0)
-        .to(this.refs.shadow.current, {
+        .to(this.refs.shadow, {
             duration: .2,
             transformOrigin: "center",
             scale: .9,
@@ -199,7 +202,7 @@ class Moji extends Component{
                 jump_tl.reverse();
             }
         }, 0)
-        .to(this.refs.headwear.base, {
+        .to(this.refs.headwear, {
             duration: .2,
             y: -100,
             transformOrigin: "center",
@@ -227,12 +230,36 @@ class Moji extends Component{
         }
     }
 
+    shadowMounted(el){
+        if(el === null){
+            if(this.state.ebb && this.animations.ebb != null){
+                this.animations.ebb.kill();
+            }
+        }
+        else if(this.state.animations){
+            this.refs.shadow = el;
+            this.setupEbb();
+        }
+    }
+
+    mojiMounted(el){
+        if(el === null){
+            if(this.state.ebb && this.animations.ebb != null){
+                this.animations.ebb.kill();
+            }
+        }
+        else if(this.state.animations){
+            this.refs.moji = el;
+            this.setupEbb();
+        }
+    }
+
     setupEbb(){
-        if(this.refs.moji != null && this.refs.shadow != null && this.animations.ebb === null && this.state.animations){
+        if(this.refs.moji != null && this.refs.shadow != null){
             let ebb = gsap.timeline({repeat:-1, repeatDelay:.5, yoyo:true});
             let range = randomRange(0, 2);
             ebb.add(
-                gsap.to(this.refs.moji.current, {
+                gsap.to(this.refs.moji, {
                     scale: 1.03,
                     duration: 2,
                     ease: "linear",
@@ -240,7 +267,7 @@ class Moji extends Component{
                 }), range
             );
             ebb.add(
-                gsap.to(this.refs.shadow.current, {
+                gsap.to(this.refs.shadow, {
                     scale: 1.03,
                     duration: 2,
                     ease: "linear",
@@ -253,10 +280,6 @@ class Moji extends Component{
 
     headwearMounted(el){
         this.refs.headwear = el
-    }
-
-    componentDidMount(){
-        this.setupEbb();
     }
 
     componentWillUnmount(){
@@ -318,40 +341,41 @@ class Moji extends Component{
                     </Suspense>
                     <Clip id={this.state.id} />
                 </defs>
-                <g ref={this.refs.shadow}>
+                <g ref={this.shadowMounted}>
                     <Shadow id={this.state.id} />
                 </g>
-                <g style={this.state.orientation === 'back' ? "transform:scale(-1, 1);transform-origin:39.75% 0%;" : ""}>
-                    {this.state.orientation === 'back' ?
-                    <g ref={this.refs.moji} onClick={this.state.click ? this.onClick : null}>
-                        <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
-                            <Suspense fallback={<DefaultEyes />}>
-                                <Eyes id={this.state.id} ref={this.eyesMounted} />
-                            </Suspense>
-                            <Suspense>
-                                <Mouth />
-                            </Suspense>
+                <Suspense>
+                    <Headwear ref={this.headwearMounted} orientation={this.state.orientation} style={orientation_headwear_style} id={this.state.id}>
+                        <g style={this.state.orientation === 'back' ? "transform:scale(-1, 1);transform-origin:39.75% 0%;" : ""}>
+                            {this.state.orientation === 'back' ?
+                            <g ref={this.mojiMounted} onClick={this.state.click ? this.onClick : null}>
+                                <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
+                                    <Suspense fallback={<DefaultEyes />}>
+                                        <Eyes id={this.state.id} ref={this.eyesMounted} />
+                                    </Suspense>
+                                    <Suspense>
+                                        <Mouth />
+                                    </Suspense>
+                                </g>
+                                <Suspense fallback={<DefaultBody />}>
+                                    <Body style={orientation_style} id={this.state.id} orientation={this.state.orientation} pattern={this.state.pattern} />
+                                </Suspense>
+                            </g> :
+                            <g ref={this.mojiMounted} onClick={this.state.click ? this.onClick : null}>
+                                <Suspense fallback={<DefaultBody />}>
+                                    <Body style={orientation_style} id={this.state.id} orientation={this.state.orientation} pattern={this.state.pattern} />
+                                </Suspense>
+                                <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
+                                    <Suspense fallback={<DefaultEyes />}>
+                                        <Eyes id={this.state.id} ref={this.eyesMounted} />
+                                    </Suspense>
+                                    <Suspense>
+                                        <Mouth />
+                                    </Suspense>
+                                </g>
+                            </g>}
                         </g>
-                        <Suspense fallback={<DefaultBody />}>
-                            <Body style={orientation_style} id={this.state.id} orientation={this.state.orientation} pattern={this.state.pattern} />
-                        </Suspense>
-                    </g> :
-                    <g ref={this.refs.moji} onClick={this.state.click ? this.onClick : null}>
-                        <Suspense fallback={<DefaultBody />}>
-                            <Body style={orientation_style} id={this.state.id} orientation={this.state.orientation} pattern={this.state.pattern} />
-                        </Suspense>
-                        <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
-                            <Suspense fallback={<DefaultEyes />}>
-                                <Eyes id={this.state.id} ref={this.eyesMounted} />
-                            </Suspense>
-                            <Suspense>
-                                <Mouth />
-                            </Suspense>
-                        </g>
-                    </g>}
-                </g>
-                <Suspense ref={this.headwearMounted}>
-                    <Headwear orientation={this.state.orientation != 'back' ? 'front': ''} style={orientation_headwear_style} id={this.state.id} />
+                    </Headwear>
                 </Suspense>
             </svg>
         );
