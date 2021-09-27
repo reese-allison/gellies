@@ -108,10 +108,10 @@ class Menu extends Component {
                                     orientation={this.state.orientation}
                                 />
                                 <IconButton onClick={this.rotateLeft} size="large" style={{'bottom': 0, 'position': 'absolute', 'left': 0}}>
-                                    <RotateRight style={{height: '1.5em', width: '1.5em'}} />
+                                    <RotateRight style={{height: '2em', width: '2em'}} />
                                 </IconButton>
                                 <IconButton onClick={this.rotateRight} size="large" style={{'bottom': 0, 'position': 'absolute', 'right': 0}}>
-                                    <RotateLeft style={{height: '1.5em', width: '1.5em'}} />
+                                    <RotateLeft style={{height: '2em', width: '2em'}} />
                                 </IconButton>
                             </div>
                         </Grid>
@@ -157,4 +157,4 @@ class Menu extends Component {
     }
 }
 
-export default Menu
+export default Menu;

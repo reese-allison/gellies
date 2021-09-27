@@ -1,10 +1,11 @@
 import { h, Fragment } from 'preact';
+import { memo } from 'preact/compat';
 
 
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-export default (props) => {
+function Patchwork(props){
     return (
         <g style={props.style}>
             <path style="fill:#ccffcc;fill-opacity:.5;"  d="M 430.4,178.1 C 512.6,234.5 560.5,338.9 530.9,432.9 515.0,496.9 459.6,542.5 398.5,553.3 299.6,576.8 155.7,568.9 62.8,549.7 33.2,542.8 5.0,527.8 -17.5,505.0 Z" />
@@ -51,3 +52,5 @@ export default (props) => {
         </g>
     )
 }
+
+export default memo(Patchwork);

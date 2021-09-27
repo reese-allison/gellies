@@ -1,5 +1,4 @@
-import { Component } from 'preact';
-import { lazy } from 'preact/compat';
+import { lazy, PureComponent } from 'preact/compat';
 import DefaultBody from './svgs/default-body';
 import DefaultEyes from './svgs/default-eyes';
 import DefaultGradient from './svgs/default-gradient';
@@ -26,7 +25,7 @@ function maybeLoadTemplate(folder, template){
         if(folder === 'gradient'){
             return DefaultGradient
         }
-        return Component;
+        return PureComponent;
     }
     else{
         return lazy(() => import(`./svgs/${folder}/${template}`));

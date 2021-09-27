@@ -1,10 +1,11 @@
 import { h, Fragment } from 'preact';
+import { memo } from 'preact/compat';
 
 
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-export default (props) => {
+function Shadow(props){
     return (
         <g>
             <filter id={`shadow-blur-${ props.id }`} x="-100%" y="-100%" height="300%" width="300%">
@@ -14,3 +15,5 @@ export default (props) => {
         </g>
     )
 }
+
+export default memo(Shadow);
