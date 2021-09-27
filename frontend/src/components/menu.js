@@ -96,8 +96,8 @@ class Menu extends Component {
             <Container>
                 <Box m={4}>
                     <Grid container spacing={3}>
-                        <Grid item xs={vertical ? 12 : 6} style={{borderRadius: 20}}>
-                            <div style={{ position: 'relative', backgroundColor: theme.palette.secondary.main, maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
+                        <Grid item xs={vertical ? 12 : 6}>
+                            <div style={{ borderRadius: 30, position: 'relative', backgroundColor: theme.palette.secondary.main, maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
                                 <Moji 
                                     eyes={this.state.components.eyes} 
                                     mouth={this.state.components.mouth} 
@@ -115,7 +115,7 @@ class Menu extends Component {
                                 </IconButton>
                             </div>
                         </Grid>
-                        <Grid item xs={vertical ? 12 : 6} style={{borderRadius: 20}}>
+                        <Grid item xs={vertical ? 12 : 6} style={{borderRadius: 30}}>
                             <div style={{ maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
                                 <div style={vertical ? {height: 'auto', overflowX: 'scroll'} : {maxHeight: vertical ? '79vw' : '79vh', height: vertical ? '79vw' : '79vh', overflowY: 'scroll'}}>
                                     <div style={vertical ? {width: 'max-content', height: '20em'} : {}}>
@@ -124,7 +124,7 @@ class Menu extends Component {
                                             let styles = {
                                                 backgroundColor: theme.palette.secondary.main,
                                                 margin: 5,
-                                                borderRadius:10,
+                                                borderRadius: 30,
                                                 float: 'left',
                                                 height:'20em',
                                                 width: '20em'
