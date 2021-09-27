@@ -1,10 +1,11 @@
 import { h, Fragment } from 'preact';
+import { memo } from 'preact/compat';
 
 
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-export default (props) => {
+function Lemon(props){
     return (
         <radialGradient id={`moji-${ props.id }-body-color`} fx="40%" fy="0%" fr="20%" cx="40%" cy="30%">
             <stop offset="0" stop-color="rgb(254,252,113)" stop-opacity=".99" fx="0%" fy="0%"></stop>
@@ -12,3 +13,5 @@ export default (props) => {
         </radialGradient>
     )
 }
+
+export default memo(Lemon);

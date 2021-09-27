@@ -1,12 +1,13 @@
 import { h, Fragment } from 'preact';
 import { Suspense } from 'preact/compat';
 import { maybeLoadTemplate } from '../common';
+import { memo } from 'preact/compat';
 
 
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-export default (props) => {
+function DefaultBody(props){
     const Pattern = maybeLoadTemplate('pattern', props.pattern);
 
     return (
@@ -21,3 +22,5 @@ export default (props) => {
         </g>
     )
 }
+
+export default memo(DefaultBody);

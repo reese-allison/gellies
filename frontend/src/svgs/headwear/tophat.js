@@ -1,10 +1,11 @@
 import { h, Fragment } from 'preact';
+import { memo } from 'preact/compat';
 
 
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-export default (props) => {
+function Tophat(props){
     return (
         <g style={props.style}>
             <linearGradient id={`moji-${ props.id }-headwear-color`} x1="0%" y1="0%" x2="100%" y2="0%">
@@ -23,3 +24,5 @@ export default (props) => {
         </g>
     )
 }
+
+export default memo(Tophat);

@@ -297,19 +297,17 @@ class Moji extends Component{
         const Headwear = maybeLoadTemplate('headwear', this.state.headwear);
 
         let moji_style = '';
-        if(['left', 'right'].includes(this.state.orientation)){
-            moji_style = "transform:rotateY(15deg);transform-origin:center top;"
-        }
-
         let orientation_style = '';
         let orientation_headwear_style = '';
         if(this.state.orientation === 'left'){
-            orientation_style = "transform: translate(-40px, 0);"
-            orientation_headwear_style = "transform: skew(1deg, -1deg) scale(-1, 1);transform-origin:39.75% 0%;"
+            moji_style = "transform:rotateY(15deg);transform-origin:center top;";
+            orientation_style = "transform: translate(-40px, 0);";
+            orientation_headwear_style = "transform: skew(1deg, -1deg) scale(-1, 1);transform-origin:39.75% 0%;";
         }
         if(this.state.orientation === 'right'){
-            orientation_style = "transform: translate(50px, 0);"
-            orientation_headwear_style = "transform: skew(1deg, -1deg);"
+            moji_style = "transform:rotateY(15deg);transform-origin:center top;";
+            orientation_style = "transform: translate(50px, 0);";
+            orientation_headwear_style = "transform: skew(1deg, -1deg);";
         }
 
         return (
@@ -323,35 +321,37 @@ class Moji extends Component{
                 <g ref={this.refs.shadow}>
                     <Shadow id={this.state.id} />
                 </g>
-                {this.state.orientation === 'back' ?
-                <g style={"transform:scale(-1, 1);transform-origin:39.75% 0%;"} ref={this.refs.moji} onClick={this.state.click ? this.onClick : null}>
-                    <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
-                        <Suspense fallback={<DefaultEyes />}>
-                            <Eyes id={this.state.id} ref={this.eyesMounted} />
+                <g style={this.state.orientation === 'back' ? "transform:scale(-1, 1);transform-origin:39.75% 0%;" : ""}>
+                    {this.state.orientation === 'back' ?
+                    <g ref={this.refs.moji} onClick={this.state.click ? this.onClick : null}>
+                        <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
+                            <Suspense fallback={<DefaultEyes />}>
+                                <Eyes id={this.state.id} ref={this.eyesMounted} />
+                            </Suspense>
+                            <Suspense>
+                                <Mouth />
+                            </Suspense>
+                        </g>
+                        <Suspense fallback={<DefaultBody />}>
+                            <Body style={orientation_style} id={this.state.id} orientation={this.state.orientation} pattern={this.state.pattern} />
                         </Suspense>
-                        <Suspense>
-                            <Mouth />
+                    </g> :
+                    <g ref={this.refs.moji} onClick={this.state.click ? this.onClick : null}>
+                        <Suspense fallback={<DefaultBody />}>
+                            <Body style={orientation_style} id={this.state.id} orientation={this.state.orientation} pattern={this.state.pattern} />
                         </Suspense>
-                    </g> 
-                    <Suspense fallback={<DefaultBody />}>
-                        <Body style={orientation_style} id={this.state.id} orientation={this.state.orientation} pattern={this.state.pattern} />
-                    </Suspense>
-                </g> :
-                <g ref={this.refs.moji} onClick={this.state.click ? this.onClick : null}>
-                    <Suspense fallback={<DefaultBody />}>
-                        <Body style={orientation_style} id={this.state.id} orientation={this.state.orientation} pattern={this.state.pattern} />
-                    </Suspense>
-                    <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
-                        <Suspense fallback={<DefaultEyes />}>
-                            <Eyes id={this.state.id} ref={this.eyesMounted} />
-                        </Suspense>
-                        <Suspense>
-                            <Mouth />
-                        </Suspense>
-                    </g> 
-                </g>}
+                        <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
+                            <Suspense fallback={<DefaultEyes />}>
+                                <Eyes id={this.state.id} ref={this.eyesMounted} />
+                            </Suspense>
+                            <Suspense>
+                                <Mouth />
+                            </Suspense>
+                        </g>
+                    </g>}
+                </g>
                 <Suspense ref={this.headwearMounted}>
-                    <Headwear style={orientation_headwear_style} id={this.state.id} />
+                    <Headwear orientation={this.state.orientation != 'back' ? 'front': ''} style={orientation_headwear_style} id={this.state.id} />
                 </Suspense>
             </svg>
         );
@@ -362,6 +362,6 @@ Moji.defaultProps = {
     id: null,
     click: true,
     animations: true,
-}
+};
 
 export default Moji;

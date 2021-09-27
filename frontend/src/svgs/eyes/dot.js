@@ -1,10 +1,11 @@
 import { h, Fragment } from 'preact';
+import { memo } from 'preact/compat';
 
 
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-export default () => {
+function Dot(){
     return (
         <g>
             <g>
@@ -20,3 +21,5 @@ export default () => {
         </g>
     )
 };
+
+export default memo(Dot);
