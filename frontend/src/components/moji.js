@@ -345,7 +345,7 @@ class Moji extends Component{
                                 <Eyes id={this.state.id} ref={this.eyesMounted} />
                             </Suspense>
                             <Suspense>
-                                <Mouth />
+                                <Mouth orientation={this.state.orientation} />
                             </Suspense>
                         </g>
                     </g>}
