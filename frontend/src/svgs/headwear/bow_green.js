@@ -5,7 +5,7 @@ import { memo } from 'preact/compat';
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-function Bow_blue(props){
+function Bow_green(props){
     return (
         <g style={props.style}>
             <linearGradient id={`moji-${ props.id }-headwear-color`} x1="0%" y1="0%" x2="100%" y2="0%">
@@ -25,4 +25,4 @@ function Bow_blue(props){
     )
 }
 
-export default memo(Bow_blue);
+export default memo(Bow_green);
