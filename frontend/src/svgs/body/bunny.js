@@ -1,12 +1,12 @@
 import { h, Fragment } from 'preact';
-import { Suspense } from 'preact/compat';
+import { Suspense, memo} from 'preact/compat';
 import { maybeLoadTemplate } from '../../common';
 
 
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-export default (props) => {
+function Bunny(props){
     const Pattern = maybeLoadTemplate('pattern', props.pattern);
 
     const RightEar = (attrs) => {
@@ -86,3 +86,5 @@ export default (props) => {
         </g>
     )
 }
+
+export default memo(Bunny);
