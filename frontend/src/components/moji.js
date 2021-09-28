@@ -382,6 +382,9 @@ class Moji extends PureComponent{
             orientation_style = "transform: translate(50px, 0);";
             orientation_headwear_style = "transform: skew(1deg, -1deg);";
         }
+        if(this.state.orientation === 'back'){
+            orientation_style = "opacity: 0%"
+        }
 
         return (
             <svg style={moji_style} width="100%" height="100%" fill="none" viewBox="-50 -50 600 600" xmlns="http://www.w3.org/2000/svg">

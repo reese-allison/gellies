@@ -6,6 +6,7 @@ import { memo } from 'preact/compat';
 /** @jsxFrag Fragment */
 
 function Whisker(props){
+    props.style = "opacity:100%"
     return (
         <g style={props.style}>
             <path style="fill:#000;fill-opacity:.1;" d="M -18.1,432.0 C 130.9,379.1 131.4,378.9 -21.1,397.0 Z" />
