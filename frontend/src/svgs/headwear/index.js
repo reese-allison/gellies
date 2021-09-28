@@ -1,7 +1,7 @@
 import { Headwear as tophat } from "./tophat";
-import { Headwear as red_bow } from "./red_bow";
+import { Headwear as bow_red } from "./bow_red";
 
 export {
     tophat,
-    red_bow
+    bow_red
 }

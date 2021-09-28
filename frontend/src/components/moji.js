@@ -423,7 +423,7 @@ class Moji extends PureComponent{
                                 <Eyes id={this.state.id} ref={this.eyesMounted} />
                             </Suspense>
                             <Suspense>
-                                <Mouth />
+                                <Mouth orientation={this.state.orientation} />
                             </Suspense>
                         </g>
                     </g>}
