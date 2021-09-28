@@ -49,7 +49,8 @@ class Moji extends PureComponent{
         this.refs = {
             moji: null,
             shadow: null,
-            headwear: null
+            headwearBack: null,
+            headwearFront: null
         }
         this.state = {
             id: props.id,
@@ -73,7 +74,8 @@ class Moji extends PureComponent{
         this.eyesMounted = this.eyesMounted.bind(this);
         this.mojiMounted = this.mojiMounted.bind(this);
         this.shadowMounted = this.shadowMounted.bind(this);
-        this.headwearMounted = this.headwearMounted.bind(this);
+        this.headwearBackMounted = this.headwearBackMounted.bind(this);
+        this.headwearFrontMounted = this.headwearFrontMounted.bind(this);
     }
 
     bounce(){
@@ -97,7 +99,15 @@ class Moji extends PureComponent{
                 bounce_tl.reverse();
             }
         }, 0)
-        .to(this.refs.headwear, {
+        .to(this.refs.headwearBack, {
+            duration: .3,
+            y: 65,
+            ease: "power1.inOut",
+            onComplete: () => {
+                bounce_tl.reverse();
+            }
+        }, 0)
+        .to(this.refs.headwearFront, {
             duration: .3,
             y: 65,
             ease: "power1.inOut",
@@ -144,7 +154,15 @@ class Moji extends PureComponent{
                 second_bounce_tl.reverse();
             }
         }, 0)
-        .to(this.refs.headwear, {
+        .to(this.refs.headwearBack, {
+            duration: .3,
+            y: (Math.random() > .3) ? 65 : -20,
+            ease: "power1.inOut",
+            onComplete: () => {
+                second_bounce_tl.reverse();
+            }
+        }, 0)
+        .to(this.refs.headwearFront, {
             duration: .3,
             y: (Math.random() > .3) ? 65 : -20,
             ease: "power1.inOut",
@@ -171,7 +189,15 @@ class Moji extends PureComponent{
                 first_bounce_tl.reverse();
             }
         }, 0)
-        .to(this.refs.headwear, {
+        .to(this.refs.headwearBack, {
+            duration: .3,
+            y: 32,
+            ease: "power1.inOut",
+            onComplete: () => {
+                first_bounce_tl.reverse();
+            }
+        }, 0)
+        .to(this.refs.headwearFront, {
             duration: .3,
             y: 32,
             ease: "power1.inOut",
@@ -204,7 +230,15 @@ class Moji extends PureComponent{
                 jump_tl.reverse();
             }
         }, 0)
-        .to(this.refs.headwear, {
+        .to(this.refs.headwearBack, {
+            duration: .2,
+            y: -100,
+            transformOrigin: "center",
+            onComplete: () => {
+                jump_tl.reverse();
+            }
+        }, 0)
+        .to(this.refs.headwearFront, {
             duration: .2,
             y: -100,
             transformOrigin: "center",
@@ -280,8 +314,12 @@ class Moji extends PureComponent{
         }
     }
 
-    headwearMounted(el){
-        this.refs.headwear = el
+    headwearBackMounted(el){
+        this.refs.headwearBack = el
+    }
+
+    headwearFrontMounted(el){
+        this.refs.headwearFront = el
     }
 
     componentWillUnmount(){
@@ -356,11 +394,11 @@ class Moji extends PureComponent{
                 <g ref={this.shadowMounted}>
                     <Shadow id={this.state.id} />
                 </g>
-                {
-                    this.state.willRenderBack(this.state.orientation) ? 
-                    <Suspense><Headwear forwardRef={this.headwearMounted} style={orientation_headwear_style} id={this.state.id} /></Suspense> :
-                    <PureComponent />
-                }
+                <g ref={this.headwearBackMounted}>
+                    {this.state.willRenderBack(this.state.orientation) ? 
+                    <Suspense><Headwear style={orientation_headwear_style} id={this.state.id} /></Suspense> :
+                    <PureComponent />}
+                </g>
                 <g style={this.state.orientation === 'back' ? "transform:scale(-1, 1);transform-origin:39.75% 0%;" : ""}>
                     {this.state.orientation === 'back' ?
                     <g ref={this.mojiMounted} onClick={this.state.click ? this.onClick : null}>
@@ -390,11 +428,11 @@ class Moji extends PureComponent{
                         </g>
                     </g>}
                 </g>
-                {
-                    this.state.willRenderFront(this.state.orientation) ? 
-                    <Suspense><Headwear forwardRef={this.headwearMounted} style={orientation_headwear_style} id={this.state.id} /></Suspense> :
-                    <PureComponent />
-                }
+                <g ref={this.headwearFrontMounted}>
+                    {this.state.willRenderFront(this.state.orientation) ? 
+                    <Suspense><Headwear style={orientation_headwear_style} id={this.state.id} /></Suspense> :
+                    <PureComponent />}
+                </g>
             </svg>
         );
     }
