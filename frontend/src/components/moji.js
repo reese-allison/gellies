@@ -12,10 +12,6 @@ import DefaultEyes from '../svgs/default-eyes';
 import DefaultGradient from '../svgs/default-gradient';
 
 
-// TODO ADD FPS OPTION FOR USERS
-gsap.ticker.fps(30);
-
-
 function eyeMovement(inner_eyes){
     let eye_movement_delay = randomRange(0, 3);
     let x = randomRange(0, 5) * randomNegative();
