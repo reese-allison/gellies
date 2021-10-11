@@ -46,7 +46,7 @@ function Cat(props){
             return (
                 <g>
                     <RightEar style="transform:scale(.95);transform-origin:center;" />
-                    <Body orientation={props.orientation} />
+                    <Body />
                     <LeftEar style="transform:scale(1.05);transform-origin:center left;" />
                 </g>
             )
@@ -55,7 +55,7 @@ function Cat(props){
             return (
                 <g>
                     <LeftEar style="transform:scale(.95);transform-origin:center;" />
-                    <Body orientation={props.orientation} />
+                    <Body />
                     <RightEar style="transform:scale(1.05);transform-origin:center right;" />
                 </g>
             )
@@ -63,7 +63,7 @@ function Cat(props){
         else if (props.orientation === 'back'){
             return (
                 <g>
-                    <Body orientation={props.orientation} />
+                    <Body />
                     <RightEar />
                     <LeftEar />
                 </g>
@@ -74,7 +74,7 @@ function Cat(props){
                 <g>
                     <RightEar />
                     <LeftEar />
-                    <Body orientation={props.orientation} />
+                    <Body />
                 </g>
             )
         }
