@@ -300,8 +300,8 @@ class Moji extends PureComponent{
                 setTimeout(function () {
                     moji.refs.eyes.style.display = '';
                     moji.refs.blinking.style.display = 'none';
-                }, 300);
-            }, randomRange(4, 8) * 1000);
+                }, 150);
+            }, randomRange(6, 10) * 1000);
         }
     }
 

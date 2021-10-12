@@ -62,7 +62,7 @@ class Scene extends Component{
                             </div>
                         );
                     })}
-                    <img style={{ width: '100%' }} src={`/static/backgrounds/${this.state.background}.jpg`} />
+                    <img style={{ width: '100%' }} src={`/static/backgrounds/${this.state.background}.gif`} />
                 </div>
             </div>
         )

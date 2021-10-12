@@ -35,7 +35,7 @@ const App = () => {
             <Nav/>
             <Router>
                 <Home path="/"/>
-                <Scene anchors={anchors} width="100%" background="sample" path="/moji/"/>
+                <Scene anchors={anchors} width="100%" background="beach" path="/moji/"/>
                 <Menu path='/menu'/>
                 <Error type='404' default/>
             </Router>
