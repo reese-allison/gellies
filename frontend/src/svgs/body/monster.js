@@ -12,10 +12,8 @@ function Monster(props){
     const RightEar = (attrs) => {
         return (
             <g style={attrs.style}>
-                <path fill={`url(#moji-${ props.id }-body-color)`} style="stroke:#808080;stroke-width:1" d="m 471.5,251.0 -54.1,8.2 0.9,12.5 54.1,-1.1 z" />
-                <path style="fill:#000;fill-opacity:.40;stroke:black;stroke-width:.25px;stroke-opacity:1;" d="m 471.5,251.0 -54.1,8.2 0.9,12.5 54.1,-1.1 z"/>
-                <path fill={`url(#moji-${ props.id }-body-color)`} style="stroke:#808080;stroke-width:1" d="m 496.6,232.8 -30.1,2.2 4.0,53.7 30.1,-2.2 z" />
-                <path style="fill:#000;fill-opacity:.40;stroke:black;stroke-width:.25px;stroke-opacity:1;" d="m 496.6,232.8 -30.1,2.2 4.0,53.7 30.1,-2.2 z"/>
+                <path fill={`url(#moji-${ props.id }-monster-body-color)`} style="stroke:#808080;stroke-width:1" d="m 471.5,251.0 -54.1,8.2 0.9,12.5 54.1,-1.1 z" />
+                <path fill={`url(#moji-${ props.id }-monster-body-color)`} style="stroke:#808080;stroke-width:1" d="m 496.6,232.8 -30.1,2.2 4.0,53.7 30.1,-2.2 z" />
             </g>
         )
     }
@@ -23,12 +21,8 @@ function Monster(props){
     const LeftEar = (attrs) => {
         return (
             <g style={attrs.style}>
-                    <path fill={`url(#moji-${ props.id }-body-color)`} style="stroke:#808080;stroke-width:1" d="m 16.2,251.0 54.1,8.2 -0.9,12.5 -54.1,-1.1 z" />
-                    <path style="fill:#000;fill-opacity:.40;stroke:black;stroke-width:.25px;stroke-opacity:1;" d="m 16.2,251.0 54.1,8.2 -0.9,12.5 -54.1,-1.1 z"/>
-                    <path fill={`url(#moji-${ props.id }-body-color)`} style="stroke:#808080;stroke-width:1" d="m -8.8,232.8 30.1,2.2 -4.0,53.7 -30.1,-2.2 z" />
-                    <path style="fill:#000;fill-opacity:.40;stroke:black;stroke-width:.25px;stroke-opacity:1;" d="m -8.8,232.8 30.1,2.2 -4.0,53.7 -30.1,-2.2 z"/>
-                
-                
+                    <path fill={`url(#moji-${ props.id }-monster-body-color)`} style="stroke:#808080;stroke-width:1" d="m 16.2,251.0 54.1,8.2 -0.9,12.5 -54.1,-1.1 z" />
+                    <path fill={`url(#moji-${ props.id }-monster-body-color)`} style="stroke:#808080;stroke-width:1" d="m -8.8,232.8 30.1,2.2 -4.0,53.7 -30.1,-2.2 z" />
             </g>
         )
     }
@@ -88,6 +82,10 @@ function Monster(props){
 
     return (
         <g>
+            <radialGradient id={`moji-${ props.id }-monster-body-color`} fx="40%" fy="0%" fr="20%" cx="40%" cy="30%">
+                <stop offset="0" stop-color="rgb(180,180,180)" stop-opacity="1" fx="0%" fy="0%"></stop>
+                <stop offset="1" stop-color="rgb(140,140,140)" stop-opacity="1"></stop>
+            </radialGradient>
             <Moji />
         </g>
     )
