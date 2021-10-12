@@ -21,7 +21,7 @@ const willRenderBack = (orientation) => {
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-class BlueBow extends PureComponent{
+class Headwear extends PureComponent{
     constructor(props){
         super(props);
         this.ref = props.forwardRef
@@ -55,5 +55,5 @@ class BlueBow extends PureComponent{
 }
 
 export {
-    BlueBow as Headwear, willRenderFront, willRenderBack
+    Headwear, willRenderFront, willRenderBack
 };

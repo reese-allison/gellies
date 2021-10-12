@@ -1,25 +1,55 @@
 import { h, Fragment } from 'preact';
-import { memo } from 'preact/compat';
+import { PureComponent } from 'preact/compat';
+
+
+const willBlink = () => {
+    return true;
+}
 
 
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-function Dot(){
-    return (
-        <g>
-            <g>
-                <g class="inner-eye">
-                    <circle fill="#000" cx="131" cy="324" r="6" />
+class Eyes extends PureComponent{
+    constructor(props){
+        super(props);
+        this.state = {
+            style: props.style,
+            id: props.id
+        }
+    }
+
+    render(){
+        return (
+            <g style={this.state.style}>
+                <g>
+                    <g class="inner-eye">
+                        <circle fill="#000" cx="131" cy="324" r="6" />
+                    </g>
+                </g>
+                <g>
+                    <g class="inner-eye">
+                        <circle fill="#000" cx="352" cy="324" r="6" />
+                    </g>
                 </g>
             </g>
-            <g>
-                <g class="inner-eye">
-                    <circle fill="#000" cx="352" cy="324" r="6" />
-                </g>
-            </g>
-        </g>
-    )
+        )
+    }
 };
 
-export default memo(Dot);
+class Blinking extends PureComponent{
+    constructor(props){
+        super(props);
+    }
+
+    render(){
+        return (
+            <g></g>
+        )
+    }
+};
+
+export {
+    Eyes, willBlink, Blinking
+};
+

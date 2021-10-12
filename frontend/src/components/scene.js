@@ -15,8 +15,8 @@ class Scene extends Component{
         this.state = {
             rendered: false,
             width: props.width,
-            background: props.background,
-            anchors: props.anchors
+            anchors: props.anchors,
+            background: props.background
         };
 
         this.handleResize = debounce(this.handleResize.bind(this), 250);
@@ -62,7 +62,7 @@ class Scene extends Component{
                             </div>
                         );
                     })}
-                    <img style={{ width: '100%' }} src={ this.state.background } />
+                    <img style={{ width: '100%' }} src={`/static/backgrounds/${this.state.background}.jpg`} />
                 </div>
             </div>
         )

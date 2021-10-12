@@ -6,3 +6,4 @@ import json
 from time import time
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="backend/static"), name="static")
