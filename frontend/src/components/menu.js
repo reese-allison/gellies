@@ -119,8 +119,8 @@ class Menu extends Component {
                             <div style={{ maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
                                 <div style={vertical ? {height: 'auto', overflowX: 'scroll'} : {maxHeight: vertical ? '79vw' : '79vh', height: vertical ? '79vw' : '79vh', overflowY: 'scroll'}}>
                                     <div style={vertical ? {width: 'max-content', height: '20em'} : {}}>
-                                        {Object.keys(parts).map((key, index) => {
-                                            let identifier = uuid();
+                                        {Object.keys(parts).map((part, index) => {
+                                            let key = this.state.component + part;
                                             let styles = {
                                                 backgroundColor: theme.palette.secondary.main,
                                                 margin: 5,
@@ -129,12 +129,12 @@ class Menu extends Component {
                                                 height:'20em',
                                                 width: '20em'
                                             };
-                                            let props = { [this.state.component]: key, animations: false }
+                                            let props = { [this.state.component]: part, animations: false }
                                             return(
                                                 <div 
-                                                    style={selected_part == key ? {...styles, backgroundColor: theme.palette.success.light, border: `3px dashed ${theme.palette.tertiary.main}`} : styles}
-                                                    onClick={() => this.setComponent(key)}>
-                                                    <Moji key={identifier} {...props}/>
+                                                    style={selected_part == part ? {...styles, backgroundColor: theme.palette.success.light, border: `3px dashed ${theme.palette.tertiary.main}`} : styles}
+                                                    onClick={() => this.setComponent(part)}>
+                                                    <Moji key={key} {...props}/>
                                                 </div>
                                             )
                                         })}
