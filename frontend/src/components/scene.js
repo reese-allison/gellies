@@ -22,8 +22,10 @@ class Scene extends Component{
     }
 
     handleResize(){
-        this.setState({
-            moji_width: this.ref.current.offsetWidth
+        this.setState({}, ()=>{
+            this.setState({
+                moji_width: this.ref.current.offsetWidth
+            })
         });
     }
 
@@ -45,7 +47,7 @@ class Scene extends Component{
                     <Grid container spacing={3}>
                         <Grid item xs={vertical ? 12 : 6}>
                             <div className={classes.scene}>
-                                <div ref={this.ref} style={{ position: 'relative'}}>
+                                <div ref={this.ref} style={{ position: 'relative', width: '100%'}}>
                                     <video style={{ width: '100%', borderRadius: 30 }} playsinline autoplay muted loop>
                                         <source type="video/mp4" src={`/static/backgrounds/${this.state.background}.mp4`} />
                                     </video>

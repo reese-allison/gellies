@@ -1,5 +1,5 @@
 import { h, Fragment, Component } from 'preact';
-import { Grid, Container, IconButton, Button, ButtonGroup, Box } from '@material-ui/core';
+import { Grid, Container, IconButton, Button, ButtonGroup, Box, debounce } from '@material-ui/core';
 import { v4 as uuid } from 'uuid';
 
 import theme from '../styles/theme';
@@ -28,10 +28,16 @@ class Menu extends Component {
         this.setComponent = this.setComponent.bind(this);
         this.rotateLeft = this.rotateLeft.bind(this);
         this.rotateRight = this.rotateRight.bind(this);
+        this.handleResize = debounce(this.handleResize.bind(this), 250);
+    }
+
+    handleResize(){
+        this.setState({});
     }
 
     componentDidMount(){
         this.showComponents('body');
+        window.addEventListener('resize', this.handleResize);
     }
 
     showComponents(component){
