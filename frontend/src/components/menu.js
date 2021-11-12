@@ -8,7 +8,7 @@ import Moji from './moji';
 import { RotateRight, RotateLeft } from '@material-ui/icons';
 
 
-const ORIENTATIONS = ['left', 'front', 'right', 'back'];
+const ORIENTATIONS = ['left', 'front', 'right', 'back-right', 'back', 'back-left'];
 
 
 /**  @jsx h */

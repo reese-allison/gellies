@@ -3,7 +3,7 @@ import { PureComponent } from 'preact/compat';
 
 
 const willRenderFront = (orientation) => {
-    if(orientation != 'back'){
+    if(!orientation.includes('back')){
         return true;
     }
     return false;
@@ -11,7 +11,7 @@ const willRenderFront = (orientation) => {
 
 
 const willRenderBack = (orientation) => {
-    if(orientation === 'back'){
+    if(orientation.includes('back')){
         return true;
     }
     return false;

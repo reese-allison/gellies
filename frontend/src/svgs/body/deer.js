@@ -42,7 +42,7 @@ function Deer(props){
     }
 
     const Moji = () => {
-        if(props.orientation === 'right'){
+        if(props.orientation.includes('right')){
             return (
                 <g>
                     <RightEar style="transform:scale(.95);transform-origin:center;" />
@@ -51,7 +51,7 @@ function Deer(props){
                 </g>
             )
         }
-        else if (props.orientation === 'left'){
+        else if (props.orientation.includes('left')){
             return (
                 <g>
                     <LeftEar style="transform:scale(.95);transform-origin:center;" />

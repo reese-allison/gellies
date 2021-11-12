@@ -424,12 +424,13 @@ class Moji extends PureComponent{
         let moji_style = '';
         let orientation_style = '';
         let orientation_headwear_style = '';
-        if(this.state.orientation === 'left'){
+        let current_orientation = this.state.orientation || 'front';
+        if(current_orientation === 'left' || current_orientation === 'back-right'){
             moji_style = "transform:rotateY(15deg);transform-origin:center top;";
             orientation_style = "transform: translate(-40px, 0);";
             orientation_headwear_style = "transform: skew(1deg, -1deg) scale(-1, 1);transform-origin:39.75% 0%;";
         }
-        if(this.state.orientation === 'right'){
+        if(current_orientation === 'right' || current_orientation === 'back-left'){
             moji_style = "transform:rotateY(15deg);transform-origin:center top;";
             orientation_style = "transform: translate(50px, 0);";
             orientation_headwear_style = "transform: skew(1deg, -1deg);";
@@ -447,12 +448,12 @@ class Moji extends PureComponent{
                     <Shadow id={this.state.id} />
                 </g>
                 <g ref={this.headwearBackMounted}>
-                    {this.state.willRenderBack(this.state.orientation) ? 
+                    {this.state.willRenderBack(current_orientation) ? 
                     <Suspense><Headwear style={orientation_headwear_style} id={this.state.id} /></Suspense> :
                     <PureComponent />}
                 </g>
-                <g style={this.state.orientation === 'back' ? "transform:scale(-1, 1);transform-origin:39.75% 0%;" : ""}>
-                    {this.state.orientation === 'back' ?
+                <g style={current_orientation.includes('back') ? "transform:scale(-1, 1);transform-origin:39.75% 0%;" : ""}>
+                    {current_orientation.includes('back') ?
                     <g ref={this.mojiMounted} onClick={this.state.click ? this.onClick : null}>
                         <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
                             <Suspense>
@@ -466,12 +467,12 @@ class Moji extends PureComponent{
                             </Suspense>
                         </g>
                         <Suspense fallback={<DefaultBody />}>
-                            <Body style={orientation_style} id={this.state.id} orientation={this.state.orientation} pattern={this.state.pattern} />
+                            <Body style={orientation_style} id={this.state.id} orientation={current_orientation} pattern={this.state.pattern} />
                         </Suspense>
                     </g> :
                     <g ref={this.mojiMounted} onClick={this.state.click ? this.onClick : null}>
                         <Suspense fallback={<DefaultBody />}>
-                            <Body style={orientation_style} id={this.state.id} orientation={this.state.orientation} pattern={this.state.pattern} />
+                            <Body style={orientation_style} id={this.state.id} orientation={current_orientation} pattern={this.state.pattern} />
                         </Suspense>
                         <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
                             <Suspense>
@@ -481,13 +482,13 @@ class Moji extends PureComponent{
                                 <Eyes id={this.state.id} ref={this.eyesMounted} />
                             </Suspense>
                             <Suspense>
-                                <Mouth orientation={this.state.orientation} />
+                                <Mouth orientation={current_orientation} />
                             </Suspense>
                         </g>
                     </g>}
                 </g>
                 <g ref={this.headwearFrontMounted}>
-                    {this.state.willRenderFront(this.state.orientation) ? 
+                    {this.state.willRenderFront(current_orientation) ? 
                     <Suspense><Headwear style={orientation_headwear_style} id={this.state.id} /></Suspense> :
                     <PureComponent />}
                 </g>

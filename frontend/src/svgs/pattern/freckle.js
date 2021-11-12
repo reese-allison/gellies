@@ -6,7 +6,7 @@ import { memo } from 'preact/compat';
 /** @jsxFrag Fragment */
 
 function Freckle(props){
-    if(props.orientation != 'back'){
+    if(!props.orientation.includes('back')){
         return (
             <g style={props.style}>
                 <circle style="fill:#000;fill-opacity:.3;" cx="143.4" cy="403.0" r="2" /> 
