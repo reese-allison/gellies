@@ -1,5 +1,5 @@
 import { h, Fragment, Component, createRef } from 'preact';
-import { debounce } from '@material-ui/core';
+import { Grid, Container, Box, debounce } from '@material-ui/core';
 
 import Moji from './moji';
 import sceneStyles from '../styles/scene'
@@ -14,7 +14,6 @@ class Scene extends Component{
         this.ref = createRef();
         this.state = {
             rendered: false,
-            width: props.width,
             anchors: props.anchors,
             background: props.background
         };
@@ -39,32 +38,45 @@ class Scene extends Component{
 
     render(){
         const classes = sceneStyles();
+        let vertical = window.innerHeight > window.innerWidth;
         return (
-            <div className={classes.scene}>
-                <div ref={this.ref} style={{ position: 'relative', width: this.state.width }}>
-                    {this.state.anchors.map((x, i) => {
-                        let moji_style = {}
-                        Object.assign(moji_style, x.style);
-                        moji_style.width = x.width * this.state.moji_width + 'px';
-                        moji_style.height = x.width * this.state.moji_width + 'px';
-                        return(
-                            <div style={Object.assign({position: 'absolute'}, moji_style)}>
-                                <Moji 
-                                    eyes={x.eyes} 
-                                    mouth={x.mouth} 
-                                    gradient={x.gradient} 
-                                    body={x.body} 
-                                    orientation={x.orientation}
-                                    headwear={x.headwear}
-                                    pattern={x.pattern}
-                                    id={x.id}
-                                />
+            <Container>
+                <Box m={4}>
+                    <Grid container spacing={3}>
+                        <Grid item xs={vertical ? 12 : 6}>
+                            <div className={classes.scene}>
+                                <div ref={this.ref} style={{ position: 'relative'}}>
+                                    <video style={{ width: '100%', borderRadius: 30 }} playsinline autoplay muted loop>
+                                        <source type="video/mp4" src={`/static/backgrounds/${this.state.background}.mp4`} />
+                                    </video>
+                                    {this.state.anchors.map((x, i) => {
+                                        let moji_style = {}
+                                        Object.assign(moji_style, x.style);
+                                        moji_style.width = x.width * this.state.moji_width + 'px';
+                                        moji_style.height = x.width * this.state.moji_width + 'px';
+                                        return(
+                                            <div style={Object.assign({position: 'absolute'}, moji_style)}>
+                                                <Moji 
+                                                    eyes={x.eyes} 
+                                                    mouth={x.mouth} 
+                                                    gradient={x.gradient} 
+                                                    body={x.body} 
+                                                    orientation={x.orientation}
+                                                    headwear={x.headwear}
+                                                    pattern={x.pattern}
+                                                    id={x.id}
+                                                />
+                                            </div>
+                                        );
+                                    })}
+                                </div>
                             </div>
-                        );
-                    })}
-                    <img style={{ width: '100%' }} src={`/static/backgrounds/${this.state.background}.gif`} />
-                </div>
-            </div>
+                        </Grid>
+                        <Grid item xs={vertical ? 12 : 6} style={{borderRadius: 30}}>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </Container>
         )
     }
 }

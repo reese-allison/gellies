@@ -19,8 +19,6 @@ class Menu extends Component {
         super(props)
         this.state = {
             orientation: 'front',
-            height: window.innerHeight,
-            width: window.innerWidth,
             components: {},
             parts: {},
             component: null
@@ -28,18 +26,12 @@ class Menu extends Component {
 
         this.showComponents = this.showComponents.bind(this);
         this.setComponent = this.setComponent.bind(this);
-        this.updateDimensions = this.updateDimensions.bind(this);
         this.rotateLeft = this.rotateLeft.bind(this);
         this.rotateRight = this.rotateRight.bind(this);
     }
 
     componentDidMount(){
         this.showComponents('body');
-        window.addEventListener('resize', this.updateDimensions);
-    }
-
-    componentWillUnmount(){
-        window.removeEventListener('resize', this.updateDimensions);
     }
 
     showComponents(component){
@@ -66,10 +58,6 @@ class Menu extends Component {
             new_components[this.state.component] = value;
             this.setState({ components: new_components });
         }
-    }
-
-    updateDimensions(){
-        this.setState({ width: window.innerWidth, height: window.innerHeight }); 
     }
 
     rotateLeft(){
@@ -115,7 +103,7 @@ class Menu extends Component {
                                 </IconButton>
                             </div>
                         </Grid>
-                        <Grid item xs={vertical ? 12 : 6} style={{borderRadius: 30}}>
+                        <Grid item xs={vertical ? 12 : 6}>
                             <div style={{ maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
                                 <div style={vertical ? {height: 'auto', overflowX: 'scroll'} : {maxHeight: vertical ? '79vw' : '79vh', height: vertical ? '79vw' : '79vh', overflowY: 'scroll'}}>
                                     <div style={vertical ? {width: 'max-content', height: '20em'} : {}}>
