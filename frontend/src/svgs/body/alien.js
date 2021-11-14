@@ -12,10 +12,10 @@ function Alien(props){
     const RightEar = (attrs) => {
         return (
             <g style={attrs.style}>
-                <path fill={`url(#moji-${ props.id }-body-color)`} d="m 418.9,255.2 -11.4,-4.1 c -32.0,-70.6 6.1,-88.8 33.5,-55.5 l -1.0,8.6 c -37.4,-42.4 -51.4,5.2 -21.1,50.9 z" />
-                <path style="fill:#000;fill-opacity:.25;stroke:black;stroke-width:.25px;stroke-opacity:1;" d="m 418.9,255.2 -11.4,-4.1 c -32.0,-70.6 6.1,-88.8 33.5,-55.5 l -1.0,8.6 c -37.4,-42.4 -51.4,5.2 -21.1,50.9 z" />
-                <ellipse style="stroke:black;stroke-width:.25px;stroke-opacity:1;" fill={`url(#moji-${ props.id }-body-color)`} cx="442.6" cy="193.7" rx="24.8" ry="24.4" />
-                <ellipse style={`stroke:url(#moji-${ props.id }-body-color);stroke-width:3px;stroke-opacity:.65;`} cx="442.6" cy="193.7" rx="24.8" ry="24.4" />
+                <path style='stroke-width:2px;stroke-opacity:1;stroke:black;' fill={`url(#moji-${ props.id }-body-color)`} d="m 418.9,255.2 -11.4,-4.1 c -32.0,-70.6 6.1,-88.8 33.5,-55.5 l -1.0,8.6 c -37.4,-42.4 -51.4,5.2 -21.1,50.9 z" />
+                <path style={`fill:#000;fill-opacity:.25;stroke:url(#moji-${ props.id }-body-color);stroke-width:2px;stroke-opacity:.5;`} d="m 418.9,255.2 -11.4,-4.1 c -32.0,-70.6 6.1,-88.8 33.5,-55.5 l -1.0,8.6 c -37.4,-42.4 -51.4,5.2 -21.1,50.9 z" />
+                <ellipse style="stroke:black;stroke-width:2px;stroke-opacity:1;" fill={`url(#moji-${ props.id }-body-color)`} cx="442.6" cy="193.7" rx="24.8" ry="24.4" />
+                <ellipse style={`stroke:url(#moji-${ props.id }-body-color);stroke-width:2px;stroke-opacity:.75;`} cx="442.6" cy="193.7" rx="24.8" ry="24.4" />
             </g>
         )
     }
@@ -23,10 +23,10 @@ function Alien(props){
     const LeftEar = (attrs) => {
         return (
             <g style={attrs.style}>
-                <path fill={`url(#moji-${ props.id }-body-color)`} d="m 67.6,258.4 11.4,-4.1 C 111.2,183.7 72.9,165.4 45.5,198.8 l 1.0,8.6 c 37.4,-42.4 51.4,5.2 21.1,50.9 z" />
-                <path style="fill:#000;fill-opacity:.25;stroke:black;stroke-width:.25px;stroke-opacity:1;" d="m 67.6,258.4 11.4,-4.1 C 111.2,183.7 72.9,165.4 45.5,198.8 l 1.0,8.6 c 37.4,-42.4 51.4,5.2 21.1,50.9 z" />
-                <ellipse style="stroke:black;stroke-width:.25px;stroke-opacity:1;" fill={`url(#moji-${ props.id }-body-color)`} cx="42.9" cy="200.4" rx="24.8" ry="24.4" />
-                <ellipse style={`stroke:url(#moji-${ props.id }-body-color);stroke-width:3px;stroke-opacity:.65;`} cx="42.9" cy="200.4" rx="24.8" ry="24.4" />
+                <path style='stroke-width:2px;stroke-opacity:1;stroke:black;' fill={`url(#moji-${ props.id }-body-color)`} d="m 67.6,258.4 11.4,-4.1 C 111.2,183.7 72.9,165.4 45.5,198.8 l 1.0,8.6 c 37.4,-42.4 51.4,5.2 21.1,50.9 z" />
+                <path style={`fill:#000;fill-opacity:.25;stroke:url(#moji-${ props.id }-body-color);stroke-width:2px;stroke-opacity:.5;`} d="m 67.6,258.4 11.4,-4.1 C 111.2,183.7 72.9,165.4 45.5,198.8 l 1.0,8.6 c 37.4,-42.4 51.4,5.2 21.1,50.9 z" />
+                <ellipse style="stroke:black;stroke-width:2px;stroke-opacity:1;" fill={`url(#moji-${ props.id }-body-color)`} cx="42.9" cy="200.4" rx="24.8" ry="24.4" />
+                <ellipse style={`stroke:url(#moji-${ props.id }-body-color);stroke-width:2px;stroke-opacity:.75;`} cx="42.9" cy="200.4" rx="24.8" ry="24.4" />
             </g>
         )
     }
@@ -34,8 +34,8 @@ function Alien(props){
     const Body = () => {
         return (
             <g>
-                <path fill={`url(#moji-${ props.id }-body-color)`} style="stroke:black;stroke-width:.25px;stroke-opacity:1;" d="m 461.5,342.6 c 0.5,94.0 -62.2,138.6 -224.6,139.0 -159.7,0.3 -212.9,-44.6 -212.9,-137.6 0,-91.9 95.8,-161.6 216.1,-161.6 132.5,0 220.9,68.3 221.4,160.2 z" />
-                <path style={`stroke:url(#moji-${ props.id }-body-color);stroke-width:3px;stroke-opacity:.65;`} d="m 461.5,342.6 c 0.5,94.0 -62.2,138.6 -224.6,139.0 -159.7,0.3 -212.9,-44.6 -212.9,-137.6 0,-91.9 95.8,-161.6 216.1,-161.6 132.5,0 220.9,68.3 221.4,160.2 z" />
+                <path fill={`url(#moji-${ props.id }-body-color)`} style="stroke:black;stroke-width:2px;stroke-opacity:1;" d="m 461.5,342.6 c 0.5,94.0 -62.2,138.6 -224.6,139.0 -159.7,0.3 -212.9,-44.6 -212.9,-137.6 0,-91.9 95.8,-161.6 216.1,-161.6 132.5,0 220.9,68.3 221.4,160.2 z" />
+                <path style={`stroke:url(#moji-${ props.id }-body-color);stroke-width:2px;stroke-opacity:.75;`} d="m 461.5,342.6 c 0.5,94.0 -62.2,138.6 -224.6,139.0 -159.7,0.3 -212.9,-44.6 -212.9,-137.6 0,-91.9 95.8,-161.6 216.1,-161.6 132.5,0 220.9,68.3 221.4,160.2 z" />
                 <g clip-path={`url(#body-clip-${ props.id })`}>
                     <Suspense>
                         <Pattern id={props.id} style={props.style} orientation={props.orientation} />
