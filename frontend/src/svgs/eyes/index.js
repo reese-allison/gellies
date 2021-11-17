@@ -1,20 +1,18 @@
-import cute from './cute';
-import dot from './dot';
-import bored from './bored';
-import cat from './cat';
-import frog from './frog';
-import hungry from './hungry';
-import knockout from './knockout';
-import pouty from './pouty';
-import pumpkin from './pumpkin';
-import shiny from './shiny';
-import sleepy from './sleepy';
-import smiley from './smiley';
-import suprised from './suprised';
-import swirl from './swirl';
-import teddy from './teddy';
-import winking_left from './winking_left';
-import winking_right from './winking_right';
+import {Eyes as cute} from './cute';
+import {Eyes as dot} from './dot';
+import {Eyes as bored} from './bored';
+import {Eyes as cat} from './cat';
+import {Eyes as frog} from './frog';
+import {Eyes as hungry} from './hungry';
+import {Eyes as knockout} from './knockout';
+import {Eyes as pouty} from './pouty';
+import {Eyes as pumpkin} from './pumpkin';
+import {Eyes as shiny} from './shiny';
+// import smiley from './smiley';
+// import sleepy from './sleepy';
+import {Eyes as surprised} from './surprised';
+import {Eyes as swirl} from './swirl';
+import {Eyes as teddy} from './teddy';
 
 export {
     cute,
@@ -27,11 +25,9 @@ export {
     pouty, 
     pumpkin,
     shiny,
-    sleepy, 
-    smiley, 
-    suprised,
+    // smiley,
+    // sleepy,
+    surprised,
     swirl, 
-    teddy, 
-    winking_left,
-    winking_right
+    teddy,
 }

@@ -1,12 +1,11 @@
 import { Headwear as tophat } from "./tophat";
-import { Headwear as red_bow } from "./red_bow";
-import { Headwear as green_bow } from "./green_bow";
-import { Headwear as blue_bow } from "./blue_bow";
-
+import { Headwear as bow_red } from "./bow_red";
+import { Headwear as bow_blue } from "./bow_blue";
+import { Headwear as bow_green } from "./bow_green";
 
 export {
     tophat,
-    red_bow,
-    blue_bow,
-    green_bow
+    bow_red,
+    bow_green,
+    bow_blue
 }

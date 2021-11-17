@@ -9,7 +9,11 @@ function Patchwork(props){
     props.style = "opacity:100%"
     return (
         <g style={props.style}>
-            <path style="fill:#ccffcc;fill-opacity:.5;"  d="M 430.4,178.1 C 512.6,234.5 560.5,338.9 530.9,432.9 515.0,496.9 459.6,542.5 398.5,553.3 299.6,576.8 155.7,568.9 62.8,549.7 33.2,542.8 5.0,527.8 -17.5,505.0 Z" />
+            <radialGradient id={`moji-${ props.id }-patchwork-pattern-color`} fx="40%" fy="0%" fr="20%" cx="40%" cy="30%">
+                <stop offset="0" stop-color="rgb(204,255,204)" stop-opacity="1" fx="0%" fy="0%"></stop>
+                <stop offset="1" stop-color="rgb(124,175,124)" stop-opacity="1"></stop>
+            </radialGradient>
+            <path fill={`url(#moji-${ props.id }-patchwork-pattern-color)`} style="fill-opacity:.4;"  d="M 70.5,447.7 C -98.7,549.8 -37.5,217.3 58.3,151.5 138.3,96.5 533.9,102.5 379.1,214.8 Z" />
             <g>
                 <path style="opacity:0.9;fill:#000000;stroke:#000000;stroke-width:0.5" d="m 86,416.2 c 2.2,-1.3 4.8,-5.2 4,-2.5 -0.2,0.7 -1,1.8 -3.3,3.2 -2.3,1.4 -3.8,2 -4.6,2 -3.9,-0.3 1.3,-1.1 3.9,-2.7 z"/>
                 <path style="opacity:0.9;fill:#000000;stroke:#000000;stroke-width:0.5" d="m 101.8,435.1 c -2.2,1.3 -4.7,5.3 -3.9,2.6 0.2,-0.7 1,-1.8 3.2,-3.3 2.2,-1.4 3.7,-2.1 4.5,-2 3.9,0.2 -1.3,1.2 -3.8,2.7 z" />

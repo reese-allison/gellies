@@ -25,9 +25,8 @@ const appStyles = makeStyles(theme => ({
 
 const App = () => {
     let anchors = [
-        {width: .2, pattern: 'patchwork', gradient: 'lemon', body: 'alien', eyes: 'cute', mouth: 'cute', orientation: 'right', style: {bottom: '4%', left: '1%'}},
-        {width: .2, pattern: 'patchwork', gradient: 'lemon', body: 'alien', eyes: 'cute', mouth: 'cute', orientation: 'left', style: {bottom: '3%', left: '18%'}},
-        {width: .08, headwear: 'tophat', gradient: 'lemon', eyes: 'dot', mouth: 'cute', orientation: 'left', style: {bottom: '44%', right: '12%'}}
+        {width: .5, headwear: 'bow_green', pattern: 'whisker', gradient: 'pear', body: 'teddy', eyes: 'shiny', mouth: 'buck_teeth', orientation: 'back-right', style: {bottom: '5%', left: '11%'}},
+        {width: .35, headwear: 'bow_red', gradient: 'lavender', eyes: 'swirl', mouth: 'skeleton', orientation: 'left', style: {bottom: '45%', right: '5%'}}
     ];
     appStyles();
     return (
@@ -36,7 +35,7 @@ const App = () => {
             <Nav/>
             <Router>
                 <Home path="/"/>
-                <Scene anchors={anchors} width="100%" background="/static/images/beach.gif" path="/moji/"/>
+                <Scene anchors={anchors} background="desert" path="/moji/"/>
                 <Menu path='/menu'/>
                 <Error type='404' default/>
             </Router>

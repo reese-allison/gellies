@@ -1,5 +1,5 @@
 import { h, Fragment, Component } from 'preact';
-import { Grid, Container, IconButton, Button, ButtonGroup, Box } from '@material-ui/core';
+import { Grid, Container, IconButton, Button, ButtonGroup, Box, debounce } from '@material-ui/core';
 import { v4 as uuid } from 'uuid';
 
 import theme from '../styles/theme';
@@ -8,7 +8,7 @@ import Moji from './moji';
 import { RotateRight, RotateLeft } from '@material-ui/icons';
 
 
-const ORIENTATIONS = ['left', 'front', 'right', 'back'];
+const ORIENTATIONS = ['left', 'front', 'right', 'back-right', 'back', 'back-left'];
 
 
 /**  @jsx h */
@@ -19,8 +19,6 @@ class Menu extends Component {
         super(props)
         this.state = {
             orientation: 'front',
-            height: window.innerHeight,
-            width: window.innerWidth,
             components: {},
             parts: {},
             component: null
@@ -28,18 +26,18 @@ class Menu extends Component {
 
         this.showComponents = this.showComponents.bind(this);
         this.setComponent = this.setComponent.bind(this);
-        this.updateDimensions = this.updateDimensions.bind(this);
         this.rotateLeft = this.rotateLeft.bind(this);
         this.rotateRight = this.rotateRight.bind(this);
+        this.handleResize = debounce(this.handleResize.bind(this), 250);
+    }
+
+    handleResize(){
+        this.setState({});
     }
 
     componentDidMount(){
         this.showComponents('body');
-        window.addEventListener('resize', this.updateDimensions);
-    }
-
-    componentWillUnmount(){
-        window.removeEventListener('resize', this.updateDimensions);
+        window.addEventListener('resize', this.handleResize);
     }
 
     showComponents(component){
@@ -66,10 +64,6 @@ class Menu extends Component {
             new_components[this.state.component] = value;
             this.setState({ components: new_components });
         }
-    }
-
-    updateDimensions(){
-        this.setState({ width: window.innerWidth, height: window.innerHeight }); 
     }
 
     rotateLeft(){
@@ -115,12 +109,12 @@ class Menu extends Component {
                                 </IconButton>
                             </div>
                         </Grid>
-                        <Grid item xs={vertical ? 12 : 6} style={{borderRadius: 30}}>
+                        <Grid item xs={vertical ? 12 : 6}>
                             <div style={{ maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
                                 <div style={vertical ? {height: 'auto', overflowX: 'scroll'} : {maxHeight: vertical ? '79vw' : '79vh', height: vertical ? '79vw' : '79vh', overflowY: 'scroll'}}>
                                     <div style={vertical ? {width: 'max-content', height: '20em'} : {}}>
-                                        {Object.keys(parts).map((key, index) => {
-                                            let identifier = uuid();
+                                        {Object.keys(parts).map((part, index) => {
+                                            let key = this.state.component + part;
                                             let styles = {
                                                 backgroundColor: theme.palette.secondary.main,
                                                 margin: 5,
@@ -129,12 +123,12 @@ class Menu extends Component {
                                                 height:'20em',
                                                 width: '20em'
                                             };
-                                            let props = { [this.state.component]: key, animations: false }
+                                            let props = { [this.state.component]: part, animations: false }
                                             return(
                                                 <div 
-                                                    style={selected_part == key ? {...styles, backgroundColor: theme.palette.success.light, border: `3px dashed ${theme.palette.tertiary.main}`} : styles}
-                                                    onClick={() => this.setComponent(key)}>
-                                                    <Moji key={identifier} {...props}/>
+                                                    style={selected_part == part ? {...styles, backgroundColor: theme.palette.success.light, border: `3px dashed ${theme.palette.tertiary.main}`} : styles}
+                                                    onClick={() => this.setComponent(part)}>
+                                                    <Moji key={key} {...props}/>
                                                 </div>
                                             )
                                         })}

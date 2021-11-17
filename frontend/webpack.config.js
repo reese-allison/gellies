@@ -32,8 +32,8 @@ function buildConfig(env) {
         {
           test: /\.(woff|woff2|eot|ttf|png|jpeg|jpg|svg|gif)$/,
           sideEffects: false,
-          use: 'asset/resource'
-        }
+          type: 'asset/resource'
+        },
       ],
     },
     plugins: [

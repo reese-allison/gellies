@@ -1,4 +1,4 @@
-import { h, Fragment } from 'preact';
+import { h, Fragment, createRef } from 'preact';
 import { Suspense, PureComponent, lazy } from 'preact/compat';
 import { v4 as uuid } from 'uuid';
 import gsap from "gsap";
@@ -10,10 +10,6 @@ import Clip from '../svgs/clip';
 import DefaultBody from '../svgs/default-body';
 import DefaultEyes from '../svgs/default-eyes';
 import DefaultGradient from '../svgs/default-gradient';
-
-
-// TODO ADD FPS OPTION FOR USERS
-gsap.ticker.fps(30);
 
 
 function eyeMovement(inner_eyes){
@@ -47,6 +43,8 @@ class Moji extends PureComponent{
             eyes: null
         }
         this.refs = {
+            blinking: null,
+            eyes: null,
             moji: null,
             shadow: null,
             headwearBack: null,
@@ -64,7 +62,8 @@ class Moji extends PureComponent{
             mouth: props.mouth,
             headwear: props.headwear,
             willRenderBack: ()=>{false},
-            willRenderFront: ()=>{false}
+            willRenderFront: ()=>{false},
+            willBlink: ()=>{false},
         };
 
         this.bounce = this.bounce.bind(this);
@@ -74,6 +73,7 @@ class Moji extends PureComponent{
         this.eyesMounted = this.eyesMounted.bind(this);
         this.mojiMounted = this.mojiMounted.bind(this);
         this.shadowMounted = this.shadowMounted.bind(this);
+        this.blinkMounted = this.blinkMounted.bind(this);
         this.headwearBackMounted = this.headwearBackMounted.bind(this);
         this.headwearFrontMounted = this.headwearFrontMounted.bind(this);
     }
@@ -250,19 +250,58 @@ class Moji extends PureComponent{
 
     eyesMounted(el){
         if(el === null){
+            clearInterval(this.blink_interval);
+            this.refs.eyes = null;
             if(this.state.animations && this.animations.eyes != null){
                 this.animations.eyes.kill();
             }
         }
-        else if(this.state.animations){
-            const q = gsap.utils.selector(el.base);
-            let eye_animations = gsap.set(eyeMovement, {
-                onRepeat: eyeMovement, 
-                onRepeatParams: [q('.inner-eye')], 
-                repeat: -1, 
-                repeatDelay: 4
-            });
-            this.animations.eyes = eye_animations;
+        else{
+            this.refs.eyes = el.base;
+            if(this.state.animations){
+                this.setupEyes();
+                this.setupBlink();
+            }
+        }
+    }
+
+    blinkMounted(el){
+        if (el === null){
+            clearInterval(this.blink_interval);
+            this.refs.blinking = null;
+        }
+        else{
+            this.refs.blinking = el.base;
+            this.setupBlink();
+        }
+    }
+
+    setupEyes(){
+        const q = gsap.utils.selector(this.refs.eyes);
+        let eye_animations = gsap.set(eyeMovement, {
+            onRepeat: eyeMovement,
+            onRepeatParams: [q('.inner-eye')], 
+            repeat: -1, 
+            repeatDelay: 4
+        });
+        this.animations.eyes = eye_animations;
+    }
+
+    setupBlink(){
+        if(this.state.willBlink() && this.refs.blinking != null && this.refs.eyes != null){
+            this.refs.eyes.style.display = '';
+            this.refs.blinking.style.display = 'none';
+            clearInterval(this.blink_interval);
+
+            let moji = this;
+            this.blink_interval = setInterval(() => {
+                moji.refs.eyes.style.display = 'none';
+                moji.refs.blinking.style.display = '';
+                setTimeout(function () {
+                    moji.refs.eyes.style.display = '';
+                    moji.refs.blinking.style.display = 'none';
+                }, 150);
+            }, randomRange(6, 10) * 1000);
         }
     }
 
@@ -329,6 +368,7 @@ class Moji extends PureComponent{
         if(this.animations.ebb != null){
             this.animations.ebb.kill();
         }
+        clearInterval(this.blink_interval);
     }
 
     componentWillReceiveProps(nextProps){
@@ -355,9 +395,10 @@ class Moji extends PureComponent{
     render(){
         const Gradient = maybeLoadTemplate('gradient', this.state.gradient);
         const Body = maybeLoadTemplate('body', this.state.body);
-        const Eyes = maybeLoadTemplate('eyes', this.state.eyes);
         const Mouth = maybeLoadTemplate('mouth', this.state.mouth);
+        let Eyes = DefaultEyes;
         let Headwear = PureComponent;
+        let Blinking = PureComponent;
 
         if(this.state.headwear != undefined){
             import(`../svgs/headwear/${this.state.headwear}`).then(module => {
@@ -369,15 +410,27 @@ class Moji extends PureComponent{
             Headwear = lazy(() => import(`../svgs/headwear/${this.state.headwear}`).then(module => ({ default: module.Headwear })));
         }
 
+        if(this.state.eyes != undefined){
+            import(`../svgs/eyes/${this.state.eyes}`).then(module => {
+                this.setState({
+                    willBlink: module.willBlink,
+                })
+            });
+            Eyes = lazy(() => import(`../svgs/eyes/${this.state.eyes}`).then(module => ({ default: module.Eyes })));
+            Blinking = lazy(() => import(`../svgs/eyes/${this.state.eyes}`).then(module => ({ default: module.Blinking })));
+        }
+
+
         let moji_style = '';
         let orientation_style = '';
         let orientation_headwear_style = '';
-        if(this.state.orientation === 'left'){
+        let current_orientation = this.state.orientation || 'front';
+        if(current_orientation === 'left' || current_orientation === 'back-right'){
             moji_style = "transform:rotateY(15deg);transform-origin:center top;";
             orientation_style = "transform: translate(-40px, 0);";
             orientation_headwear_style = "transform: skew(1deg, -1deg) scale(-1, 1);transform-origin:39.75% 0%;";
         }
-        if(this.state.orientation === 'right'){
+        if(current_orientation === 'right' || current_orientation === 'back-left'){
             moji_style = "transform:rotateY(15deg);transform-origin:center top;";
             orientation_style = "transform: translate(50px, 0);";
             orientation_headwear_style = "transform: skew(1deg, -1deg);";
@@ -398,14 +451,17 @@ class Moji extends PureComponent{
                     <Shadow id={this.state.id} />
                 </g>
                 <g ref={this.headwearBackMounted}>
-                    {this.state.willRenderBack(this.state.orientation) ? 
+                    {this.state.willRenderBack(current_orientation) ? 
                     <Suspense><Headwear style={orientation_headwear_style} id={this.state.id} /></Suspense> :
                     <PureComponent />}
                 </g>
-                <g style={this.state.orientation === 'back' ? "transform:scale(-1, 1);transform-origin:39.75% 0%;" : ""}>
-                    {this.state.orientation === 'back' ?
+                <g style={current_orientation.includes('back') ? "transform:scale(-1, 1);transform-origin:39.75% 0%;" : ""}>
+                    {current_orientation.includes('back') ?
                     <g ref={this.mojiMounted} onClick={this.state.click ? this.onClick : null}>
                         <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
+                            <Suspense>
+                                <Blinking style={{display: 'none'}} ref={this.blinkMounted} />
+                            </Suspense>
                             <Suspense fallback={<DefaultEyes />}>
                                 <Eyes id={this.state.id} ref={this.eyesMounted} />
                             </Suspense>
@@ -414,25 +470,28 @@ class Moji extends PureComponent{
                             </Suspense>
                         </g>
                         <Suspense fallback={<DefaultBody />}>
-                            <Body style={orientation_style} id={this.state.id} orientation={this.state.orientation} pattern={this.state.pattern} />
+                            <Body style={orientation_style} id={this.state.id} orientation={current_orientation} pattern={this.state.pattern} />
                         </Suspense>
                     </g> :
                     <g ref={this.mojiMounted} onClick={this.state.click ? this.onClick : null}>
                         <Suspense fallback={<DefaultBody />}>
-                            <Body style={orientation_style} id={this.state.id} orientation={this.state.orientation} pattern={this.state.pattern} />
+                            <Body style={orientation_style} id={this.state.id} orientation={current_orientation} pattern={this.state.pattern} />
                         </Suspense>
                         <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
+                            <Suspense>
+                                <Blinking style={{display: 'none'}} ref={this.blinkMounted} />
+                            </Suspense>
                             <Suspense fallback={<DefaultEyes />}>
                                 <Eyes id={this.state.id} ref={this.eyesMounted} />
                             </Suspense>
                             <Suspense>
-                                <Mouth orientation={this.state.orientation} />
+                                <Mouth orientation={current_orientation} />
                             </Suspense>
                         </g>
                     </g>}
                 </g>
                 <g ref={this.headwearFrontMounted}>
-                    {this.state.willRenderFront(this.state.orientation) ? 
+                    {this.state.willRenderFront(current_orientation) ? 
                     <Suspense><Headwear style={orientation_headwear_style} id={this.state.id} /></Suspense> :
                     <PureComponent />}
                 </g>

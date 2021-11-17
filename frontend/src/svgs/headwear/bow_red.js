@@ -3,7 +3,7 @@ import { PureComponent } from 'preact/compat';
 
 
 const willRenderFront = (orientation) => {
-    if(orientation != 'back'){
+    if(!orientation.includes('back')){
         return true;
     }
     return false;
@@ -11,7 +11,7 @@ const willRenderFront = (orientation) => {
 
 
 const willRenderBack = (orientation) => {
-    if(orientation === 'back'){
+    if(orientation.includes('back')){
         return true;
     }
     return false;
@@ -21,7 +21,7 @@ const willRenderBack = (orientation) => {
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-class RedBow extends PureComponent{
+class Headwear extends PureComponent{
     constructor(props){
         super(props);
         this.ref = props.forwardRef
@@ -55,5 +55,5 @@ class RedBow extends PureComponent{
 }
 
 export {
-    RedBow as Headwear, willRenderFront, willRenderBack
+    Headwear, willRenderFront, willRenderBack
 };

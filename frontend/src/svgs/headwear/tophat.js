@@ -15,7 +15,7 @@ const willRenderBack = () => {
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-class Tophat extends PureComponent{
+class Headwear extends PureComponent{
     constructor(props){
         super(props);
         this.ref = props.forwardRef
@@ -49,5 +49,5 @@ class Tophat extends PureComponent{
 }
 
 export {
-    Tophat as Headwear, willRenderFront, willRenderBack
+    Headwear, willRenderFront, willRenderBack
 };
