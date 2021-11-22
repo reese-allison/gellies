@@ -1,6 +1,5 @@
 import { h, Fragment, Component } from 'preact';
 import { Grid, Container, IconButton, Button, ButtonGroup, Box, debounce } from '@material-ui/core';
-import { v4 as uuid } from 'uuid';
 
 import theme from '../styles/theme';
 import menuStyles from '../styles/menu';
