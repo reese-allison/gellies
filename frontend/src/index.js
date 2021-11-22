@@ -12,6 +12,9 @@ import Menu from './components/menu';
 import theme from './styles/theme.js';
 
 
+const backgrounds = ['desert', 'forest', 'volcano', 'glacier']
+
+
 /** @jsx h */
 /** @jsxFrag Fragment */
 
@@ -29,13 +32,14 @@ const App = () => {
         {width: .35, headwear: 'bow_red', gradient: 'lavender', eyes: 'swirl', mouth: 'skeleton', orientation: 'left', style: {bottom: '45%', right: '5%'}}
     ];
     appStyles();
+    let background = backgrounds[Math.floor(Math.random()*backgrounds.length)];
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Nav/>
             <Router>
                 <Home path="/"/>
-                <Scene anchors={anchors} background="desert" path="/moji/"/>
+                <Scene anchors={anchors} background={background} path="/moji/"/>
                 <Menu path='/menu'/>
                 <Error type='404' default/>
             </Router>
