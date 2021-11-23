@@ -7,9 +7,10 @@ import { ThemeProvider, makeStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Nav from './components/nav';
-import Scene from './components/scene';
+//import Scene from './components/scene';
 import Menu from './components/menu';
 import theme from './styles/theme.js';
+import Battler from './components/battler';
 
 
 const backgrounds = ['desert', 'forest', 'volcano', 'glacier']
@@ -39,7 +40,7 @@ const App = () => {
             <Nav/>
             <Router>
                 <Home path="/"/>
-                <Scene anchors={anchors} background={background} path="/moji/"/>
+                <Battler anchors={anchors} background={background} path='/moji/' />
                 <Menu path='/menu'/>
                 <Error type='404' default/>
             </Router>
