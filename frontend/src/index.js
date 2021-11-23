@@ -12,6 +12,9 @@ import Menu from './components/menu';
 import theme from './styles/theme.js';
 
 
+const backgrounds = ['desert', 'forest', 'volcano', 'glacier']
+
+
 /** @jsx h */
 /** @jsxFrag Fragment */
 
@@ -25,17 +28,18 @@ const appStyles = makeStyles(theme => ({
 
 const App = () => {
     let anchors = [
-        {width: .5, headwear: 'bow_green', pattern: 'whisker', gradient: 'pear', body: 'teddy', eyes: 'shiny', mouth: 'buck_teeth', orientation: 'back-right', style: {bottom: '5%', left: '11%'}},
+        {width: .5, headwear: 'bow_green', pattern: 'whisker', gradient: 'leaf', body: 'teddy', eyes: 'shiny', mouth: 'buck_teeth', orientation: 'back-right', style: {bottom: '5%', left: '11%'}},
         {width: .35, headwear: 'bow_red', gradient: 'lavender', eyes: 'swirl', mouth: 'skeleton', orientation: 'left', style: {bottom: '45%', right: '5%'}}
     ];
     appStyles();
+    let background = backgrounds[Math.floor(Math.random()*backgrounds.length)];
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Nav/>
             <Router>
                 <Home path="/"/>
-                <Scene anchors={anchors} background="desert" path="/moji/"/>
+                <Scene anchors={anchors} background={background} path="/moji/"/>
                 <Menu path='/menu'/>
                 <Error type='404' default/>
             </Router>

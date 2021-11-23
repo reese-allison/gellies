@@ -5,18 +5,13 @@ import { memo } from 'preact/compat';
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-function Fish(props){
+function Leaf(props){
     return (
         <radialGradient id={`moji-${ props.id }-body-color`} fx="40%" fy="0%" fr="20%" cx="40%" cy="30%">
-            <stop offset="0" stop-color="rgb(173,253,204)" stop-opacity=".99" fx="0%" fy="0%"></stop>
-            <stop offset="1" stop-color="rgb(160,177,164)" stop-opacity=".99"></stop>
+            <stop offset="0" stop-color="rgb(167,247,100)" stop-opacity=".99" fx="0%" fy="0%"></stop>
+            <stop offset="1" stop-color="rgb(98,184,45)" stop-opacity=".99"></stop>
         </radialGradient>
     )
 }
 
-export default memo(Fish);
-
-
-
-
-
+export default memo(Leaf);

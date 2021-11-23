@@ -1,6 +1,7 @@
 import { h, Fragment, Component, createRef } from 'preact';
 import { Grid, Container, Box, debounce } from '@material-ui/core';
 
+import theme from '../styles/theme';
 import Moji from './moji';
 import sceneStyles from '../styles/scene'
 
@@ -47,8 +48,8 @@ class Scene extends Component{
                     <Grid container spacing={3}>
                         <Grid item xs={vertical ? 12 : 6}>
                             <div className={classes.scene}>
-                                <div ref={this.ref} style={{ position: 'relative', width: '100%'}}>
-                                    <video style={{ width: '100%', borderRadius: 30 }} playsinline autoplay muted loop>
+                                <div ref={this.ref} style="aspect-ratio: 1 / 1;width: 100%;position: relative;">
+                                    <video style={{ width: '100%', borderRadius: 30, backgroundColor: theme.palette.secondary.main }} playsinline autoplay muted loop>
                                         <source type="video/mp4" src={`/static/backgrounds/${this.state.background}.mp4`} />
                                     </video>
                                     {this.state.anchors.map((x, i) => {
