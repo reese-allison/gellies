@@ -84,3 +84,7 @@ dist/
 
 # Hide test coverage
 .coverage
+
+# Hide authentication file
+client_secret.json
+auth_secret.py

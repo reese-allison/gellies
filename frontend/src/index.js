@@ -8,6 +8,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Nav from './components/nav';
 //import Scene from './components/scene';
+import Login from './components/login';
 import Menu from './components/menu';
 import theme from './styles/theme.js';
 import Battler from './components/battler';
@@ -43,6 +44,7 @@ const App = () => {
                 <Battler anchors={anchors} background={background} path='/moji/' />
                 <Menu path='/menu'/>
                 <Error type='404' default/>
+                <Login path='/login'/>
             </Router>
         </ThemeProvider>
     )
