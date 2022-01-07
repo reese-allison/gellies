@@ -13,7 +13,11 @@ import navBarStyles from '../styles/nav';
 const Nav = () => {
     const classes = navBarStyles();
     return(
-        <AppBar position="static">
+        <div>
+            <head>
+                <script src="https://accounts.google.com/gsi/client" async defer></script>
+            </head>
+            <AppBar position="static">
             <Toolbar className={classes.navBar}>
                 <Link style={{ flex: 1 }} className={classes.navBarLink} activeClassName="active" href="/">
                     <Button className={classes.navBarButton}>
@@ -37,6 +41,8 @@ const Nav = () => {
                 </Link>
             </Toolbar>
         </AppBar>
+        </div>
+        
     )
 };
 
