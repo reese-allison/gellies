@@ -1,5 +1,8 @@
 aiofiles>=0.6.0
+authlib>=0.15.5
 fastapi>=0.63.0
+httpx>=0.21.3
+itsdangerous>=2.0.1
 jinja2>=2.11.3
 MarkupSafe>=1.1.1
 orjson>=3.6.3
