@@ -41,7 +41,7 @@ wfastcgi.py
 !system.conf
 !loggly.conf
 settings.json
-.env
+*.env
 
 # Hide IIS
 aspnet_client
