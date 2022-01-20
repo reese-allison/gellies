@@ -21,29 +21,37 @@ oauth.register(
 )
 
 app = FastAPI(root_path="/api")
-app.add_middleware(SessionMiddleware, secret_key='674B1F485B5E52D45813FE5F47678')
+app.add_middleware(SessionMiddleware, secret_key=config('SECRET_KEY'))
 app.mount("/static", StaticFiles(directory="backend/static"), name="static")
 
 
-@app.get('/login', tags=['authentication'])
-async def login(request: Request):
+@app.get('/login/{method}', tags=['authentication'])
+async def login(request: Request, method: str):
+    url = request.url_for("auth", method=method)
 
-    # url = request.url_for("auth")
-    # Change to use dynamic host url_for
+    if method == 'google':
+        return await oauth.google.authorize_redirect(request, url)
+    elif method == 'facebook':
+        ...
+    else:
+        raise NotImplementedError(f'Login method {method} is not implemented!')
 
-    return await oauth.google.authorize_redirect(request, 'http://localhost/api/auth/google-login')
 
+@app.route('/auth/{method}')
+async def auth(request: Request, method: str):
+    if method == 'google':
+        # Perform Google OAuth
+        token = await oauth.google.authorize_access_token(request)
+        user = await oauth.google.parse_id_token(request, token)
 
-@app.route('/auth/google-login')
-async def auth(request: Request):
-    # Perform Google OAuth
-    token = await oauth.google.authorize_access_token(request)
-    user = await oauth.google.parse_id_token(request, token)
+        # Save the user
+        request.session['user'] = dict(user)
 
-    # Save the user
-    request.session['user'] = dict(user)
-
-    return RedirectResponse(url='/')
+        return RedirectResponse(url='/')
+    elif method == 'facebook':
+        ...
+    else:
+        raise NotImplementedError(f'Login method {method} is not implemented!')
 
 
 @app.get('/logout', tags=['authentication'])  # Tag it as "authentication" for our docs

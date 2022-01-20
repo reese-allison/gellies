@@ -36,7 +36,7 @@ var theme = createTheme({
         main: '#3E517A'
       },
       secondary: {
-        main: '#FCF5C7'
+        main: '#faf1b1'
       },
       tertiary: {
         main: '#472836'

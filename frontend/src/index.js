@@ -9,6 +9,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Nav from './components/nav';
 import Scene from './components/scene';
 import Menu from './components/menu';
+import Login from './components/login';
 import theme from './styles/theme.js';
 
 
@@ -41,6 +42,7 @@ const App = () => {
                 <Home path="/"/>
                 <Scene anchors={anchors} background={background} path="/moji/"/>
                 <Menu path='/menu'/>
+                <Login path='/login' />
                 <Error type='404' default/>
             </Router>
         </ThemeProvider>
