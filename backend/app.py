@@ -12,7 +12,7 @@ from pymongo import MongoClient
 
 # Configuration File
 
-config = Config("secret.env")
+config = Config("./secret.env")
 
 # OAuth Setup
 
@@ -26,13 +26,6 @@ oauth.register(
         'scope': 'openid email'
     }
 )
-
-
-'''
-'api_base_url': 'https://graph.facebook.com/v7.0/',
-        'access_token_url': 'https://graph.facebook.com/v7.0/oauth/access_token',
-        'authorize_url': 'https://www.facebook.com/v7.0/dialog/oauth',
-        'client_kwargs': {'scope': 'email public_profile'},'''
 
 oauth.register(
 
@@ -61,61 +54,48 @@ ggcollection = DB['google_user']
 # FastAPI Server setup
 
 app = FastAPI(root_path="/api")
-app.add_middleware(SessionMiddleware, secret_key='674B1F485B5E52D45813FE5F47678')
+app.add_middleware(SessionMiddleware, secret_key=config('SECRET_KEY'))
 app.mount("/static", StaticFiles(directory="backend/static"), name="static")
 
 # Login Function
 
-def user_verify(collection, id):
-    if (collection.find_one(id) == None):
-        
+@app.get('/login/{method}', tags=['authentication'])
+async def login(request: Request, method: str):
+    url = request.url_for("auth", method=method)
 
-
-
-
-# FastAPI Routes
-
-@app.get('/login/{service}', tags=['authentication'])
-async def login(service, request: Request):
-    print(oauth.facebook)
-    if (service == 'google'):
-        return await oauth.google.authorize_redirect(request, 'http://localhost/api/auth/google-login')
-    elif (service == 'facebook'):
-        #code = oauth.facebook.authorize_access_token()
-        return await oauth.facebook.authorize_redirect(request, 'http://localhost/api/auth/facebook-login')
+    if method == 'google':
+        return await oauth.google.authorize_redirect(request, url)
+    elif method == 'facebook':
+        return await oauth.facebook.authorize_redirect(request, url)
     else:
+        raise NotImplementedError(f'Login method {method} is not implemented!')
+
+@app.route('/auth/{method}')
+async def auth(request: Request, method: str):
+    if method == 'google':
+        # Perform Google OAuth
+        token = await oauth.google.authorize_access_token(request)
+        user = await oauth.google.parse_id_token(request, token)
+
+        # Save the user
+        request.session['user'] = dict(user)
+
         return RedirectResponse(url='/')
-    # url = request.url_for("auth")
-    # Change to use dynamic host url_for
-
+    elif method == 'facebook':
+        token = await oauth.facebook.authorize_access_token(request)
     
+        #'https://graph.facebook.com/me?fields=id&access_token=xxxxxx'
+        response = requests.post(f'https://graph.facebook.com/me?fields=id&access_token={ token["access_token"] }')
+        user = response.json()['id']
+        # Save the user
+        #user_verify(fbcollection, {"facebook_user" : user.id})
 
-@app.route('/auth/facebook-login')
-async def auth(request: Request):
-    token = await oauth.facebook.authorize_access_token(request)
-    
-    #'https://graph.facebook.com/me?fields=id&access_token=xxxxxx'
-    response = requests.post(f'https://graph.facebook.com/me?fields=id&access_token={ token["access_token"] }')
-    user = response.json()['id']
-    # Save the user
-    user_verify(fbcollection, {"facebook_user" : user.id})
+            
+        request.session['user'] = dict()
 
-        
-    request.session['user'] = dict()
-
-    return RedirectResponse(url='/')
-
-
-@app.route('/auth/google-login')
-async def auth(request: Request):
-    # Perform Google OAuth
-    token = await oauth.google.authorize_access_token(request)
-    user = await oauth.google.parse_id_token(request, token)
-
-    # Save the user
-    request.session['user'] = dict(user)
-
-    return RedirectResponse(url='/')
+        return RedirectResponse(url='/')
+    else:
+        raise NotImplementedError(f'Login method {method} is not implemented!')
 
 
 @app.get('/logout', tags=['authentication'])  # Tag it as "authentication" for our docs
@@ -131,7 +111,10 @@ async def newuser(request: Request):
 
     return RedirectResponse(url='/')
 
+'''
 @app.get('/verify/username/{inputname}')
 async def verify_username(inputname: str):
     if (mjcollection.find_one(input) != None )
+'''
+
 

@@ -30,6 +30,11 @@ const Nav = () => {
                         MENU
                     </Button>
                 </Link>
+                <Link style={{ marginRight: 30 }} className={classes.navBarLink} activeClassName="active" href="/login">
+                    <Button className={classes.navBarButton}>
+                        LOGIN
+                    </Button>
+                </Link>
             </Toolbar>
         </AppBar>
     )

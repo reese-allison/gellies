@@ -90,7 +90,7 @@ class Menu extends Component {
                 <Box m={4}>
                     <Grid container spacing={3}>
                         <Grid item xs={vertical ? 12 : 6}>
-                            <div style={{ borderRadius: 30, position: 'relative', backgroundColor: theme.palette.secondary.main, maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
+                            <Box boxShadow={1} style={{ borderRadius: 30, position: 'relative', backgroundColor: theme.palette.secondary.main, maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
                                 <Moji 
                                     eyes={this.state.components.eyes} 
                                     mouth={this.state.components.mouth} 
@@ -106,7 +106,7 @@ class Menu extends Component {
                                 <IconButton onClick={this.rotateRight} size="large" style={{'bottom': 0, 'position': 'absolute', 'right': 0}}>
                                     <RotateLeft style={{height: '2em', width: '2em'}} />
                                 </IconButton>
-                            </div>
+                            </Box>
                         </Grid>
                         <Grid item xs={vertical ? 12 : 6}>
                             <div style={{ maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
@@ -124,11 +124,11 @@ class Menu extends Component {
                                             };
                                             let props = { [this.state.component]: part, animations: false }
                                             return(
-                                                <div 
+                                                <Box  
                                                     style={selected_part == part ? {...styles, backgroundColor: theme.palette.success.light, border: `3px dashed ${theme.palette.tertiary.main}`} : styles}
-                                                    onClick={() => this.setComponent(part)}>
+                                                    onClick={() => this.setComponent(part)} boxShadow={1}>
                                                     <Moji key={key} {...props}/>
-                                                </div>
+                                                </Box>
                                             )
                                         })}
                                     </div>
