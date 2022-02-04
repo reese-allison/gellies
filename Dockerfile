@@ -1,8 +1,8 @@
-FROM node:17-alpine3.14 as build
+FROM node:14 as build
 
 WORKDIR /app
 
-COPY frontend/. /app
+COPY frontend/. .
 RUN npm install
 RUN npm run build:prod
 
@@ -10,7 +10,7 @@ FROM nginx:1.21.6
 RUN rm /etc/nginx/nginx.conf
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx/nginx.conf /etc/nginx
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /dist /usr/share/nginx/html
 
 EXPOSE 80
 
