@@ -4,15 +4,14 @@ from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from starlette.middleware.sessions import SessionMiddleware
-from starlette.config import Config
 from authlib.integrations.starlette_client import OAuth
+import os
 
-config = Config('./.env')
 
 oauth = OAuth()
 oauth.register(
-    client_id=config('GOOGLE_CLIENT_ID'),
-    client_secret=config('GOOGLE_CLIENT_SECRET'),
+    client_id=os.environ.get('GOOGLE_CLIENT_ID'),
+    client_secret=os.environ.get('GOOGLE_CLIENT_SECRET'),
     name='google',
     server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
     client_kwargs={
@@ -21,7 +20,7 @@ oauth.register(
 )
 
 app = FastAPI(root_path="/api")
-app.add_middleware(SessionMiddleware, secret_key=config('SECRET_KEY'))
+app.add_middleware(SessionMiddleware, secret_key=os.environ.get('SECRET_KEY'))
 app.mount("/static", StaticFiles(directory="backend/static"), name="static")
 
 

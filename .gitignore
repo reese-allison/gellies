@@ -37,7 +37,6 @@ web.config
 config.py
 wfastcgi.py
 *.config
-*.conf
 !system.conf
 !loggly.conf
 settings.json

@@ -40,8 +40,7 @@ const App = () => {
             <Nav/>
             <Router>
                 <Home path="/"/>
-                <Scene anchors={anchors} background={background} path="/moji/"/>
-                <Menu path='/menu'/>
+                <Menu anchors={anchors} path='/menu'/>
                 <Login path='/login' />
                 <Error type='404' default/>
             </Router>

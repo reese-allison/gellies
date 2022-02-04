@@ -15,16 +15,11 @@ const Nav = () => {
     return(
         <AppBar position="static">
             <Toolbar className={classes.navBar}>
-                <Link style={{ flex: 1 }} className={classes.navBarLink} activeClassName="active" href="/">
-                    <Button className={classes.navBarButton}>
+                <div style={{ flex: 1 }} className={classes.navBarLink} activeClassName="active">
+                    <div className={classes.navBarButton} style={{userSelect: 'none'}}>
                         MOJI
-                    </Button>
-                </Link>
-                <Link style={{ marginRight: 30 }} className={classes.navBarLink} activeClassName="active" href="/moji">
-                    <Button className={classes.navBarButton}>
-                        RANDOM
-                    </Button >
-                </Link>
+                    </div>
+                </div>
                 <Link style={{ marginRight: 30 }} className={classes.navBarLink} activeClassName="active" href="/menu">
                     <Button className={classes.navBarButton}>
                         MENU
