@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[1753],{1753:(c,e,l)=>{l.r(e),l.d(e,{default:()=>n});var u=l(6400);const n=(0,l(9748).X$)((function(c){return(0,u.h)("g",null,(0,u.h)("ellipse",{id:"moji-".concat(c.id,"-mouth"),fill:"#000",cx:"240",cy:"418",rx:"11",ry:"5"}))}))}}]);
