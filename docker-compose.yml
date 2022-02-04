@@ -6,10 +6,13 @@ services:
         build: nginx
         ports:
           - 80:80
+          - 443:443
         depends_on:
           - backend
         extra_hosts:
           - "host.docker.internal:host-gateway"
+        volumes:
+          - ./data/certbot/conf:/etc/letsencrypt:ro
     backend:
         restart: always
         build: backend
