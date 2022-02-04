@@ -84,3 +84,6 @@ dist/
 
 # Hide test coverage
 .coverage
+
+#Hide keys
+*.pem
