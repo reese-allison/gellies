@@ -2,10 +2,11 @@ from fastapi import FastAPI
 from fastapi import Request
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
-
 from starlette.middleware.sessions import SessionMiddleware
 from authlib.integrations.starlette_client import OAuth
 import os
+
+import backend.database.database as database
 
 
 oauth = OAuth()
@@ -35,24 +36,27 @@ async def login(request: Request, method: str):
         raise NotImplementedError(f'Login method {method} is not implemented!')
 
 
-@app.route('/auth/{method}')
+@app.get('/auth/{method}', tags=['authentication'])
 async def auth(request: Request, method: str):
     if method == 'google':
         # Perform Google OAuth
         token = await oauth.google.authorize_access_token(request)
         user = await oauth.google.parse_id_token(request, token)
 
-        # Save the user
-        request.session['user'] = dict(user)
+        session_user = await database.retrieve_user(user['sub'])
+        if session_user:
+            request.session['user'] = session_user
+        else:
+            request.session['user'] = await database.add_user(dict(user))
 
-        return RedirectResponse(url='/')
+        return RedirectResponse(url='/customize')
     elif method == 'facebook':
         ...
     else:
         raise NotImplementedError(f'Login method {method} is not implemented!')
 
 
-@app.get('/logout', tags=['authentication'])  # Tag it as "authentication" for our docs
+@app.get('/logout', tags=['authentication'])
 async def logout(request: Request):
     # Remove the user
     request.session.pop('user', None)

@@ -34,6 +34,7 @@ services:
           - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
           - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
           - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+          - MONGO_URL=mongodb://host.docker.internal:27017
     db:
       image: mongo
       restart: always
