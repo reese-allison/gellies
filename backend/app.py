@@ -26,8 +26,7 @@ app.mount("/static", StaticFiles(directory="backend/static"), name="static")
 
 @app.get('/login/{method}', tags=['authentication'])
 async def login(request: Request, method: str):
-    url = request.url_for("auth", method=method)
-
+    url = f"http://{os.environ.get('HOST')}/api/auth/{method}"
     if method == 'google':
         return await oauth.google.authorize_redirect(request, url)
     elif method == 'facebook':

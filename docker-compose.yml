@@ -3,7 +3,12 @@ version: "3.9"
 services:
     web:
         restart: always
-        build: nginx
+        build:
+          context: nginx
+          args:
+              ENV: ${ENV}
+        env_file:
+            - .env
         ports:
           - 80:80
           - 443:443
@@ -22,8 +27,19 @@ services:
           - 8000:8000
         depends_on:
           - db
+        environment:
+          - HOST=${HOST}
+          - SECRET_KEY=${SECRET_KEY}
+          - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+          - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+          - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+          - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     db:
       image: mongo
       restart: always
       ports:
         - 27017:27017
+      environment:
+        - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+        - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+        - MONGO_INITDB_DATABASE=gellies
