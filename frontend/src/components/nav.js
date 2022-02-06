@@ -44,7 +44,7 @@ export default function Nav (){
     );
     let vertical = window.innerHeight > window.innerWidth;
     return(
-        <AppBar position="fixed">
+        <AppBar style={{ zIndex: 99 }} position="fixed">
             <Toolbar className={classes.navBar}>
                 <div style={{ flex: 1 }} className={classes.navBarLink} activeClassName="active">
                     <Link className={classes.navBarLink} href='/'>

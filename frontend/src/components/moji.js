@@ -426,12 +426,12 @@ class Gelly extends PureComponent{
         let orientation_headwear_style = '';
         let current_orientation = this.state.orientation || 'front';
         if(current_orientation === 'left' || current_orientation === 'back-right'){
-            moji_style = "transform:rotateY(15deg);transform-origin:center top;";
+            moji_style = "transform:scale(.96, 1);transform-origin:center top;";
             orientation_style = "transform: translate(-40px, 0);";
             orientation_headwear_style = "transform: skew(1deg, -1deg) scale(-1, 1);transform-origin:39.75% 0%;";
         }
         if(current_orientation === 'right' || current_orientation === 'back-left'){
-            moji_style = "transform:rotateY(15deg);transform-origin:center top;";
+            moji_style = "transform:scale(.96, 1);transform-origin:center top;";
             orientation_style = "transform: translate(50px, 0);";
             orientation_headwear_style = "transform: skew(1deg, -1deg);";
         }
@@ -454,7 +454,7 @@ class Gelly extends PureComponent{
                 </g>
                 <g style={current_orientation.includes('back') ? "transform:scale(-1, 1);transform-origin:39.75% 0%;" : ""}>
                     {current_orientation.includes('back') ?
-                    <g ref={this.mojiMounted} onClick={this.state.click ? this.onClick : null} style='transform: translateZ(0);'>
+                    <g ref={this.mojiMounted} onClick={this.state.click ? this.onClick : null}>
                         <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
                             <Suspense>
                                 <Blinking style={{display: 'none'}} ref={this.blinkMounted} />
