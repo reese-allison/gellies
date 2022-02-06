@@ -36,7 +36,7 @@ class Login extends Component{
     render(){
         const classes = navBarStyles();
         return (
-            <Container style={{marginTop:'100px'}}>
+            <Container style={{marginTop:'100px', zIndex: 0}}>
                 <Box m={6}>
                     <Grid container spacing={3} alignItems="center" justifyContent="center">
                         <Grid item xs={12} sm={8} md={4}>
