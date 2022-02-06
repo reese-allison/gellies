@@ -454,7 +454,7 @@ class Gelly extends PureComponent{
                 </g>
                 <g style={current_orientation.includes('back') ? "transform:scale(-1, 1);transform-origin:39.75% 0%;" : ""}>
                     {current_orientation.includes('back') ?
-                    <g ref={this.mojiMounted} onClick={this.state.click ? this.onClick : null}>
+                    <g ref={this.mojiMounted} onClick={this.state.click ? this.onClick : null} style='transform: translateZ(0);'>
                         <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
                             <Suspense>
                                 <Blinking style={{display: 'none'}} ref={this.blinkMounted} />

@@ -32,7 +32,7 @@ const App = () => {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Nav/>
+            <Nav style={{ zIndex: 99 }}/>
             <Router>
                 <Home path="/"/>
                 <Customize path='/customize'/>
