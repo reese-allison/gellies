@@ -5,10 +5,11 @@ import { Router } from 'preact-router';
 import { h, Fragment, render } from 'preact';
 import { ThemeProvider, makeStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { Container } from '@material-ui/core'
 
 import Nav from './components/nav';
 import Scene from './components/scene';
-import Menu from './components/menu';
+import Customize from './components/customize';
 import Login from './components/login';
 import theme from './styles/theme.js';
 
@@ -28,31 +29,21 @@ const appStyles = makeStyles(theme => ({
 }), { defaultTheme: theme });
 
 const App = () => {
-    let anchors = [
-        {width: .5, headwear: 'bow_green', pattern: 'whisker', gradient: 'leaf', body: 'teddy', eyes: 'shiny', mouth: 'buck_teeth', orientation: 'back-right', style: {bottom: '5%', left: '11%'}},
-        {width: .35, headwear: 'bow_red', gradient: 'lavender', eyes: 'swirl', mouth: 'skeleton', orientation: 'left', style: {bottom: '45%', right: '5%'}}
-    ];
     appStyles();
-    let background = backgrounds[Math.floor(Math.random()*backgrounds.length)];
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Nav/>
-            <Router>
-                <Home path="/"/>
-                <Menu anchors={anchors} path='/menu'/>
-                <Login path='/login' />
-                <Error type='404' default/>
-            </Router>
+            <Container style={{marginTop: '120px'}}>
+                <Router>
+                    <Customize path='/customize'/>
+                    <Login path='/login' />
+                    <Error type='404' default/>
+                </Router>
+            </Container>
         </ThemeProvider>
     )
 };
-
-const Home = () =>(
-    <div>
-        <h1>HOME SCREEN</h1>
-    </div>
-);
 
 const Error = ({ type, url }) => (
 	<section class="error">

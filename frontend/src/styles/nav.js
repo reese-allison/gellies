@@ -21,6 +21,9 @@ const navBarStyles = makeStyles(theme => ({
     },
     navBarLink: {
         textDecoration: 'none'
+    },
+    navBarDrawer: {
+        background: theme.palette.secondary.main,
     }
 }), { defaultTheme: theme });
 
