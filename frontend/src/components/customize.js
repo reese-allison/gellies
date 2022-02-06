@@ -67,16 +67,21 @@ class Customize extends Component {
 
     rotateLeft(){
         let idx = ORIENTATIONS.indexOf(this.state.orientation);
-        this.setState({orientation: ORIENTATIONS.at(idx - 1)});
+        if(ORIENTATIONS[idx - 1] === undefined){
+            this.setState({orientation: ORIENTATIONS[ORIENTATIONS.length - 1]});
+        }
+        else{
+            this.setState({orientation: ORIENTATIONS[idx - 1]});
+        }
     }
 
     rotateRight(){
         let idx = ORIENTATIONS.indexOf(this.state.orientation);
-        if(ORIENTATIONS.at(idx + 1) === undefined){
-            this.setState({orientation: ORIENTATIONS.at(0)});
+        if(ORIENTATIONS[idx + 1] === undefined){
+            this.setState({orientation: ORIENTATIONS[0]});
         }
         else{
-            this.setState({orientation: ORIENTATIONS.at(idx + 1)});
+            this.setState({orientation: ORIENTATIONS[idx + 1]});
         }
     }
 
