@@ -1,8 +1,8 @@
 import { h, Fragment, Component } from 'preact';
-import { Grid, Container, IconButton, Button, ButtonGroup, Box, debounce } from '@material-ui/core';
+import { Grid, IconButton, Button, ButtonGroup, Box, debounce } from '@material-ui/core';
 
 import theme from '../styles/theme';
-import menuStyles from '../styles/menu';
+import customizeStyles from '../styles/customize';
 import Moji from './moji';
 import { RotateRight, RotateLeft } from '@material-ui/icons';
 
@@ -13,7 +13,7 @@ const ORIENTATIONS = ['left', 'front', 'right', 'back-right', 'back', 'back-left
 /**  @jsx h */
 /** @jsxFrag Fragment */
 
-class Menu extends Component {
+class Customize extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -81,59 +81,59 @@ class Menu extends Component {
     }
 
     render(){
-        const classes = menuStyles();
+        const classes = customizeStyles();
         let vertical = window.innerHeight > window.innerWidth;
         let parts = this.state.parts[this.state.component] || {};
         let selected_part = this.state.components[this.state.component];
         return(
-            <Container>
-                <Box m={4}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={vertical ? 12 : 6}>
-                            <Box boxShadow={1} style={{ borderRadius: 30, position: 'relative', backgroundColor: theme.palette.secondary.main, maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
-                                <Moji 
-                                    eyes={this.state.components.eyes} 
-                                    mouth={this.state.components.mouth} 
-                                    gradient={this.state.components.gradient} 
-                                    body={this.state.components.body} 
-                                    headwear={this.state.components.headwear}
-                                    pattern={this.state.components.pattern}
-                                    orientation={this.state.orientation}
-                                />
-                                <IconButton onClick={this.rotateLeft} size="large" style={{'bottom': 0, 'position': 'absolute', 'left': 0}}>
-                                    <RotateRight style={{height: '2em', width: '2em'}} />
-                                </IconButton>
-                                <IconButton onClick={this.rotateRight} size="large" style={{'bottom': 0, 'position': 'absolute', 'right': 0}}>
-                                    <RotateLeft style={{height: '2em', width: '2em'}} />
-                                </IconButton>
-                            </Box>
-                        </Grid>
-                        <Grid item xs={vertical ? 12 : 6}>
-                            <div style={{ maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
-                                <div style={vertical ? {height: 'auto', overflowX: 'scroll'} : {maxHeight: vertical ? '79vw' : '79vh', height: vertical ? '79vw' : '79vh', overflowY: 'scroll'}}>
-                                    <div style={vertical ? {width: 'max-content', height: '20em'} : {}}>
-                                        {Object.keys(parts).map((part, index) => {
-                                            let key = this.state.component + part;
-                                            let styles = {
-                                                backgroundColor: theme.palette.secondary.main,
-                                                margin: 5,
-                                                borderRadius: 30,
-                                                float: 'left',
-                                                height:'20em',
-                                                width: '20em'
-                                            };
-                                            let props = { [this.state.component]: part, animations: false }
-                                            return(
-                                                <Box  
-                                                    style={selected_part == part ? {...styles, backgroundColor: theme.palette.success.light, border: `3px dashed ${theme.palette.tertiary.main}`} : styles}
-                                                    onClick={() => this.setComponent(part)} boxShadow={1}>
-                                                    <Moji key={key} {...props}/>
-                                                </Box>
-                                            )
-                                        })}
-                                    </div>
+            <Box m={4}>
+                <Grid container spacing={3}>
+                    <Grid item xs={vertical ? 12 : 6}>
+                        <Box boxShadow={1} style={{ borderRadius: 30, position: 'relative', backgroundColor: theme.palette.secondary.main, maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
+                            <Moji 
+                                eyes={this.state.components.eyes} 
+                                mouth={this.state.components.mouth} 
+                                gradient={this.state.components.gradient} 
+                                body={this.state.components.body} 
+                                headwear={this.state.components.headwear}
+                                pattern={this.state.components.pattern}
+                                orientation={this.state.orientation}
+                            />
+                            <IconButton onClick={this.rotateLeft} size="large" style={{'bottom': 0, 'position': 'absolute', 'left': 0}}>
+                                <RotateRight style={{height: '2em', width: '2em'}} />
+                            </IconButton>
+                            <IconButton onClick={this.rotateRight} size="large" style={{'bottom': 0, 'position': 'absolute', 'right': 0}}>
+                                <RotateLeft style={{height: '2em', width: '2em'}} />
+                            </IconButton>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={vertical ? 12 : 6}>
+                        <div style={{ maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
+                            <div className={classes.noScrollBar} style={vertical ? {height: 'auto', overflowX: 'scroll'} : {maxHeight: '79vw', height: '79vw', overflowY: 'scroll'}}>
+                                <div style={vertical ? {width: 'max-content', height: '20em'} : {}}>
+                                    {Object.keys(parts).map((part, index) => {
+                                        let key = this.state.component + part;
+                                        let styles = {
+                                            backgroundColor: theme.palette.secondary.main,
+                                            margin: 5,
+                                            borderRadius: 30,
+                                            float: 'left',
+                                            height:'20em',
+                                            width: '20em'
+                                        };
+                                        let props = { [this.state.component]: part, animations: false }
+                                        return(
+                                            <Box  
+                                                style={selected_part == part ? {...styles, backgroundColor: theme.palette.success.light, border: `3px dashed ${theme.palette.tertiary.main}`} : styles}
+                                                onClick={() => this.setComponent(part)} boxShadow={1}>
+                                                <Moji key={key} {...props}/>
+                                            </Box>
+                                        )
+                                    })}
                                 </div>
-                                <ButtonGroup fullWidth={true} variant="contained" color="primary" aria-label="contained primary button group">
+                            </div>
+                            <Box className={classes.thinScrollBar} style={{overflowX: 'scroll'}}>
+                                <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
                                     <Button style={this.state.component=='body' ? {textDecoration: 'underline'} : {}} className={classes.menuButton} size='large' onClick={() => this.showComponents('body')}>Body</Button>
                                     <Button style={this.state.component=='eyes' ? {textDecoration: 'underline'} : {}} className={classes.menuButton} size='large' onClick={() => this.showComponents('eyes')}>Eyes</Button>
                                     <Button style={this.state.component=='mouth' ? {textDecoration: 'underline'} : {}} className={classes.menuButton} size='large' onClick={() => this.showComponents('mouth')}>Mouth</Button>
@@ -141,13 +141,13 @@ class Menu extends Component {
                                     <Button style={this.state.component=='headwear' ? {textDecoration: 'underline'} : {}} className={classes.menuButton} size='large' onClick={() => this.showComponents('headwear')}>Headwear</Button>
                                     <Button style={this.state.component=='gradient' ? {textDecoration: 'underline'} : {}} className={classes.menuButton} size='large' onClick={() => this.showComponents('gradient')}>Color</Button>
                                 </ButtonGroup>
-                            </div>
-                        </Grid>
+                            </Box>
+                        </div>
                     </Grid>
-                </Box>
-            </Container>
+                </Grid>
+            </Box>
         )
     }
 }
 
-export default Menu;
+export default Customize;
