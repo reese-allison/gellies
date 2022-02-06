@@ -45,7 +45,7 @@ function Alien(props){
         )
     }
 
-    const Moji = () => {
+    const Gelly = () => {
         if(props.orientation.includes('right')){
             return (
                 <g>
@@ -86,7 +86,7 @@ function Alien(props){
 
     return (
         <g>
-            <Moji />
+            <Gelly />
         </g>
     )
 }

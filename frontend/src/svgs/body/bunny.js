@@ -41,7 +41,7 @@ function Bunny(props){
         )
     }
 
-    const Moji = () => {
+    const Gelly = () => {
         if(props.orientation.includes('right')){
             return (
                 <g>
@@ -82,7 +82,7 @@ function Bunny(props){
 
     return (
         <g>
-            <Moji />
+            <Gelly />
         </g>
     )
 }

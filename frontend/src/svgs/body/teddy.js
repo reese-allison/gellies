@@ -42,7 +42,7 @@ function Teddy(props){
         )
     }
 
-    const Moji = () => {
+    const Gelly = () => {
         if(props.orientation.includes('right')){
             return (
                 <g>
@@ -83,7 +83,7 @@ function Teddy(props){
 
     return (
         <g>
-            <Moji />
+            <Gelly />
         </g>
     )
 }

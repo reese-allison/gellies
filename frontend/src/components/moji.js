@@ -30,7 +30,7 @@ function eyeMovement(inner_eyes){
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-class Moji extends PureComponent{
+class Gelly extends PureComponent{
     constructor(props){
         super(props);
         if(props.id === null){
@@ -497,10 +497,10 @@ class Moji extends PureComponent{
     }
 }
 
-Moji.defaultProps = {
+Gelly.defaultProps = {
     id: null,
     click: true,
     animations: true,
 };
 
-export default Moji;
+export default Gelly;
