@@ -43,7 +43,7 @@ function Devil(props){
         )
     }
 
-    const Moji = () => {
+    const Gelly = () => {
         if(props.orientation.includes('right')){
             return (
                 <g>
@@ -84,7 +84,7 @@ function Devil(props){
 
     return (
         <g>
-            <Moji />
+            <Gelly />
         </g>
     )
 }

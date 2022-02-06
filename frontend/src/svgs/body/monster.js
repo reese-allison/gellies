@@ -41,7 +41,7 @@ function Monster(props){
         )
     }
 
-    const Moji = () => {
+    const Gelly = () => {
         if(props.orientation.includes('right')){
             return (
                 <g>
@@ -86,7 +86,7 @@ function Monster(props){
                 <stop offset="0" stop-color="rgb(180,180,180)" stop-opacity="1" fx="0%" fy="0%"></stop>
                 <stop offset="1" stop-color="rgb(140,140,140)" stop-opacity="1"></stop>
             </radialGradient>
-            <Moji />
+            <Gelly />
         </g>
     )
 }

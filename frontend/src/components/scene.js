@@ -2,7 +2,7 @@ import { h, Fragment, Component, createRef } from 'preact';
 import { Grid, Container, Box, debounce } from '@material-ui/core';
 
 import theme from '../styles/theme';
-import Moji from './moji';
+import Gelly from './moji';
 import sceneStyles from '../styles/scene'
 
 
@@ -59,7 +59,7 @@ class Scene extends Component{
                                         moji_style.height = x.width * this.state.moji_width + 'px';
                                         return(
                                             <div style={Object.assign({position: 'absolute'}, moji_style)}>
-                                                <Moji 
+                                                <Gelly 
                                                     eyes={x.eyes} 
                                                     mouth={x.mouth} 
                                                     gradient={x.gradient} 
