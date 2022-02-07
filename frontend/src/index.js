@@ -28,11 +28,23 @@ const appStyles = makeStyles(theme => ({
 }), { defaultTheme: theme });
 
 const App = () => {
+    const [state, setState] = useState({
+        is_authenticated: false
+    });
+
+    useEffect(() => {
+        fetch('/api/authenticated')
+        .then(response => response.json())
+        .then(data => {
+            setState(data);
+        });
+    }, []);
+
     const classes = appStyles();
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Nav style={{ zIndex: 99 }}/>
+            <Nav is_authenticated={state.is_authenticated} style={{ zIndex: 99 }}/>
             <Router>
                 <Home path="/"/>
                 <Customize path='/customize'/>

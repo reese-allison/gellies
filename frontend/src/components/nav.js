@@ -10,7 +10,7 @@ import navBarStyles from '../styles/nav';
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-export default function Nav (){
+export default function Nav (props){
     const classes = navBarStyles();
     const [state, setState] = useState({
         open: false,
@@ -24,24 +24,27 @@ export default function Nav (){
         setState({ open: open });
     };
     
-    const list = () => (
-        <Box
-            sx="auto"
-            role="presentation"
-            onClick={toggleDrawer(false)}
-            onKeyDown={toggleDrawer(false)}
-        >
-            <List>
-                {['customize', 'login'].map((text, index) => (
-                    <ListItem button key={text} className={classes.navBarLink} href={text} component={Link}>
-                        <Button className={classes.navBarButton}>
-                            {text.toUpperCase()}
-                        </Button>
-                    </ListItem>
-                ))}
-            </List>
-        </Box>
-    );
+    const list = () => {
+        let ui = props.is_authenticated ? ['customize', 'logout'] : ['login'];
+        return (
+            <Box
+                sx="auto"
+                role="presentation"
+                onClick={toggleDrawer(false)}
+                onKeyDown={toggleDrawer(false)}
+            >
+                <List>
+                    {ui.map((text, index) => (
+                        <ListItem button key={text} className={classes.navBarLink} href={text === 'logout' ? 'api/logout' : text} component={Link}>
+                            <Button className={classes.navBarButton}>
+                                {text.toUpperCase()}
+                            </Button>
+                        </ListItem>
+                    ))}
+                </List>
+            </Box>
+        )
+    };
     let vertical = window.innerHeight > window.innerWidth;
     return(
         <AppBar style={{ zIndex: 99 }} position="fixed">

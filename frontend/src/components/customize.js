@@ -93,7 +93,7 @@ class Customize extends Component {
         let lg_breakpoint = window.innerWidth > theme.breakpoints.values.lg;
 
         return(
-            <Container style={{marginTop:'90px', zIndex: 0}}>
+            <Container style={{marginTop:'100px', zIndex: 0}}>
                 <Box m={4}>
                     <Grid container spacing={3}>
                         <Grid item xs={vertical ? 12 : 6}>

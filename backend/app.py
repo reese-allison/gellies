@@ -1,12 +1,12 @@
-from fastapi import FastAPI
-from fastapi import Request
-from fastapi.responses import RedirectResponse
+from fastapi import FastAPI, Depends, Request
+from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.sessions import SessionMiddleware
 from authlib.integrations.starlette_client import OAuth
 import os
+import json
 
-import backend.database.database as database
+from backend.database import database, models
 
 
 oauth = OAuth()
@@ -25,8 +25,17 @@ app.add_middleware(SessionMiddleware, secret_key=os.environ.get('SECRET_KEY'))
 app.mount("/static", StaticFiles(directory="backend/static"), name="static")
 
 
+async def current_user(request: Request):
+    if 'user' in request.session:
+        return json.loads(request.session['user'])
+   
+
 @app.get('/login/{method}', tags=['authentication'])
 async def login(request: Request, method: str):
+    user = await current_user(request)
+    if user:
+        return RedirectResponse(url='/customize')
+
     url = f"http://{os.environ.get('HOST')}/api/auth/{method}"
     if method == 'google':
         return await oauth.google.authorize_redirect(request, url)
@@ -61,4 +70,12 @@ async def logout(request: Request):
     # Remove the user
     request.session.pop('user', None)
 
-    return RedirectResponse(url='/')
+    return RedirectResponse(url='/login')
+
+
+@app.get('/authenticated', tags=['authentication'])
+async def me(user: models.UserModel = Depends(current_user)):
+    if user:
+        return JSONResponse(content={'is_authenticated': True})
+    else:
+        return JSONResponse(content={'is_authenticated': False})
