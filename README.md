@@ -1,6 +1,6 @@
 <h1>Gellies</h1>
-Animated gelly web buddies!
-Live demo at [gellies.io](https://gellies.io)
+Animated gelly web buddies!<br>
+View live demo at https://gellies.io
 
 ## Quick Start
 
