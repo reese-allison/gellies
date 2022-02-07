@@ -48,7 +48,3 @@ def test_get_me(mocker):
     test_client = TestClient(app)
     response = test_client.get("/authenticated", allow_redirects=False)
     assert json.loads(response.text)['is_authenticated'] == False
-
-    authenticate(test_client, mocker)
-    response = test_client.get("/authenticated", allow_redirects=False)
-    assert json.loads(response.text)['is_authenticated'] == True
