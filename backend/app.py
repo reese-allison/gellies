@@ -68,8 +68,8 @@ async def auth(request: Request, method: str):
 @app.get('/logout', tags=['authentication'])
 async def logout(request: Request):
     # Remove the user
-    request.session.pop('user', None)
-
+    request.session.clear()
+    request.cookies.clear()
     return RedirectResponse(url='/login')
 
 
