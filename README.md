@@ -36,4 +36,4 @@ docker-compose build
 docker-compose up
 ```
 
-AFter the containers are up, your project should be live on [localhost](http://localhost)
+After the containers are up, your project should be live on [localhost](http://localhost)
