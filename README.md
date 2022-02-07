@@ -1,12 +1,12 @@
-<h1>gellies</h1>
+<h1>Gellies</h1>
 Animated gelly web buddies!
 
 ## Quick Start
 
 First, install git, docker, and docker-compose.
 
-[git installation](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-[docker installation](https://docs.docker.com/get-docker/)
+[git installation](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)<br>
+[docker installation](https://docs.docker.com/get-docker/)<br>
 [docker-compose installation](https://docs.docker.com/compose/install/)
 
 Clone into the directory where you want your project to live:
@@ -36,4 +36,4 @@ docker-compose build
 docker-compose up
 ```
 
-The project should be live on [localhost](http://localhost)
+AFter the containers are up, your project should be live on [localhost](http://localhost)
