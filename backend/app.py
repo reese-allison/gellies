@@ -49,7 +49,10 @@ async def login(request: Request, method: str):
 async def auth(request: Request, method: str):
     if method == 'google':
         # Perform Google OAuth
-        user = await oauth.google.authorize_access_token(request)
+        token = await oauth.google.authorize_access_token(request)
+        from logging import logger
+        logger.info(token)
+        user = await oauth.google.parse_id_token(request, token)
 
         session_user = await database.retrieve_user(user['sub'])
         if session_user:
