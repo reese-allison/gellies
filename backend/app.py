@@ -50,8 +50,7 @@ async def auth(request: Request, method: str):
     if method == 'google':
         # Perform Google OAuth
         token = await oauth.google.authorize_access_token(request)
-        import logging
-        logging.info(token)
+        raise Exception(token)
         user = await oauth.google.parse_id_token(request, token)
 
         session_user = await database.retrieve_user(user['sub'])
