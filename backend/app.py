@@ -50,7 +50,7 @@ async def auth(request: Request, method: str):
     if method == 'google':
         # Perform Google OAuth
         token = await oauth.google.authorize_access_token(request)
-        from logging import logger
+        import logging
         logger.info(token)
         user = await oauth.google.parse_id_token(request, token)
 
