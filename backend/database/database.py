@@ -5,7 +5,7 @@ from backend.database import models
 
 db_user = os.environ.get('MONGO_INITDB_ROOT_USERNAME')
 db_pass = os.environ.get('MONGO_INITDB_ROOT_PASSWORD')
-connection_string = f"mongodb://{db_user}:{db_pass}@{os.environ.get('MONGO_URL')}:27017"
+connection_string = f"mongodb+srv://{db_user}:{db_pass}@{os.environ.get('MONGO_URL')}"
 client = AsyncIOMotorClient(connection_string)
 db = client.gellies
 

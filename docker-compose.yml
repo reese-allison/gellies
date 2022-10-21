@@ -34,19 +34,6 @@ services:
           - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
           - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
           - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-          - MONGO_URL=host.docker.internal
+          - MONGO_URL=${MONGO_URL}
         extra_hosts:
           - "host.docker.internal:host-gateway"
-    db:
-        image: mongo
-        restart: always
-        ports:
-          - 27017:27017
-        environment:
-          - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
-          - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-          - MONGO_INITDB_DATABASE=gellies
-        extra_hosts:
-          - "host.docker.internal:host-gateway"
-        command:
-          - mongod
