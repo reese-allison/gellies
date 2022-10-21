@@ -16,7 +16,7 @@ test_user = {
 
 def authenticate(test_client, mocker):
     oauth = mocker.patch('backend.app.oauth', new=AsyncMock())
-    oauth.google.parse_id_token.return_value = test_user
+    oauth.google.authorize_access_token.return_value = test_user
 
     database = mocker.patch('backend.app.database', new=AsyncMock())
     database.retrieve_user.return_value = models.UserModel(**test_user).json()
