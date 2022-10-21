@@ -51,7 +51,7 @@ async def auth(request: Request, method: str):
         # Perform Google OAuth
         token = await oauth.google.authorize_access_token(request)
         import logging
-        logger.info(token)
+        logging.info(token)
         user = await oauth.google.parse_id_token(request, token)
 
         session_user = await database.retrieve_user(user['sub'])
