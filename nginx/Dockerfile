@@ -11,7 +11,6 @@ COPY --from=frontend /app/dist /usr/share/nginx/html
 RUN rm /etc/nginx/nginx.conf
 RUN rm /etc/nginx/conf.d/default.conf
 COPY ./nginx/${ENV}.nginx.conf /etc/nginx/nginx.conf
-COPY ./nginx/html/ /usr/share/nginx/html/
 
 EXPOSE 80
 EXPOSE 443
