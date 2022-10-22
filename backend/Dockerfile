@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY ./requirements/production.txt /app/production.txt
 
+RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN pip install --no-cache-dir --upgrade -r /app/production.txt
 
 COPY . /app/backend
