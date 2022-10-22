@@ -4,7 +4,8 @@ services:
     web:
         restart: always
         build:
-          context: nginx
+          context: .
+          dockerfile: ./nginx/Dockerfile
           args:
               ENV: ${ENV}
         env_file:
