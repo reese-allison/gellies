@@ -2,6 +2,7 @@ version: "3.9"
 
 services:
     web:
+        container_name: web
         restart: always
         build:
           context: .
@@ -18,8 +19,22 @@ services:
         extra_hosts:
           - "host.docker.internal:host-gateway"
         volumes:
-          - "./nginx/certs:/etc/nginx/certs"
+          - .tmp/etc/letsencrypt:/etc/letsencrypt
+          - .tmp/certbot/data:/var/www/certbot
+    certbot:
+        container_name: certbot
+        image: certbot/certbot:latest
+        depends_on:
+          - web
+        command: >-
+                certonly --reinstall --webroot --webroot-path=/var/www/certbot
+                --email ${EMAIL} --agree-tos --no-eff-email
+                -d ${DOMAIN} --dry-run
+        volumes:
+          - ./tmp/etc/letsencrypt:/etc/letsencrypt
+          - ./tmp/certbot/data:/var/www/certbot
     backend:
+        container_name: backend
         restart: always
         build: backend
         environment:

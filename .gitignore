@@ -22,6 +22,7 @@ static/bundle/*.css
 
 # Temp files generated on ini
 temp
+tmp
 
 # Ignore upload folder
 upload
