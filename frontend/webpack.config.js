@@ -38,6 +38,7 @@ function buildConfig(env) {
     },
     plugins: [
       new HtmlWebpackPlugin({
+        favicon: "./src/favicon.ico",
         template: path.join(__dirname, "src", "index.html"),
         minify: true,
       }),
