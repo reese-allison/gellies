@@ -1,25 +1,34 @@
-from fastapi.testclient import TestClient
-from backend.app import app
-from backend.database import models
+from dotenv import load_dotenv
+import os
+
+BASEDIR = os.path.dirname(os.path.dirname(__file__))
+load_dotenv(os.path.join(BASEDIR, '.env'))
+
 from bson import ObjectId
+from fastapi.testclient import TestClient
+import json
 import pytest
 from unittest.mock import AsyncMock
-import json
+
+from backend.app import app
+from backend.database import models
 
 
-test_user = {
-    'id': ObjectId(),
-    'sub': '123456789',
-    'email': 'email@site.com',
+test_token = {
+    'userinfo': {
+        'id': ObjectId(),
+        'sub': '123456789',
+        'email': 'email@site.com',
+    }
 }
 
 
 def authenticate(test_client, mocker):
     oauth = mocker.patch('backend.app.oauth', new=AsyncMock())
-    oauth.google.authorize_access_token.return_value = test_user
+    oauth.google.authorize_access_token.return_value = test_token
 
     database = mocker.patch('backend.app.database', new=AsyncMock())
-    database.retrieve_user.return_value = models.UserModel(**test_user).json()
+    database.retrieve_user.return_value = models.UserModel(**test_token['userinfo']).json()
 
     return test_client.get("/auth/google", allow_redirects=False)
 

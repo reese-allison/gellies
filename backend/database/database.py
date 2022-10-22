@@ -1,11 +1,13 @@
 import os
 from bson import ObjectId
 from motor.motor_asyncio import AsyncIOMotorClient
+
 from backend.database import models
 
 db_user = os.environ.get('MONGO_INITDB_ROOT_USERNAME')
 db_pass = os.environ.get('MONGO_INITDB_ROOT_PASSWORD')
-connection_string = f"mongodb+srv://{db_user}:{db_pass}@{os.environ.get('MONGO_URL')}"
+host = os.environ.get('MONGO_URL')
+connection_string = f"mongodb+srv://{db_user}:{db_pass}@{host}"
 client = AsyncIOMotorClient(connection_string)
 db = client.gellies
 
