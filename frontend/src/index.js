@@ -102,4 +102,5 @@ const Error = ({ type, url }) => (
 	</section>
 );
 
+document.title = "Gellies"
 render(<App />, document.getElementById('root'));
