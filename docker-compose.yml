@@ -19,8 +19,8 @@ services:
         extra_hosts:
           - "host.docker.internal:host-gateway"
         volumes:
-          - .tmp/etc/letsencrypt:/etc/letsencrypt
-          - .tmp/certbot/data:/var/www/certbot
+          - ./tmp/etc/letsencrypt:/etc/letsencrypt
+          - ./tmp/certbot/data:/var/www/certbot
     certbot:
         container_name: certbot
         image: certbot/certbot:latest
