@@ -1,10 +1,10 @@
+from authlib.integrations.starlette_client import OAuth
 from fastapi import FastAPI, Depends, Request
 from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
-from starlette.middleware.sessions import SessionMiddleware
-from authlib.integrations.starlette_client import OAuth
-import os
 import json
+from starlette.middleware.sessions import SessionMiddleware
+import os
 
 from backend.database import database, models
 

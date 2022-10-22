@@ -1,9 +1,3 @@
-from dotenv import load_dotenv
-import os
-
-BASEDIR = os.path.dirname(os.path.dirname(__file__))
-load_dotenv(os.path.join(BASEDIR, '.env'))
-
 from bson import ObjectId
 from fastapi.testclient import TestClient
 import json

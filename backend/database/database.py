@@ -1,16 +1,22 @@
 import os
 from bson import ObjectId
 from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo.errors import ConfigurationError
 
 from backend.database import models
 
 db_user = os.environ.get('MONGO_INITDB_ROOT_USERNAME')
 db_pass = os.environ.get('MONGO_INITDB_ROOT_PASSWORD')
 host = os.environ.get('MONGO_URL')
-connection_string = f"mongodb+srv://{db_user}:{db_pass}@{host}"
-client = AsyncIOMotorClient(connection_string)
-db = client.gellies
 
+try:
+    connection_string = f"mongodb+srv://{db_user}:{db_pass}@{host}"
+    client = AsyncIOMotorClient(connection_string)
+except ConfigurationError:
+    connection_string = f"mongodb://{db_user}:{db_pass}@{host}"
+    client = AsyncIOMotorClient(connection_string)
+
+db = client.gellies
 user_collection = db.get_collection("user_collection")
 
 
