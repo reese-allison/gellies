@@ -1,7 +1,7 @@
 import { h, Fragment, Component } from 'preact';
 import { Container, Box, Grid, Button, Icon } from '@material-ui/core';
 
-import theme from '../styles/theme';
+import baseStyles from '../styles/base';
 import navBarStyles from '../styles/nav';
 
 
@@ -33,14 +33,15 @@ class Login extends Component{
         super(props);
     }
 
-    render(){
+    render() {
+        const base_classes = baseStyles();
         const classes = navBarStyles();
         return (
-            <Container style={{marginTop:'110px', zIndex: 0}}>
+            <Container style={{ zIndex: 0}}>
                 <Box m={6}>
                     <Grid container spacing={3} alignItems="center" justifyContent="center">
                         <Grid item xs={12} sm={8} md={4}>
-                            <Box boxShadow={1} style={{backgroundColor: theme.palette.secondary.main, borderRadius: 30, maxHeight: '60vh', height: '60vh'}}>
+                            <Box boxShadow={1} className={ base_classes.box } style={{maxHeight: '60vh', height: '60vh'}}>
                                 <Grid container spacing={4} direction='column' alignItems="stretch" justifyContent="center">
                                     <Grid item xs={12} >
                                         <Box m={5} style={{textAlign: 'center'}} className={classes.navBarButton}>

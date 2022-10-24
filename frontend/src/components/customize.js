@@ -1,9 +1,10 @@
 import { h, Fragment, Component } from 'preact';
 import { Grid, IconButton, Button, ButtonGroup, Box, debounce, Container } from '@material-ui/core';
 
-import theme from '../styles/theme';
-import customizeStyles from '../styles/customize';
 import Gelly from './moji';
+import theme from '../styles/theme';
+import baseStyles from '../styles/base';
+import customizeStyles from '../styles/customize';
 import { RotateRight, RotateLeft } from '@material-ui/icons';
 
 
@@ -85,7 +86,8 @@ class Customize extends Component {
         }
     }
 
-    render(){
+    render() {
+        const base_classes = baseStyles();
         const classes = customizeStyles();
         let vertical = window.innerHeight > window.innerWidth;
         let parts = this.state.parts[this.state.component] || {};
@@ -93,11 +95,11 @@ class Customize extends Component {
         let lg_breakpoint = window.innerWidth > theme.breakpoints.values.lg;
 
         return(
-            <Container style={{marginTop:'100px', zIndex: 0}}>
+            <Container style={{ zIndex: 0}}>
                 <Box m={4}>
                     <Grid container spacing={3}>
                         <Grid item xs={vertical ? 12 : 6}>
-                            <Box boxShadow={1} style={{ borderRadius: 30, position: 'relative', backgroundColor: theme.palette.secondary.main, maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
+                            <Box boxShadow={1} className={ base_classes.box } style={{ position: 'relative', maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
                                 <Gelly 
                                     eyes={this.state.components.eyes} 
                                     mouth={this.state.components.mouth} 

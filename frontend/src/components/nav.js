@@ -25,7 +25,7 @@ export default function Nav (props){
     };
     
     const list = () => {
-        let ui = props.is_authenticated ? ['customize', 'logout'] : ['login'];
+        let ui = props.is_authenticated ? ['room', 'customize', 'logout'] : ['login'];
         return (
             <Box
                 sx="auto"
@@ -47,7 +47,7 @@ export default function Nav (props){
     };
     let vertical = window.innerHeight > window.innerWidth;
     return(
-        <AppBar style={{ zIndex: 99 }} position="fixed">
+        <AppBar style={{ zIndex: 99 }} position="sticky">
             <Toolbar className={classes.navBar}>
                 <div style={{ flex: 1 }} className={classes.navBarLink} activeClassName="active">
                     <Link className={classes.navBarLink} href='/'>

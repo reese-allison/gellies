@@ -10,7 +10,7 @@ import { Box } from '@material-ui/core'
 
 import Gelly from './components/moji';
 import Nav from './components/nav';
-// import Scene from './components/scene';
+import Room from './components/room';
 import Customize from './components/customize';
 import Login from './components/login';
 import theme from './styles/theme.js';
@@ -46,7 +46,8 @@ const App = () => {
             <CssBaseline />
             <Nav is_authenticated={state.is_authenticated} style={{ zIndex: 99 }}/>
             <Router>
-                <Home path="/"/>
+                <Home path="/" />
+                <Room path='/room'/>
                 <Customize path='/customize'/>
                 <Login path='/login' />
                 <Error type='404' default/>
