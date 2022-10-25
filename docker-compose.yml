@@ -21,18 +21,18 @@ services:
         volumes:
           - ./tmp/etc/letsencrypt:/etc/letsencrypt
           - ./tmp/certbot/data:/var/www/certbot
-    certbot:
-        container_name: certbot
-        image: certbot/certbot:latest
-        depends_on:
-          - web
-        command: >-
-                certonly --keep-until-expiring --webroot --webroot-path=/var/www/certbot
-                --email ${EMAIL} --agree-tos --no-eff-email 
-                -d ${DOMAIN}
-        volumes:
-          - ./tmp/etc/letsencrypt:/etc/letsencrypt
-          - ./tmp/certbot/data:/var/www/certbot
+    # certbot:
+    #     container_name: certbot
+    #     image: certbot/certbot:latest
+    #     depends_on:
+    #       - web
+    #     command: >-
+    #             certonly --keep-until-expiring --webroot --webroot-path=/var/www/certbot
+    #             --email ${EMAIL} --agree-tos --no-eff-email 
+    #             -d ${DOMAIN}
+    #     volumes:
+    #       - ./tmp/etc/letsencrypt:/etc/letsencrypt
+    #       - ./tmp/certbot/data:/var/www/certbot
     backend:
         container_name: backend
         restart: always

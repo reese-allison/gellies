@@ -4,7 +4,6 @@ import theme from './theme.js'
 const customizeStyles = makeStyles(theme => ({
     roomWrapper: {
         backgroundColor: "black",
-        minHeight: "100vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

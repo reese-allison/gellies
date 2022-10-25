@@ -34,7 +34,7 @@ class Gelly extends PureComponent{
     constructor(props){
         super(props);
         if(props.id === null){
-            props.id = uuid();        
+            props.id = uuid();
         }
 
         this.busy = false;
@@ -52,6 +52,7 @@ class Gelly extends PureComponent{
         }
         this.state = {
             id: props.id,
+            style: props.style,
             orientation: props.orientation,
             animations: props.animations,
             click: props.animations === false ? false : props.click,
@@ -437,62 +438,64 @@ class Gelly extends PureComponent{
         }
 
         return (
-            <svg style={moji_style} width="100%" height="100%" fill="none" viewBox="-50 -50 600 600" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <Suspense fallback={<DefaultGradient />}>
-                        <Gradient id={this.state.id} />
-                    </Suspense>
-                    <Clip id={this.state.id} />
-                </defs>
-                <g ref={this.shadowMounted}>
-                    <Shadow id={this.state.id} />
-                </g>
-                <g ref={this.headwearBackMounted}>
-                    {this.state.willRenderBack(current_orientation) ? 
-                    <Suspense><Headwear style={orientation_headwear_style} id={this.state.id} /></Suspense> :
-                    <PureComponent />}
-                </g>
-                <g style={current_orientation.includes('back') ? "transform:scale(-1, 1);transform-origin:39.75% 0%;" : ""}>
-                    {current_orientation.includes('back') ?
-                    <g ref={this.mojiMounted} onClick={this.state.click ? this.onClick : null}>
-                        <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
-                            <Suspense>
-                                <Blinking style={{display: 'none'}} ref={this.blinkMounted} />
-                            </Suspense>
-                            <Suspense fallback={<DefaultEyes />}>
-                                <Eyes id={this.state.id} ref={this.eyesMounted} />
-                            </Suspense>
-                            <Suspense>
-                                <Mouth />
-                            </Suspense>
-                        </g>
-                        <Suspense fallback={<DefaultBody />}>
-                            <Body style={orientation_style} id={this.state.id} orientation={current_orientation} pattern={this.state.pattern} />
+            <div style={ this.state.style }>
+                <svg style={moji_style} width="100%" height="100%" fill="none" viewBox="-50 -50 600 600" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <Suspense fallback={<DefaultGradient />}>
+                            <Gradient id={this.state.id} />
                         </Suspense>
-                    </g> :
-                    <g ref={this.mojiMounted} onClick={this.state.click ? this.onClick : null}>
-                        <Suspense fallback={<DefaultBody />}>
-                            <Body style={orientation_style} id={this.state.id} orientation={current_orientation} pattern={this.state.pattern} />
-                        </Suspense>
-                        <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
-                            <Suspense>
-                                <Blinking style={{display: 'none'}} ref={this.blinkMounted} />
+                        <Clip id={this.state.id} />
+                    </defs>
+                    <g ref={this.shadowMounted}>
+                        <Shadow id={this.state.id} />
+                    </g>
+                    <g ref={this.headwearBackMounted}>
+                        {this.state.willRenderBack(current_orientation) ? 
+                        <Suspense><Headwear style={orientation_headwear_style} id={this.state.id} /></Suspense> :
+                        <PureComponent />}
+                    </g>
+                    <g style={current_orientation.includes('back') ? "transform:scale(-1, 1);transform-origin:39.75% 0%;" : ""}>
+                        {current_orientation.includes('back') ?
+                        <g ref={this.mojiMounted} onClick={this.state.click ? this.onClick : null}>
+                            <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
+                                <Suspense>
+                                    <Blinking style={{display: 'none'}} ref={this.blinkMounted} />
+                                </Suspense>
+                                <Suspense fallback={<DefaultEyes />}>
+                                    <Eyes id={this.state.id} ref={this.eyesMounted} />
+                                </Suspense>
+                                <Suspense>
+                                    <Mouth />
+                                </Suspense>
+                            </g>
+                            <Suspense fallback={<DefaultBody />}>
+                                <Body style={orientation_style} id={this.state.id} orientation={current_orientation} pattern={this.state.pattern} />
                             </Suspense>
-                            <Suspense fallback={<DefaultEyes />}>
-                                <Eyes id={this.state.id} ref={this.eyesMounted} />
+                        </g> :
+                        <g ref={this.mojiMounted} onClick={this.state.click ? this.onClick : null}>
+                            <Suspense fallback={<DefaultBody />}>
+                                <Body style={orientation_style} id={this.state.id} orientation={current_orientation} pattern={this.state.pattern} />
                             </Suspense>
-                            <Suspense>
-                                <Mouth orientation={current_orientation} />
-                            </Suspense>
-                        </g>
-                    </g>}
-                </g>
-                <g ref={this.headwearFrontMounted}>
-                    {this.state.willRenderFront(current_orientation) ? 
-                    <Suspense><Headwear style={orientation_headwear_style} id={this.state.id} /></Suspense> :
-                    <PureComponent />}
-                </g>
-            </svg>
+                            <g style={orientation_style} clip-path={`url(#body-clip-${ this.state.id })`}>
+                                <Suspense>
+                                    <Blinking style={{display: 'none'}} ref={this.blinkMounted} />
+                                </Suspense>
+                                <Suspense fallback={<DefaultEyes />}>
+                                    <Eyes id={this.state.id} ref={this.eyesMounted} />
+                                </Suspense>
+                                <Suspense>
+                                    <Mouth orientation={current_orientation} />
+                                </Suspense>
+                            </g>
+                        </g>}
+                    </g>
+                    <g ref={this.headwearFrontMounted}>
+                        {this.state.willRenderFront(current_orientation) ?
+                        <Suspense><Headwear style={orientation_headwear_style} id={this.state.id} /></Suspense> :
+                        <PureComponent />}
+                    </g>
+                </svg>
+            </div>
         );
     }
 }
