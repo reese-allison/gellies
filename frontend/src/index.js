@@ -1,3 +1,7 @@
+if (process.env.ENV === "development") {
+    require('preact/debug');   
+}
+
 import registerServiceWorker from './service-worker';
 registerServiceWorker();
 

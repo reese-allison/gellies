@@ -1,4 +1,4 @@
-import { h, Fragment, createRef } from 'preact';
+import { h, Fragment } from 'preact';
 import { Suspense, PureComponent, lazy } from 'preact/compat';
 import { v4 as uuid } from 'uuid';
 import gsap from "gsap";
@@ -53,6 +53,7 @@ class Gelly extends PureComponent{
         this.state = {
             id: props.id,
             style: props.style,
+            moving: false,
             orientation: props.orientation,
             animations: props.animations,
             click: props.animations === false ? false : props.click,
@@ -88,6 +89,9 @@ class Gelly extends PureComponent{
         let bounce_tl = gsap.timeline({ onReverseComplete: ()=>{
             this.state.animations && this.animations.ebb.resume();
             this.busy = false;
+            if (this.state.moving) {
+                this.hop();
+            }
         }});
 
         bounce_tl.to(this.refs.moji, {
@@ -135,6 +139,9 @@ class Gelly extends PureComponent{
         let second_bounce_tl = gsap.timeline({ paused: true, onReverseComplete: ()=>{
             this.state.animations && this.animations.ebb.resume();
             this.busy = false;
+            if (this.state.moving) {
+                this.hop();
+            }
         }});
 
         let jump_tl = gsap.timeline({ paused: true, onReverseComplete: ()=>{
@@ -249,6 +256,61 @@ class Gelly extends PureComponent{
         }, 0);
     }
 
+    hop(){
+        if(this.busy){
+            return;
+        }
+        this.busy = true;
+        this.state.animations && this.animations.ebb.pause();
+        let second_bounce_tl = gsap.timeline({paused: true, onReverseComplete: () => {
+            this.state.animations && this.animations.ebb.resume();
+            this.busy = false; 
+            if (this.state.moving) {
+                this.hop();
+            }
+        }});
+
+        let hop_tl = gsap.timeline({ onReverseComplete: ()=>{
+            second_bounce_tl.resume();
+        }});
+
+        second_bounce_tl.to(this.refs.moji, {
+            duration: .2,
+            transformOrigin: "bottom center",
+            scaleX: 1.05,
+            scaleY: 0.9,
+            ease: "power1.inOut",
+            onComplete: () => {
+                second_bounce_tl.reverse();
+            }
+        }, 0)
+        .to(this.refs.shadow, {
+            duration: .2,
+            transformOrigin: "center",
+            scale: 1.05,
+            onComplete: () => {
+                second_bounce_tl.reverse();
+            }
+        }, 0);
+
+        hop_tl.to(this.refs.moji, {
+            duration: .15,
+            y: -50,
+            onComplete: () => {
+                hop_tl.reverse();
+            }
+        }, 0)
+        .to(this.refs.shadow, {
+            duration: .15,
+            transformOrigin: "center",
+            scale: .95,
+            opacity: .80,
+            onComplete: () => {
+                hop_tl.reverse();
+            }
+        }, 0);
+    }
+
     eyesMounted(el){
         if(el === null){
             clearInterval(this.blink_interval);
@@ -302,7 +364,7 @@ class Gelly extends PureComponent{
                     moji.refs.eyes.style.display = '';
                     moji.refs.blinking.style.display = 'none';
                 }, 150);
-            }, randomRange(6, 10) * 1000);
+            }, 6000);
         }
     }
 
@@ -372,15 +434,19 @@ class Gelly extends PureComponent{
         clearInterval(this.blink_interval);
     }
 
-    componentWillReceiveProps(nextProps){
-        const updateable_props = ['orientation', 'body', 'eyes', 'gradient', 'mouth', 'pattern', 'headwear'];
+    componentWillReceiveProps(nextProps) {
+        const updateable_props = ['orientation', 'body', 'eyes', 'gradient', 'mouth', 'pattern', 'headwear', 'style', 'moving'];
         const filtered = Object.keys(nextProps)
           .filter(key => updateable_props.includes(key))
           .reduce((obj, key) => {
             obj[key] = nextProps[key];
             return obj;
           }, {});
-        this.setState(filtered);
+        this.setState(filtered, () => {
+            if (filtered.moving) {
+                this.hop()
+            }
+        });
     }
 
     onClick(e){

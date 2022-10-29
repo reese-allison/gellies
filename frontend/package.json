@@ -1,19 +1,20 @@
 {
   "dependencies": {
-    "@material-ui/core": "^4.12.3",
-    "@material-ui/icons": "^4.11.2",
-    "@material-ui/styles": "^4.11.4",
-    "dompurify": "^2.3.1",
-    "gsap": "^3.7.1",
-    "preact": "^10.5.14",
     "@babel/core": "^7.15.0",
     "@babel/plugin-transform-react-jsx": "^7.14.9",
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-react": "^7.14.5",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/styles": "^4.11.4",
     "babel-loader": "^8.2.2",
     "css-loader": "^6.2.0",
+    "dompurify": "^2.3.1",
+    "dotenv": "^16.0.3",
+    "gsap": "^3.7.1",
     "html-webpack-plugin": "^5.3.2",
     "mini-css-extract-plugin": "^2.2.0",
+    "preact": "^10.5.14",
     "preact-compat": "^3.19.0",
     "preact-router": "^3.2.1",
     "style-loader": "^3.2.1",
@@ -24,10 +25,10 @@
     "workbox-webpack-plugin": "^6.3.0"
   },
   "scripts": {
-    "serve:dev": "webpack serve --config webpack.config.js --env=development",
-    "serve:prod": "webpack serve --config webpack.config.js --env=production",
-    "build:dev": "webpack --config webpack.config.js --env=development",
-    "build:prod": "webpack --config webpack.config.js --env=production"
+    "serve:development": "webpack serve --config webpack.config.js --env=development",
+    "serve:production": "webpack serve --config webpack.config.js --env=production",
+    "build:development": "webpack --config webpack.config.js --env=development",
+    "build:production": "webpack --config webpack.config.js --env=production"
   },
   "babel": {
     "plugins": [

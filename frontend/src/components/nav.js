@@ -56,8 +56,8 @@ export default function Nav (props){
                         </Button>
                     </Link>
                 </div>
-                <IconButton aria-label="menu" size="large">
-                    <MenuRounded onClick={toggleDrawer(true)} className={classes.navBarButton} style={{height: '1.5em', width: '1.5em'}} />
+                <IconButton onClick={toggleDrawer(true)} aria-label="menu">
+                    <MenuRounded className={classes.navBarButton} style={{height: '1.5em', width: '1.5em'}} />
                 </IconButton>
             </Toolbar>
             <Drawer

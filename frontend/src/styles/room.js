@@ -8,8 +8,8 @@ const customizeStyles = makeStyles(theme => ({
         justifyContent: "center",
         alignItems: "center",
         fontSize: "40px",
-        perspective: "10em",
-        perspectiveOrigin: "50% calc(50% - 2em)",                     
+        perspective: "15em",
+        perspectiveOrigin: "50% calc(50% - 8em)",                     
         overflow: "hidden"
     },
 
@@ -40,6 +40,8 @@ const customizeStyles = makeStyles(theme => ({
         left: 0,
         borderRight: "2px solid black",
     },
+
+    backWall: {},
 
     floor: {
         backgroundColor: "white",

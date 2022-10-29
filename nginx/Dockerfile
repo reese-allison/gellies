@@ -1,8 +1,13 @@
 FROM node:14.15.1 as frontend
+ARG ENV
+
+COPY ./frontend/package.json ./frontend/yarn.lock /tmp/
+RUN cd /tmp && yarn && npx browserslist@latest --update-db
+RUN mkdir -p /app && cp -a /tmp/node_modules /opt/app/
+
 WORKDIR /app
 COPY ./frontend /app/
-RUN yarn
-RUN yarn build:prod
+RUN yarn build:${ENV}
 
 FROM nginx:1.21.6
 ARG ENV

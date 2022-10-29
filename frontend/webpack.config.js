@@ -1,6 +1,8 @@
+const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
+require('dotenv').config({ path: '../.env' });
 
 function buildConfig(env) {
   return{
@@ -54,6 +56,9 @@ function buildConfig(env) {
             }
           }
         ]
+      }),
+      new webpack.DefinePlugin({
+        "process.env": JSON.stringify(process.env)
       }),
     ],
     resolve: {
