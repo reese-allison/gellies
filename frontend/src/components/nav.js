@@ -25,7 +25,15 @@ export default function Nav (props){
     };
     
     const list = () => {
-        let ui = props.is_authenticated ? ['customize', 'logout'] : ['login'];
+        let ui;
+        if (!props.backend_available) {
+            // Static hosting - just show customize
+            ui = ['customize'];
+        } else if (props.is_authenticated) {
+            ui = ['customize', 'logout'];
+        } else {
+            ui = ['login'];
+        }
         return (
             <Box
                 sx="auto"

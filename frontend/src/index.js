@@ -29,14 +29,19 @@ const appStyles = makeStyles(theme => ({
 
 const App = () => {
     const [state, setState] = useState({
-        is_authenticated: false
+        is_authenticated: false,
+        backend_available: true
     });
 
     useEffect(() => {
         fetch('/api/authenticated')
         .then(response => response.json())
         .then(data => {
-            setState(data);
+            setState({ ...data, backend_available: true });
+        })
+        .catch(() => {
+            // Backend not available (e.g., static hosting)
+            setState({ is_authenticated: false, backend_available: false });
         });
     }, []);
 
@@ -44,7 +49,7 @@ const App = () => {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Nav is_authenticated={state.is_authenticated} style={{ zIndex: 99 }}/>
+            <Nav is_authenticated={state.is_authenticated} backend_available={state.backend_available} style={{ zIndex: 99 }}/>
             <Router>
                 <Home path="/"/>
                 <Customize path='/customize'/>
