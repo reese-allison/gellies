@@ -8,8 +8,9 @@ function buildConfig(env) {
     entry: { 
       main: path.resolve(__dirname, "src/index.js")
     },
-    output: { 
-      path: path.resolve(__dirname, "./dist")
+    output: {
+      path: path.resolve(__dirname, "./dist"),
+      publicPath: env.production ? '/gellies/' : '/'
     },
     module: {
       rules: [
@@ -40,6 +41,12 @@ function buildConfig(env) {
       new HtmlWebpackPlugin({
         favicon: "./src/favicon.ico",
         template: path.join(__dirname, "src", "index.html"),
+        minify: true,
+      }),
+      new HtmlWebpackPlugin({
+        filename: '404.html',
+        template: path.join(__dirname, "src", "404.html"),
+        inject: false,
         minify: true,
       }),
       new WorkboxPlugin.GenerateSW({
