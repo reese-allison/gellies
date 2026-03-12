@@ -1,111 +1,74 @@
-import registerServiceWorker from './service-worker';
-registerServiceWorker();
-
-import { Router } from 'preact-router';
 import { h, Fragment, render } from 'preact';
-import { useEffect, useState } from 'preact/compat'
-import { ThemeProvider, makeStyles} from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { Box } from '@material-ui/core'
+import { useEffect, useState } from 'preact/compat';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
 
-import Gelly from './components/moji';
 import Nav from './components/nav';
-// import Scene from './components/scene';
 import Customize from './components/customize';
-import Login from './components/login';
+import Room from './components/room';
 import theme from './styles/theme.js';
-
 
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-const appStyles = makeStyles(theme => ({
-    "@global": {
-        body: {
-          backgroundColor: theme.palette.secondary.light
-        }
-    },
-}), { defaultTheme: theme });
+// Get path from hash
+const getHashPath = () => {
+    const hash = window.location.hash;
+    return hash ? hash.substring(1) : '/customize';
+};
 
 const App = () => {
-    const [state, setState] = useState({
-        is_authenticated: false,
-        backend_available: true
+    const [currentPath, setCurrentPath] = useState(getHashPath());
+
+    // Shared gelly customization state
+    const [gellyConfig, setGellyConfig] = useState({
+        eyes: null,
+        mouth: null,
+        gradient: null,
+        body: null,
+        headwear: null,
+        pattern: null
     });
 
     useEffect(() => {
-        fetch('/api/authenticated')
-        .then(response => response.json())
-        .then(data => {
-            setState({ ...data, backend_available: true });
-        })
-        .catch(() => {
-            // Backend not available (e.g., static hosting)
-            setState({ is_authenticated: false, backend_available: false });
-        });
+        const handleHashChange = () => {
+            setCurrentPath(getHashPath());
+        };
+
+        window.addEventListener('hashchange', handleHashChange);
+
+        // Redirect to customize if no hash
+        if (!window.location.hash) {
+            window.location.hash = '#/customize';
+        }
+
+        return () => window.removeEventListener('hashchange', handleHashChange);
     }, []);
 
-    const classes = appStyles();
+    // Render the correct component based on path
+    const renderPage = () => {
+        if (currentPath === '/room') {
+            return <Room gellyConfig={gellyConfig} />;
+        }
+        return <Customize gellyConfig={gellyConfig} setGellyConfig={setGellyConfig} />;
+    };
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Nav is_authenticated={state.is_authenticated} backend_available={state.backend_available} style={{ zIndex: 99 }}/>
-            <Router>
-                <Home path="/"/>
-                <Customize path='/customize'/>
-                <Login path='/login' />
-                <Error type='404' default/>
-            </Router>
+            <Box sx={{
+                minHeight: '100vh',
+                backgroundColor: theme.palette.secondary.light,
+                paddingTop: 0,
+                marginTop: 0
+            }}>
+                <Nav />
+                {renderPage()}
+            </Box>
         </ThemeProvider>
-    )
+    );
 };
 
-const Home = () => {
-    const [state, setState] = useState({});
-
-    useEffect(()=>{
-        const randomGelly = () => {
-            ['eyes', 'mouth', 'gradient', 'body', 'headwear', 'pattern'].map((comp, idx)=>{
-                import(`./svgs/${comp}/index`).then(item => {
-                    let parts = Object.keys( item );
-                    if(['headwear', 'pattern'].includes(comp)){
-                        parts.push(undefined);
-                    }
-                    let random_part = parts[Math.floor(Math.random()*parts.length)];
-                    let new_state = {}
-                    new_state[comp] = random_part;
-                    setState(s => { return {...s, ...new_state} })
-                });
-            });
-        }
-        randomGelly();
-        let interval = setInterval(randomGelly, 3000);
-        return () => {
-            clearInterval(interval);
-        }
-    }, []);
-
-    return(
-        <Box>
-            <Gelly 
-                eyes={state.eyes}
-                mouth={state.mouth}
-                gradient={state.gradient}
-                body={state.body}
-                headwear={state.headwear}
-                pattern={state.pattern}
-            />
-        </Box>
-    )
-};
-
-const Error = ({ type, url }) => (
-	<section class="error">
-		<h2>Error</h2>
-		<p>It looks like we hit a snag.</p>
-		<pre>{url}</pre>
-	</section>
-);
-
-document.title = "Gellies"
+document.title = "Gellies";
 render(<App />, document.getElementById('root'));

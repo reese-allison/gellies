@@ -1,90 +1,28 @@
-# Python
-*.pyc
-common/*/__pycache__/
-common/*/__pycache__
-**/__pycache__
-
-# Ingore celery configurations
-
-celerybeat-schedule.bak
-celerybeat-schedule.dat
-celerybeat-schedule.dir
-celery_start.bat
-celery_start_eventlet.bat
-celery_start_prefork.bat
-
-# Static assets compiled on init
-static/.webassets-cache
-static/.webassets-manifest
-static/bundle/*.js
-static/bundle/*.css
-.cache
-
-# Temp files generated on ini
-temp
-tmp
-
-# Ignore upload folder
-upload
-
-# Ignore git folder
-git
-
-# Patchfile for GIT
-patchfile
-
-# Hide config files
-web.config
-config.py
-wfastcgi.py
-*.config
-!system.conf
-!loggly.conf
-settings.json
-.env
-
-# Hide IIS
-aspnet_client
-
-# Hide logs
-logs
-
-### VisualStudioCode template
-.vscode
-.pytest_cache/*
-.pytest_cache
-.jshintrc
-
-### PyCharm Template
-.idea
-
-### Windows template
-# Windows thumbnail cache files
-Thumbs.db
-ehthumbs.db
-ehthumbs_vista.db
-
-### macOS template
-# General
-*.DS_Store
-.AppleDouble
-.LSOverride
-
-#Node
+# Dependencies
 node_modules/
-jspm_packages/
-/build
-/*.log
+
+# Build output
 dist/
+build/
+.cache/
 
-# Ignore stored sql
-*.sql
+# Environment files
+.env
+.env.local
+.env.*.local
 
-# Ignore saved http calls
-*.http
+# Editor directories
+.vscode/
+.idea/
 
-# Hide test coverage
-.coverage
+# OS files
+.DS_Store
+Thumbs.db
 
-#Hide keys
-*.pem
+# Logs
+*.log
+npm-debug.log*
+
+# Temp files
+temp/
+tmp/

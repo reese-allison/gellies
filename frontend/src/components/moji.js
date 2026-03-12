@@ -1,4 +1,4 @@
-import { h, Fragment, createRef } from 'preact';
+import { h, Fragment } from 'preact';
 import { Suspense, PureComponent, lazy } from 'preact/compat';
 import { v4 as uuid } from 'uuid';
 import gsap from "gsap";
@@ -33,9 +33,8 @@ function eyeMovement(inner_eyes){
 class Gelly extends PureComponent{
     constructor(props){
         super(props);
-        if(props.id === null){
-            props.id = uuid();        
-        }
+        // Generate ID if not provided (don't mutate props)
+        const id = props.id === null ? uuid() : props.id;
 
         this.busy = false;
         this.animations = {
@@ -50,8 +49,13 @@ class Gelly extends PureComponent{
             headwearBack: null,
             headwearFront: null
         }
+        // Cache for loaded modules to avoid re-importing on every render
+        this._loadedHeadwear = null;
+        this._loadedEyes = null;
         this.state = {
-            id: props.id,
+            id: id,
+            style: props.style,
+            moving: false,
             orientation: props.orientation,
             animations: props.animations,
             click: props.animations === false ? false : props.click,
@@ -68,6 +72,7 @@ class Gelly extends PureComponent{
 
         this.bounce = this.bounce.bind(this);
         this.jump = this.jump.bind(this);
+        this.hop = this.hop.bind(this);
         this.onClick = this.onClick.bind(this);
 
         this.eyesMounted = this.eyesMounted.bind(this);
@@ -84,44 +89,42 @@ class Gelly extends PureComponent{
         }
         this.busy = true;
         this.state.animations && this.animations.ebb.pause();
-        let bounce_tl = gsap.timeline({ onReverseComplete: ()=>{
-            this.state.animations && this.animations.ebb.resume();
-            this.busy = false;
-        }});
+
+        // Use timeline onComplete instead of individual onComplete callbacks
+        let bounce_tl = gsap.timeline({
+            onComplete: () => {
+                bounce_tl.reverse();
+            },
+            onReverseComplete: () => {
+                this.state.animations && this.animations.ebb.resume();
+                this.busy = false;
+                if (this.state.moving) {
+                    this.hop();
+                }
+            }
+        });
 
         bounce_tl.to(this.refs.moji, {
             duration: .3,
             transformOrigin: "bottom center",
             scaleX: 1.1,
             scaleY: 0.8,
-            ease: "power1.inOut",
-            onComplete: () => {
-                bounce_tl.reverse();
-            }
+            ease: "power1.inOut"
         }, 0)
         .to(this.refs.headwearBack, {
             duration: .3,
             y: 65,
-            ease: "power1.inOut",
-            onComplete: () => {
-                bounce_tl.reverse();
-            }
+            ease: "power1.inOut"
         }, 0)
         .to(this.refs.headwearFront, {
             duration: .3,
             y: 65,
-            ease: "power1.inOut",
-            onComplete: () => {
-                bounce_tl.reverse();
-            }
+            ease: "power1.inOut"
         }, 0)
         .to(this.refs.shadow, {
             duration: .3,
             transformOrigin: "center",
-            scale: 1.1,
-            onComplete: () => {
-                bounce_tl.reverse();
-            }
+            scale: 1.1
         }, 0);
     }
 
@@ -131,52 +134,54 @@ class Gelly extends PureComponent{
         }
         this.busy = true;
         this.state.animations && this.animations.ebb.pause();
-        let second_bounce_tl = gsap.timeline({ paused: true, onReverseComplete: ()=>{
-            this.state.animations && this.animations.ebb.resume();
-            this.busy = false;
-        }});
 
-        let jump_tl = gsap.timeline({ paused: true, onReverseComplete: ()=>{
-            second_bounce_tl.resume();
-        }});
+        // Calculate headwear y values once to ensure consistency
+        const headwearY = (Math.random() > .3) ? 65 : -20;
 
-        let first_bounce_tl = gsap.timeline({ onReverseComplete: ()=>{
-            jump_tl.resume();
-        }});
+        let second_bounce_tl = gsap.timeline({
+            paused: true,
+            onComplete: () => { second_bounce_tl.reverse(); },
+            onReverseComplete: () => {
+                this.state.animations && this.animations.ebb.resume();
+                this.busy = false;
+                if (this.state.moving) {
+                    this.hop();
+                }
+            }
+        });
+
+        let jump_tl = gsap.timeline({
+            paused: true,
+            onComplete: () => { jump_tl.reverse(); },
+            onReverseComplete: () => { second_bounce_tl.resume(); }
+        });
+
+        let first_bounce_tl = gsap.timeline({
+            onComplete: () => { first_bounce_tl.reverse(); },
+            onReverseComplete: () => { jump_tl.resume(); }
+        });
 
         second_bounce_tl.to(this.refs.moji, {
             duration: .3,
             transformOrigin: "bottom center",
             scaleX: 1.1,
             scaleY: 0.8,
-            ease: "power1.inOut",
-            onComplete: () => {
-                second_bounce_tl.reverse();
-            }
+            ease: "power1.inOut"
         }, 0)
         .to(this.refs.headwearBack, {
             duration: .3,
-            y: (Math.random() > .3) ? 65 : -20,
-            ease: "power1.inOut",
-            onComplete: () => {
-                second_bounce_tl.reverse();
-            }
+            y: headwearY,
+            ease: "power1.inOut"
         }, 0)
         .to(this.refs.headwearFront, {
             duration: .3,
-            y: (Math.random() > .3) ? 65 : -20,
-            ease: "power1.inOut",
-            onComplete: () => {
-                second_bounce_tl.reverse();
-            }
+            y: headwearY,
+            ease: "power1.inOut"
         }, 0)
         .to(this.refs.shadow, {
             duration: .3,
             transformOrigin: "center",
-            scale: 1.1,
-            onComplete: () => {
-                second_bounce_tl.reverse();
-            }
+            scale: 1.1
         }, 0);
 
         first_bounce_tl.to(this.refs.moji, {
@@ -184,67 +189,110 @@ class Gelly extends PureComponent{
             transformOrigin: "bottom center",
             scaleX: 1.05,
             scaleY: 0.9,
-            ease: "power1.inOut",
-            onComplete: () => {
-                first_bounce_tl.reverse();
-            }
+            ease: "power1.inOut"
         }, 0)
         .to(this.refs.headwearBack, {
             duration: .3,
             y: 32,
-            ease: "power1.inOut",
-            onComplete: () => {
-                first_bounce_tl.reverse();
-            }
+            ease: "power1.inOut"
         }, 0)
         .to(this.refs.headwearFront, {
             duration: .3,
             y: 32,
-            ease: "power1.inOut",
-            onComplete: () => {
-                first_bounce_tl.reverse();
-            }
+            ease: "power1.inOut"
         }, 0)
         .to(this.refs.shadow, {
             duration: .3,
             transformOrigin: "center",
-            scale: 1.05,
-            onComplete: () => {
-                first_bounce_tl.reverse();
-            }
+            scale: 1.05
         }, 0);
 
         jump_tl.to(this.refs.moji, {
             duration: .2,
-            y: -100,
-            onComplete: () => {
-                jump_tl.reverse();
-            }
+            y: -100
         }, 0)
         .to(this.refs.shadow, {
             duration: .2,
             transformOrigin: "center",
             scale: .9,
-            opacity: .65,
-            onComplete: () => {
-                jump_tl.reverse();
-            }
+            opacity: .65
         }, 0)
         .to(this.refs.headwearBack, {
             duration: .2,
             y: -100,
-            transformOrigin: "center",
-            onComplete: () => {
-                jump_tl.reverse();
-            }
+            transformOrigin: "center"
         }, 0)
         .to(this.refs.headwearFront, {
             duration: .2,
             y: -100,
-            transformOrigin: "center",
-            onComplete: () => {
-                jump_tl.reverse();
+            transformOrigin: "center"
+        }, 0);
+    }
+
+    hop(){
+        if(this.busy){
+            return;
+        }
+        this.busy = true;
+        this.state.animations && this.animations.ebb.pause();
+
+        let second_bounce_tl = gsap.timeline({
+            paused: true,
+            onComplete: () => { second_bounce_tl.reverse(); },
+            onReverseComplete: () => {
+                this.state.animations && this.animations.ebb.resume();
+                this.busy = false;
+                if (this.state.moving) {
+                    this.hop();
+                }
             }
+        });
+
+        let hop_tl = gsap.timeline({
+            onComplete: () => { hop_tl.reverse(); },
+            onReverseComplete: () => { second_bounce_tl.resume(); }
+        });
+
+        second_bounce_tl.to(this.refs.moji, {
+            duration: .2,
+            transformOrigin: "bottom center",
+            scaleX: 1.05,
+            scaleY: 0.9,
+            ease: "power1.inOut"
+        }, 0)
+        .to(this.refs.shadow, {
+            duration: .2,
+            transformOrigin: "center",
+            scale: 1.05
+        }, 0)
+        .to(this.refs.headwearBack, {
+            duration: .2,
+            y: 32,
+            ease: "power1.inOut"
+        }, 0)
+        .to(this.refs.headwearFront, {
+            duration: .2,
+            y: 32,
+            ease: "power1.inOut"
+        }, 0);
+
+        hop_tl.to(this.refs.moji, {
+            duration: .15,
+            y: -50
+        }, 0)
+        .to(this.refs.shadow, {
+            duration: .15,
+            transformOrigin: "center",
+            scale: .95,
+            opacity: .80
+        }, 0)
+        .to(this.refs.headwearBack, {
+            duration: .15,
+            y: -50
+        }, 0)
+        .to(this.refs.headwearFront, {
+            duration: .15,
+            y: -50
         }, 0);
     }
 
@@ -278,13 +326,17 @@ class Gelly extends PureComponent{
 
     setupEyes(){
         const q = gsap.utils.selector(this.refs.eyes);
-        let eye_animations = gsap.set(eyeMovement, {
-            onRepeat: eyeMovement,
-            onRepeatParams: [q('.inner-eye')], 
-            repeat: -1, 
-            repeatDelay: 4
-        });
-        this.animations.eyes = eye_animations;
+        const innerEyes = q('.inner-eye');
+
+        // Use gsap.delayedCall for repeating eye movement instead of gsap.set
+        const scheduleEyeMovement = () => {
+            if (!this.refs.eyes) return; // Stop if component unmounted
+            eyeMovement(innerEyes);
+            this.animations.eyes = gsap.delayedCall(4, scheduleEyeMovement);
+        };
+
+        // Start the first eye movement after initial delay
+        this.animations.eyes = gsap.delayedCall(randomRange(0, 3), scheduleEyeMovement);
     }
 
     setupBlink(){
@@ -307,7 +359,7 @@ class Gelly extends PureComponent{
 
     shadowMounted(el){
         if(el === null){
-            if(this.state.ebb && this.animations.ebb != null){
+            if(this.state.animations && this.animations.ebb != null){
                 this.animations.ebb.kill();
             }
         }
@@ -319,7 +371,7 @@ class Gelly extends PureComponent{
 
     mojiMounted(el){
         if(el === null){
-            if(this.state.ebb && this.animations.ebb != null){
+            if(this.state.animations && this.animations.ebb != null){
                 this.animations.ebb.kill();
             }
         }
@@ -372,14 +424,18 @@ class Gelly extends PureComponent{
     }
 
     componentWillReceiveProps(nextProps){
-        const updateable_props = ['orientation', 'body', 'eyes', 'gradient', 'mouth', 'pattern', 'headwear'];
+        const updateable_props = ['orientation', 'body', 'eyes', 'gradient', 'mouth', 'pattern', 'headwear', 'moving', 'style'];
         const filtered = Object.keys(nextProps)
           .filter(key => updateable_props.includes(key))
           .reduce((obj, key) => {
             obj[key] = nextProps[key];
             return obj;
           }, {});
-        this.setState(filtered);
+        this.setState(filtered, () => {
+            if (filtered.moving) {
+                this.hop();
+            }
+        });
     }
 
     onClick(e){
@@ -401,21 +457,29 @@ class Gelly extends PureComponent{
         let Blinking = PureComponent;
 
         if(this.state.headwear != undefined){
-            import(`../svgs/headwear/${this.state.headwear}`).then(module => {
-                this.setState({
-                    willRenderBack: module.willRenderBack,
-                    willRenderFront: module.willRenderFront
+            // Only import if headwear changed to avoid re-importing on every render
+            if(this._loadedHeadwear !== this.state.headwear){
+                this._loadedHeadwear = this.state.headwear;
+                import(`../svgs/headwear/${this.state.headwear}`).then(module => {
+                    this.setState({
+                        willRenderBack: module.willRenderBack,
+                        willRenderFront: module.willRenderFront
+                    })
                 })
-            })
+            }
             Headwear = lazy(() => import(`../svgs/headwear/${this.state.headwear}`).then(module => ({ default: module.Headwear })));
         }
 
         if(this.state.eyes != undefined){
-            import(`../svgs/eyes/${this.state.eyes}`).then(module => {
-                this.setState({
-                    willBlink: module.willBlink,
-                })
-            });
+            // Only import if eyes changed to avoid re-importing on every render
+            if(this._loadedEyes !== this.state.eyes){
+                this._loadedEyes = this.state.eyes;
+                import(`../svgs/eyes/${this.state.eyes}`).then(module => {
+                    this.setState({
+                        willBlink: module.willBlink,
+                    })
+                });
+            }
             Eyes = lazy(() => import(`../svgs/eyes/${this.state.eyes}`).then(module => ({ default: module.Eyes })));
             Blinking = lazy(() => import(`../svgs/eyes/${this.state.eyes}`).then(module => ({ default: module.Blinking })));
         }
@@ -425,18 +489,25 @@ class Gelly extends PureComponent{
         let orientation_style = '';
         let orientation_headwear_style = '';
         let current_orientation = this.state.orientation || 'front';
+
+        // Back-facing orientations need the headwear group flipped
+        const headwearGroupStyle = current_orientation.includes('back')
+            ? "transform:scale(-1, 1);transform-origin:39.75% 0%;"
+            : "";
+
         if(current_orientation === 'left' || current_orientation === 'back-right'){
             moji_style = "transform:scale(.96, 1);transform-origin:center top;";
             orientation_style = "transform: translate(-40px, 0);";
             orientation_headwear_style = "transform: skew(1deg, -1deg) scale(-1, 1);transform-origin:39.75% 0%;";
         }
-        if(current_orientation === 'right' || current_orientation === 'back-left'){
+        else if(current_orientation === 'right' || current_orientation === 'back-left'){
             moji_style = "transform:scale(.96, 1);transform-origin:center top;";
             orientation_style = "transform: translate(50px, 0);";
             orientation_headwear_style = "transform: skew(1deg, -1deg);";
         }
 
         return (
+            <div style={this.state.style}>
             <svg style={moji_style} width="100%" height="100%" fill="none" viewBox="-50 -50 600 600" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <Suspense fallback={<DefaultGradient />}>
@@ -447,10 +518,12 @@ class Gelly extends PureComponent{
                 <g ref={this.shadowMounted}>
                     <Shadow id={this.state.id} />
                 </g>
-                <g ref={this.headwearBackMounted}>
-                    {this.state.willRenderBack(current_orientation) ? 
-                    <Suspense><Headwear style={orientation_headwear_style} id={this.state.id} /></Suspense> :
-                    <PureComponent />}
+                <g style={headwearGroupStyle}>
+                    <g ref={this.headwearBackMounted}>
+                        {this.state.willRenderBack(current_orientation) ?
+                        <Suspense><Headwear style={orientation_headwear_style} id={this.state.id} /></Suspense> :
+                        <PureComponent />}
+                    </g>
                 </g>
                 <g style={current_orientation.includes('back') ? "transform:scale(-1, 1);transform-origin:39.75% 0%;" : ""}>
                     {current_orientation.includes('back') ?
@@ -487,12 +560,15 @@ class Gelly extends PureComponent{
                         </g>
                     </g>}
                 </g>
-                <g ref={this.headwearFrontMounted}>
-                    {this.state.willRenderFront(current_orientation) ? 
-                    <Suspense><Headwear style={orientation_headwear_style} id={this.state.id} /></Suspense> :
-                    <PureComponent />}
+                <g style={headwearGroupStyle}>
+                    <g ref={this.headwearFrontMounted}>
+                        {this.state.willRenderFront(current_orientation) ?
+                        <Suspense><Headwear style={orientation_headwear_style} id={this.state.id} /></Suspense> :
+                        <PureComponent />}
+                    </g>
                 </g>
             </svg>
+            </div>
         );
     }
 }

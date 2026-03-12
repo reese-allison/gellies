@@ -1,27 +1,48 @@
 import { h, Fragment, Component } from 'preact';
-import { Grid, IconButton, Button, ButtonGroup, Box, debounce, Container } from '@material-ui/core';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import { debounce } from '@mui/material/utils';
+import RotateRight from '@mui/icons-material/RotateRight';
+import RotateLeft from '@mui/icons-material/RotateLeft';
 
 import theme from '../styles/theme';
-import customizeStyles from '../styles/customize';
 import Gelly from './moji';
-import { RotateRight, RotateLeft } from '@material-ui/icons';
-
 
 const ORIENTATIONS = ['left', 'front', 'right', 'back-right', 'back', 'back-left'];
 
+const menuButtonStyles = {
+    color: theme.palette.primary.contrastText,
+    fontFamily: `'Grandstander', cursive`,
+    fontSize: { xs: '1.6rem', lg: '1.3rem' },
+    fontWeight: 'bold',
+    textShadow: Array(14).join('#000 0px 0px 2px, ') + '#000 0px 0px 2px'
+};
 
-/**  @jsx h */
+// Scrollbar styles - defined outside component to avoid recreation on each render
+const noScrollBarStyle = {
+    '&::-webkit-scrollbar': { display: 'none' },
+    scrollbarWidth: 'none'
+};
+
+const thinScrollBarStyle = {
+    '&::-webkit-scrollbar': { width: '4px', height: '4px' }
+};
+
+/** @jsx h */
 /** @jsxFrag Fragment */
 
 class Customize extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             orientation: 'front',
-            components: {},
             parts: {},
             component: null
-        }
+        };
 
         this.showComponents = this.showComponents.bind(this);
         this.setComponent = this.setComponent.bind(this);
@@ -30,132 +51,143 @@ class Customize extends Component {
         this.handleResize = debounce(this.handleResize.bind(this), 250);
     }
 
-    handleResize(){
+    handleResize() {
         this.setState({});
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.showComponents('body');
         window.addEventListener('resize', this.handleResize);
     }
 
-    showComponents(component){
-        if(component in this.state.parts){
-            this.setState({component: component});
-        }
-        else{
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleResize);
+    }
+
+    showComponents(component) {
+        if (component in this.state.parts) {
+            this.setState({ component: component });
+        } else {
             import(`../svgs/${component}/index`).then(item => {
-                let new_parts = { ...this.state.parts }
-                new_parts[component] = {...item}
-                this.setState({parts: new_parts, component: component});
+                let new_parts = { ...this.state.parts };
+                new_parts[component] = { ...item };
+                this.setState({ parts: new_parts, component: component });
             });
         }
     }
 
-    setComponent(value){
-        if(this.state.components[this.state.component] === value){
-            let new_components = { ...this.state.components };
-            delete new_components[this.state.component];
-            this.setState({ components: new_components });
-        }
-        else{
-            let new_components = { ...this.state.components };
-            new_components[this.state.component] = value;
-            this.setState({ components: new_components });
+    setComponent(value) {
+        const { gellyConfig, setGellyConfig } = this.props;
+        const currentComponent = this.state.component;
+
+        if (gellyConfig[currentComponent] === value) {
+            // Deselect
+            setGellyConfig({ ...gellyConfig, [currentComponent]: null });
+        } else {
+            // Select
+            setGellyConfig({ ...gellyConfig, [currentComponent]: value });
         }
     }
 
-    rotateLeft(){
+    rotateLeft() {
         let idx = ORIENTATIONS.indexOf(this.state.orientation);
-        if(ORIENTATIONS[idx - 1] === undefined){
-            this.setState({orientation: ORIENTATIONS[ORIENTATIONS.length - 1]});
-        }
-        else{
-            this.setState({orientation: ORIENTATIONS[idx - 1]});
+        if (ORIENTATIONS[idx - 1] === undefined) {
+            this.setState({ orientation: ORIENTATIONS[ORIENTATIONS.length - 1] });
+        } else {
+            this.setState({ orientation: ORIENTATIONS[idx - 1] });
         }
     }
 
-    rotateRight(){
+    rotateRight() {
         let idx = ORIENTATIONS.indexOf(this.state.orientation);
-        if(ORIENTATIONS[idx + 1] === undefined){
-            this.setState({orientation: ORIENTATIONS[0]});
-        }
-        else{
-            this.setState({orientation: ORIENTATIONS[idx + 1]});
+        if (ORIENTATIONS[idx + 1] === undefined) {
+            this.setState({ orientation: ORIENTATIONS[0] });
+        } else {
+            this.setState({ orientation: ORIENTATIONS[idx + 1] });
         }
     }
 
-    render(){
-        const classes = customizeStyles();
+    render() {
+        const { gellyConfig } = this.props;
         let vertical = window.innerHeight > window.innerWidth;
         let parts = this.state.parts[this.state.component] || {};
-        let selected_part = this.state.components[this.state.component];
+        let selected_part = gellyConfig ? gellyConfig[this.state.component] : null;
         let lg_breakpoint = window.innerWidth > theme.breakpoints.values.lg;
 
-        return(
-            <Container style={{marginTop:'100px', zIndex: 0}}>
+        return (
+            <Container style={{ marginTop: '100px', zIndex: 0 }}>
                 <Box m={4}>
-                    <Grid container spacing={3}>
+                    <Grid container spacing={3} alignItems="flex-start">
                         <Grid item xs={vertical ? 12 : 6}>
-                            <Box boxShadow={1} style={{ borderRadius: 30, position: 'relative', backgroundColor: theme.palette.secondary.main, maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
-                                <Gelly 
-                                    eyes={this.state.components.eyes} 
-                                    mouth={this.state.components.mouth} 
-                                    gradient={this.state.components.gradient} 
-                                    body={this.state.components.body} 
-                                    headwear={this.state.components.headwear}
-                                    pattern={this.state.components.pattern}
+                            <Box boxShadow={1} style={{ borderRadius: 30, position: 'relative', backgroundColor: theme.palette.secondary.main, maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh' }}>
+                                <Gelly
+                                    eyes={gellyConfig?.eyes}
+                                    mouth={gellyConfig?.mouth}
+                                    gradient={gellyConfig?.gradient}
+                                    body={gellyConfig?.body}
+                                    headwear={gellyConfig?.headwear}
+                                    pattern={gellyConfig?.pattern}
                                     orientation={this.state.orientation}
                                 />
-                                <IconButton onClick={this.rotateLeft} size="large" style={{'bottom': 0, 'position': 'absolute', 'left': 0}}>
-                                    <RotateRight style={{height: '2em', width: '2em'}} />
+                                <IconButton onClick={this.rotateLeft} size="large" style={{ bottom: 0, position: 'absolute', left: 0 }}>
+                                    <RotateRight style={{ height: '2em', width: '2em' }} />
                                 </IconButton>
-                                <IconButton onClick={this.rotateRight} size="large" style={{'bottom': 0, 'position': 'absolute', 'right': 0}}>
-                                    <RotateLeft style={{height: '2em', width: '2em'}} />
+                                <IconButton onClick={this.rotateRight} size="large" style={{ bottom: 0, position: 'absolute', right: 0 }}>
+                                    <RotateLeft style={{ height: '2em', width: '2em' }} />
                                 </IconButton>
                             </Box>
                         </Grid>
                         <Grid item xs={vertical ? 12 : 6}>
-                            <div style={{ maxHeight: vertical ? '85vw' : '85vh', height: vertical ? '85vw' : '85vh'}}>
-                                <div className={classes.noScrollBar} style={vertical ? {height: 'auto', overflowX: 'scroll'} : {maxHeight: vertical ? '79vw' : '79vh', height: vertical ? '79vw' : '79vh', overflowY: 'scroll'}}>
-                                    <div style={vertical ? {width: 'max-content', height: '20em'} : {}}>
-                                        {Object.keys(parts).map((part, index) => {
+                            <Box sx={{ display: 'flex', flexDirection: 'column', maxHeight: vertical ? 'auto' : '85vh', height: vertical ? 'auto' : '85vh' }}>
+                                <Box
+                                    sx={{
+                                        ...noScrollBarStyle,
+                                        flex: 1,
+                                        overflowY: 'auto',
+                                        overflowX: vertical ? 'auto' : 'hidden'
+                                    }}
+                                >
+                                    <Grid container spacing={1}>
+                                        {Object.keys(parts).map((part) => {
                                             let key = this.state.component + part;
-                                            let styles = {
-                                                backgroundColor: theme.palette.secondary.main,
-                                                margin: 5,
-                                                borderRadius: 30,
-                                                float: 'left',
-                                                height:'20em',
-                                                width: '20em'
-                                            };
-                                            let props = { [this.state.component]: part, animations: false }
-                                            return(
-                                                <Box  
-                                                    style={selected_part == part ? {...styles, backgroundColor: theme.palette.success.light, border: `3px dashed ${theme.palette.tertiary.main}`} : styles}
-                                                    onClick={() => this.setComponent(part)} boxShadow={1}>
-                                                    <Gelly key={key} {...props}/>
-                                                </Box>
-                                            )
+                                            let isSelected = selected_part === part;
+                                            let props = { [this.state.component]: part, animations: false };
+                                            return (
+                                                <Grid item xs={6} key={key}>
+                                                    <Box
+                                                        onClick={() => this.setComponent(part)}
+                                                        boxShadow={1}
+                                                        sx={{
+                                                            backgroundColor: isSelected ? theme.palette.success.light : theme.palette.secondary.main,
+                                                            border: isSelected ? `3px dashed ${theme.palette.tertiary.main}` : 'none',
+                                                            borderRadius: '20px',
+                                                            aspectRatio: '1',
+                                                            cursor: 'pointer'
+                                                        }}
+                                                    >
+                                                        <Gelly {...props} />
+                                                    </Box>
+                                                </Grid>
+                                            );
                                         })}
-                                    </div>
-                                </div>
-                                <Box className={classes.thinScrollBar} style={lg_breakpoint ? {} : {overflowX: 'scroll'}}>
-                                    <ButtonGroup fullWidth={lg_breakpoint} variant="contained" color="primary" aria-label="contained primary button group">
-                                        <Button style={this.state.component=='body' ? {textDecoration: 'underline'} : {}} className={classes.menuButton} size='large' onClick={() => this.showComponents('body')}>Body</Button>
-                                        <Button style={this.state.component=='eyes' ? {textDecoration: 'underline'} : {}} className={classes.menuButton} size='large' onClick={() => this.showComponents('eyes')}>Eyes</Button>
-                                        <Button style={this.state.component=='mouth' ? {textDecoration: 'underline'} : {}} className={classes.menuButton} size='large' onClick={() => this.showComponents('mouth')}>Mouth</Button>
-                                        <Button style={this.state.component=='pattern' ? {textDecoration: 'underline'} : {}} className={classes.menuButton} size='large' onClick={() => this.showComponents('pattern')}>Pattern</Button>
-                                        <Button style={this.state.component=='headwear' ? {textDecoration: 'underline'} : {}} className={classes.menuButton} size='large' onClick={() => this.showComponents('headwear')}>Headwear</Button>
-                                        <Button style={this.state.component=='gradient' ? {textDecoration: 'underline'} : {}} className={classes.menuButton} size='large' onClick={() => this.showComponents('gradient')}>Color</Button>
+                                    </Grid>
+                                </Box>
+                                <Box sx={{ ...thinScrollBarStyle, overflowX: lg_breakpoint ? 'visible' : 'auto', flexShrink: 0, mt: 1 }}>
+                                    <ButtonGroup fullWidth={lg_breakpoint} variant="contained" color="primary">
+                                        <Button sx={{ ...menuButtonStyles, textDecoration: this.state.component === 'body' ? 'underline' : 'none' }} size="large" onClick={() => this.showComponents('body')}>Body</Button>
+                                        <Button sx={{ ...menuButtonStyles, textDecoration: this.state.component === 'eyes' ? 'underline' : 'none' }} size="large" onClick={() => this.showComponents('eyes')}>Eyes</Button>
+                                        <Button sx={{ ...menuButtonStyles, textDecoration: this.state.component === 'mouth' ? 'underline' : 'none' }} size="large" onClick={() => this.showComponents('mouth')}>Mouth</Button>
+                                        <Button sx={{ ...menuButtonStyles, textDecoration: this.state.component === 'pattern' ? 'underline' : 'none' }} size="large" onClick={() => this.showComponents('pattern')}>Pattern</Button>
+                                        <Button sx={{ ...menuButtonStyles, textDecoration: this.state.component === 'headwear' ? 'underline' : 'none' }} size="large" onClick={() => this.showComponents('headwear')}>Headwear</Button>
+                                        <Button sx={{ ...menuButtonStyles, textDecoration: this.state.component === 'gradient' ? 'underline' : 'none' }} size="large" onClick={() => this.showComponents('gradient')}>Color</Button>
                                     </ButtonGroup>
                                 </Box>
-                            </div>
+                            </Box>
                         </Grid>
                     </Grid>
                 </Box>
             </Container>
-        )
+        );
     }
 }
 

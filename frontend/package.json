@@ -1,39 +1,31 @@
 {
-  "dependencies": {
-    "@material-ui/core": "^4.12.3",
-    "@material-ui/icons": "^4.11.2",
-    "@material-ui/styles": "^4.11.4",
-    "dompurify": "^2.3.1",
-    "gsap": "^3.7.1",
-    "preact": "^10.5.14",
-    "@babel/core": "^7.15.0",
-    "@babel/plugin-transform-react-jsx": "^7.14.9",
-    "@babel/preset-env": "^7.15.0",
-    "@babel/preset-react": "^7.14.5",
-    "babel-loader": "^8.2.2",
-    "css-loader": "^6.2.0",
-    "html-webpack-plugin": "^5.3.2",
-    "mini-css-extract-plugin": "^2.2.0",
-    "preact-compat": "^3.19.0",
-    "preact-router": "^3.2.1",
-    "style-loader": "^3.2.1",
-    "uuid": "^8.3.2",
-    "webpack": "^5.50.0",
-    "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^3.11.2",
-    "workbox-webpack-plugin": "^6.3.0"
-  },
+  "name": "gellies",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "serve:dev": "webpack serve --config webpack.config.js --env=development",
-    "serve:prod": "webpack serve --config webpack.config.js --env=production",
-    "build:dev": "webpack --config webpack.config.js --env=development",
-    "build:prod": "webpack --config webpack.config.js --env=production"
+    "start": "webpack serve --config webpack.config.js --env=development",
+    "build": "webpack --config webpack.config.js --env=production"
   },
-  "babel": {
-    "plugins": [
-      [
-        "@babel/plugin-transform-react-jsx"
-      ]
-    ]
+  "dependencies": {
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.0",
+    "@mui/material": "^5.15.0",
+    "gsap": "^3.12.0",
+    "preact": "^10.19.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.23.0",
+    "@babel/preset-react": "^7.23.0",
+    "babel-loader": "^9.1.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.8.0",
+    "html-webpack-plugin": "^5.6.0",
+    "style-loader": "^3.3.0",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.0",
+    "webpack-dev-server": "^4.15.0"
   }
 }

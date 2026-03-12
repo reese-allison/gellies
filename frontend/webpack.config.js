@@ -1,38 +1,45 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 function buildConfig(env) {
-  return{
-    mode: env.development ? 'development' : env.production ? 'production' : null,
-    entry: { 
+  const isProduction = env.production;
+
+  return {
+    mode: isProduction ? 'production' : 'development',
+    entry: {
       main: path.resolve(__dirname, "src/index.js")
     },
     output: {
       path: path.resolve(__dirname, "./dist"),
-      publicPath: env.production ? '/gellies/' : '/'
+      filename: '[name].[contenthash].js',
+      publicPath: isProduction ? '/gellies/' : '/',
+      clean: true
+    },
+    devServer: {
+      static: './dist',
+      hot: true,
+      historyApiFallback: true,
+      port: 3000
     },
     module: {
       rules: [
         {
-          test: /\.?js$/,
+          test: /\.js$/,
           exclude: /node_modules/,
-          sideEffects: false,
           use: {
             loader: "babel-loader",
             options: {
-              presets: ['@babel/preset-env', '@babel/preset-react']
+              presets: ['@babel/preset-env', ['@babel/preset-react', { pragma: 'h', pragmaFrag: 'Fragment' }]]
             }
           }
         },
         {
           test: /\.css$/i,
-          sideEffects: false,
           use: ["style-loader", "css-loader"],
         },
         {
           test: /\.(woff|woff2|eot|ttf|png|jpeg|jpg|svg|gif)$/,
-          sideEffects: false,
           type: 'asset/resource'
         },
       ],
@@ -41,39 +48,27 @@ function buildConfig(env) {
       new HtmlWebpackPlugin({
         favicon: "./src/favicon.ico",
         template: path.join(__dirname, "src", "index.html"),
-        minify: true,
+        minify: isProduction
       }),
       new HtmlWebpackPlugin({
         filename: '404.html',
         template: path.join(__dirname, "src", "404.html"),
         inject: false,
-        minify: true,
+        minify: isProduction
       }),
-      new WorkboxPlugin.GenerateSW({
-        clientsClaim: true,
-        skipWaiting: true,
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/fonts\.gstatic\.com/,
-            handler: 'StaleWhileRevalidate',
-            options: {
-              cacheName: 'google-fonts-webfonts'
-            }
-          }
+      new CopyWebpackPlugin({
+        patterns: [
+          { from: 'src/static', to: 'static' }
         ]
-      }),
+      })
     ],
     resolve: {
-      "alias": {
+      alias: {
         "react": "preact/compat",
-        "react-dom/test-utils": "preact/test-utils",
         "react-dom": "preact/compat",
         "react/jsx-runtime": "preact/jsx-runtime"
       }
-    },
-    optimization: {
-      mangleWasmImports: true,
-    },
+    }
   }
 }
 

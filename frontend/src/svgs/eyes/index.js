@@ -8,8 +8,6 @@ import {Eyes as knockout} from './knockout';
 import {Eyes as pouty} from './pouty';
 import {Eyes as pumpkin} from './pumpkin';
 import {Eyes as shiny} from './shiny';
-// import smiley from './smiley';
-// import sleepy from './sleepy';
 import {Eyes as surprised} from './surprised';
 import {Eyes as swirl} from './swirl';
 import {Eyes as teddy} from './teddy';
@@ -17,17 +15,15 @@ import {Eyes as teddy} from './teddy';
 export {
     cute,
     dot,
-    bored, 
+    bored,
     cat,
     frog,
     hungry,
     knockout,
-    pouty, 
+    pouty,
     pumpkin,
     shiny,
-    // smiley,
-    // sleepy,
     surprised,
-    swirl, 
+    swirl,
     teddy,
 }

@@ -1,83 +1,95 @@
 import { h, Fragment } from 'preact';
 import { useState } from 'preact/compat';
-import { Link } from 'preact-router';
-import { MenuRounded } from '@material-ui/icons';
-import { AppBar, Button, Toolbar, IconButton, List, ListItem, Box, Drawer } from '@material-ui/core';
+import MenuRounded from '@mui/icons-material/MenuRounded';
+import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import { darken, lighten } from '@mui/material/styles';
 
-import navBarStyles from '../styles/nav';
-
+import theme from '../styles/theme';
 
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-export default function Nav (props){
-    const classes = navBarStyles();
-    const [state, setState] = useState({
-        open: false,
-    });
-    
-    const toggleDrawer = (open) => (event) => {
+const buttonStyles = {
+    color: theme.palette.primary.contrastText,
+    fontFamily: `'Grandstander', cursive`,
+    fontSize: { xs: '2rem', md: '1.6rem' },
+    fontWeight: 'bold',
+    textShadow: Array(14).join('#000 0px 0px 2px, ') + '#000 0px 0px 2px',
+    textTransform: 'uppercase',
+    '&:hover': {
+        backgroundColor: 'transparent'
+    }
+};
+
+export default function Nav() {
+    const [open, setOpen] = useState(false);
+
+    const toggleDrawer = (isOpen) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-          return;
+            return;
         }
-    
-        setState({ open: open });
+        setOpen(isOpen);
     };
-    
-    const list = () => {
-        let ui;
-        if (!props.backend_available) {
-            // Static hosting - just show customize
-            ui = ['customize'];
-        } else if (props.is_authenticated) {
-            ui = ['customize', 'logout'];
-        } else {
-            ui = ['login'];
-        }
-        return (
-            <Box
-                sx="auto"
-                role="presentation"
-                onClick={toggleDrawer(false)}
-                onKeyDown={toggleDrawer(false)}
-            >
-                <List>
-                    {ui.map((text, index) => (
-                        <ListItem button key={text} className={classes.navBarLink} href={text === 'logout' ? 'api/logout' : text} component={Link}>
-                            <Button className={classes.navBarButton}>
-                                {text.toUpperCase()}
-                            </Button>
-                        </ListItem>
-                    ))}
-                </List>
-            </Box>
-        )
-    };
-    let vertical = window.innerHeight > window.innerWidth;
-    return(
-        <AppBar style={{ zIndex: 99 }} position="fixed">
-            <Toolbar className={classes.navBar}>
-                <div style={{ flex: 1 }} className={classes.navBarLink} activeClassName="active">
-                    <Link className={classes.navBarLink} href='/'>
-                        <Button className={classes.navBarButton}>
+
+    const menuItems = ['customize', 'room'];
+
+    const list = () => (
+        <Box
+            sx={{ width: 'auto' }}
+            role="presentation"
+            onClick={toggleDrawer(false)}
+            onKeyDown={toggleDrawer(false)}
+        >
+            <List>
+                {menuItems.map((text) => (
+                    <ListItemButton key={text} component="a" href={'#/' + text} sx={{ textDecoration: 'none' }}>
+                        <Button sx={buttonStyles}>
+                            {text.toUpperCase()}
+                        </Button>
+                    </ListItemButton>
+                ))}
+            </List>
+        </Box>
+    );
+
+    return (
+        <AppBar position="fixed" sx={{ zIndex: 99 }}>
+            <Toolbar sx={{
+                minHeight: { xs: 96, md: 64 },
+                backgroundImage: `linear-gradient(${darken(theme.palette.primary.main, 0.1)}, ${lighten(theme.palette.primary.main, 0.2)})`
+            }}>
+                <Box sx={{ flex: 1 }}>
+                    <a href="#/customize" style={{ textDecoration: 'none' }}>
+                        <Button sx={buttonStyles}>
                             GELLIES
                         </Button>
-                    </Link>
-                </div>
-                <IconButton aria-label="menu" size="large">
-                    <MenuRounded onClick={toggleDrawer(true)} className={classes.navBarButton} style={{height: '1.5em', width: '1.5em'}} />
+                    </a>
+                </Box>
+                <IconButton aria-label="menu" size="large" onClick={toggleDrawer(true)}>
+                    <MenuRounded sx={{
+                        height: '1.5em',
+                        width: '1.5em',
+                        color: theme.palette.primary.contrastText
+                    }} />
                 </IconButton>
             </Toolbar>
             <Drawer
                 anchor="right"
-                classes={{ 
-                    paper: classes.navBarDrawer
-                }}
-                open={state.open}
+                open={open}
                 onClose={toggleDrawer(false)}
+                PaperProps={{
+                    sx: { background: theme.palette.secondary.main }
+                }}
             >
                 {list()}
             </Drawer>
         </AppBar>
-    )
-};
+    );
+}
